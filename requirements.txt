@@ -1,0 +1,25 @@
+# Python version: 3.14.4
+# Required packages to run the Benchsales Automation project (Scraper + Resume Gen + Notebooks)
+
+# ── Core Web Scraping & Anti-Bot ──
+playwright==1.62.0
+playwright-stealth==2.0.3
+beautifulsoup4==4.15.0
+
+# ── AI API & Network ──
+requests==2.34.2
+
+# ── Search Engine Connectors (Greenhouse/Lever) ──
+duckduckgo_search==8.1.1
+
+# ── Console Formatting ──
+tabulate==0.10.0
+
+# ── Automated Resume Generation ──
+python-docx==1.2.0
+
+# ── Notebooks & Interactive ──
+jupyter_client==8.9.1
+jupyter_core==5.9.1
+ipykernel==7.3.0
+ipython==9.16.1

@@ -25,7 +25,7 @@ from datetime import datetime, date, timedelta
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urlparse, urljoin, quote_plus
-from playwright_stealth import stealth
+import playwright_stealth
 
 try:
     from tabulate import tabulate
@@ -50,7 +50,7 @@ log = logging.getLogger("V10")
 # ============================================================
 CONFIG = {
     # ── Output ──────────────────────────────────────────────
-    "csv_file": "jobs_v10_output_test_1.csv",
+    "csv_file": "jobs_v10_output_test_2.csv",
 
     # ── NVIDIA NIM ───────────────────────────────────────────
     "nvidia_api_key": os.getenv("NVIDIA_NIM_API_KEY", "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"),
@@ -1270,7 +1270,7 @@ def fetch_details_parallel(records: list, _browser=None) -> list:
                 )
                 
                 page = context.new_page()
-                stealth(page)
+                playwright_stealth.Stealth().apply_stealth_sync(page)
                 
                 # Apply human-like delays before fetching
                 time.sleep(random.uniform(1.5, 3.5))
@@ -1453,7 +1453,7 @@ def run_harvester_v10():
             viewport={"width": 1280, "height": 800},
         )
         page = context.new_page()
-        stealth(page)
+        playwright_stealth.Stealth().apply_stealth_sync(page)
         page.route("**/*.{png,jpg,jpeg,gif,svg,woff,woff2,ttf}", lambda r: r.abort())
 
         # ── Portal scrapers ─────────────────────────────────
