@@ -1,256 +1,449 @@
 """
-Page 2 — Jobs Dashboard
-- View all matched jobs for the selected user
-- Filter by score, remote type, experience fit
-- Status badges: Resume Ready / Generating / Not Generated / Applied
-- Link to apply directly (opens job URL)
-- Trigger resume generation for selected jobs
-- Applied tracking: clicking job link marks as applied
+SYNTRA — Page 2: Jobs Dashboard
+Three-panel: Job List | Full Job Details | Resume Panel
 """
 
 import streamlit as st
-import pandas as pd
+import sys, os, json, uuid
+from pathlib import Path
 from datetime import datetime
 
-@st.cache_resource
-def get_spark():
-    try:
-        from databricks.connect import DatabricksSession
-        return DatabricksSession.builder.getOrCreate()
-    except Exception:
-        return None
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from db_utils import query_df, execute_sql, insert_row
 
-spark = get_spark()
 CATALOG = "jobs_automation_db"
 
-def run_sql(q):
-    if spark:
-        try:
-            return spark.sql(q).toPandas()
-        except Exception as e:
-            st.error(f"DB Error: {e}")
-    return pd.DataFrame()
 
-def status_badge(status):
-    mapping = {
-        "resume_ready":    ('<span class="badge-green">✅ Resume Ready</span>', "green"),
-        "matched":         ('<span class="badge-yellow">⏳ Pending</span>', "yellow"),
-        "resume_pending":  ('<span class="badge-blue">🔄 Generating</span>', "blue"),
-        "applied":         ('<span class="badge-gray">📤 Applied</span>', "gray"),
-        "skipped":         ('<span class="badge-gray">⏭️ Skipped</span>', "gray"),
-        "recruiter_replied": ('<span class="badge-green">💬 Replied</span>', "green"),
+def status_badge(status: str) -> str:
+    m = {
+        "resume_ready":       '<span class="badge badge-green">✅ Resume Ready</span>',
+        "matched":            '<span class="badge badge-yellow">⏳ Pending</span>',
+        "resume_pending":     '<span class="badge badge-blue">🔄 Generating</span>',
+        "applied":            '<span class="badge badge-purple">📤 Applied</span>',
+        "skipped":            '<span class="badge badge-gray">⏭️ Skipped</span>',
+        "recruiter_replied":  '<span class="badge badge-green">💬 Replied</span>',
     }
-    return mapping.get(status, ('<span class="badge-gray">Unknown</span>', "gray"))
+    return m.get(status, f'<span class="badge badge-gray">{status}</span>')
 
-def exp_fit_badge(fit):
-    mapping = {
-        "exact": '<span class="badge-green">✅ Exact Fit</span>',
-        "near":  '<span class="badge-yellow">🔶 Near Fit</span>',
-        "over":  '<span class="badge-blue">🔼 Over-qualified</span>',
-        "under": '<span class="badge-yellow">🔽 Under</span>',
+
+def exp_fit_badge(fit: str) -> str:
+    m = {
+        "exact": '<span class="badge badge-green">✅ Exact Fit</span>',
+        "near":  '<span class="badge badge-yellow">🔶 Near Fit</span>',
+        "over":  '<span class="badge badge-blue">🔼 Over-qualified</span>',
+        "under": '<span class="badge badge-yellow">🔽 Under</span>',
     }
-    return mapping.get(fit, fit)
+    return m.get(fit, "")
 
-# ── CSS ───────────────────────────────────────────────────────
-st.markdown("""
-<style>
-.badge-green  { background:#dcfce7; color:#166534; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-.badge-yellow { background:#fef9c3; color:#854d0e; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-.badge-blue   { background:#dbeafe; color:#1e40af; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-.badge-gray   { background:#f1f5f9; color:#475569; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-.job-card { background:white; border-radius:12px; padding:16px 20px; margin-bottom:12px;
-             box-shadow:0 1px 3px rgba(0,0,0,0.08); border-left:4px solid #3b82f6; }
-.job-card:hover { box-shadow:0 4px 12px rgba(0,0,0,0.12); transform:translateY(-1px); transition:all 0.2s; }
-.score-bar { height:6px; border-radius:3px; background:#e2e8f0; margin-top:4px; }
-.score-fill { height:6px; border-radius:3px; }
-</style>
-""", unsafe_allow_html=True)
 
-st.title("💼 Jobs Dashboard")
+def score_color(s: int) -> str:
+    if s >= 70: return "#10b981"
+    if s >= 50: return "#f59e0b"
+    return "#ef4444"
 
-# ── User selector ─────────────────────────────────────────────
-users_df = run_sql(f"SELECT user_id, full_name, total_experience_years FROM {CATALOG}.users_schema.users WHERE is_active = true")
 
+# ── Header ────────────────────────────────────────────────────
+st.markdown("<h2 style='color:#f1f5f9; margin-bottom:4px;'>💼 Jobs Dashboard</h2>", unsafe_allow_html=True)
+
+# ── User selector + Download format ──────────────────────────
+hcol1, hcol2, hcol3 = st.columns([3, 2, 2])
+
+users_df = query_df(f"SELECT user_id, full_name, total_experience_years FROM {CATALOG}.users_schema.users WHERE is_active = true")
 if users_df.empty:
-    st.warning("No users found. Please complete onboarding first.")
+    st.warning("No users yet. Complete Onboarding first.")
     st.stop()
 
-user_options = {row["full_name"]: row["user_id"] for _, row in users_df.iterrows()}
-selected_name = st.selectbox("👤 Select User", list(user_options.keys()))
-user_id = user_options[selected_name]
-st.session_state["current_user_id"] = user_id
+user_opts = {r["full_name"]: r["user_id"] for _, r in users_df.iterrows()}
+with hcol1:
+    sel_name = st.selectbox("👤 User", list(user_opts.keys()))
+    user_id  = user_opts[sel_name]
+    st.session_state["current_user_id"] = user_id
 
-# ── Metrics Row ───────────────────────────────────────────────
-metrics_df = run_sql(f"""
+with hcol2:
+    default_fmt = st.session_state.get("default_download_format", "DOCX")
+    fmt_choice  = st.radio("⬇️ Default Download", ["DOCX", "PDF"], horizontal=True,
+                           index=0 if default_fmt == "DOCX" else 1)
+    st.session_state["default_download_format"] = fmt_choice
+
+with hcol3:
+    if st.button("🔄 Refresh", use_container_width=True):
+        st.rerun()
+
+# ── Metrics ───────────────────────────────────────────────────
+m_df = query_df(f"""
     SELECT
-        COUNT(*) AS total_matches,
-        SUM(CASE WHEN status = 'resume_ready' THEN 1 ELSE 0 END) AS resumes_ready,
+        COUNT(*) AS total,
+        SUM(CASE WHEN status = 'resume_ready' THEN 1 ELSE 0 END) AS ready,
         SUM(CASE WHEN status = 'applied' THEN 1 ELSE 0 END) AS applied,
         SUM(CASE WHEN status = 'recruiter_replied' THEN 1 ELSE 0 END) AS replied,
+        SUM(CASE WHEN status = 'matched' THEN 1 ELSE 0 END) AS pending,
         AVG(match_score) AS avg_score
     FROM {CATALOG}.default.user_job_matches
     WHERE user_id = '{user_id}'
 """)
 
-if not metrics_df.empty:
-    row = metrics_df.iloc[0]
-    c1, c2, c3, c4, c5 = st.columns(5)
-    c1.metric("Total Matches",    int(row["total_matches"] or 0))
-    c2.metric("✅ Resume Ready",  int(row["resumes_ready"] or 0))
-    c3.metric("📤 Applied",       int(row["applied"] or 0))
-    c4.metric("💬 Replies",       int(row["replied"] or 0))
-    c5.metric("Avg Match Score",  f"{float(row['avg_score'] or 0):.0f}%")
+if not m_df.empty:
+    r = m_df.iloc[0]
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1.markdown(f"<div class='metric-card'><div class='value'>{int(float(r.get('total') or 0))}</div><div class='label'>Total</div></div>", unsafe_allow_html=True)
+    c2.markdown(f"<div class='metric-card'><div class='value' style='color:#10b981;'>{int(float(r.get('ready') or 0))}</div><div class='label'>✅ Resume Ready</div></div>", unsafe_allow_html=True)
+    c3.markdown(f"<div class='metric-card'><div class='value' style='color:#f59e0b;'>{int(float(r.get('pending') or 0))}</div><div class='label'>⏳ Pending</div></div>", unsafe_allow_html=True)
+    c4.markdown(f"<div class='metric-card'><div class='value' style='color:#a78bfa;'>{int(float(r.get('applied') or 0))}</div><div class='label'>📤 Applied</div></div>", unsafe_allow_html=True)
+    c5.markdown(f"<div class='metric-card'><div class='value' style='color:#10b981;'>{int(float(r.get('replied') or 0))}</div><div class='label'>💬 Replied</div></div>", unsafe_allow_html=True)
+    c6.markdown(f"<div class='metric-card'><div class='value'>{float(r.get('avg_score') or 0):.0f}%</div><div class='label'>Avg Score</div></div>", unsafe_allow_html=True)
 
 st.markdown("---")
 
 # ── Filters ───────────────────────────────────────────────────
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    min_score = st.slider("Min Match Score", 30, 100, 40, step=5)
-with col2:
-    remote_filter = st.multiselect("Remote Type",
-        ["Remote", "Hybrid", "Onsite", "Not specified"],
-        default=["Remote", "Hybrid"])
-with col3:
-    status_filter = st.multiselect("Status",
-        ["matched", "resume_ready", "resume_pending", "applied", "skipped"],
-        default=["matched", "resume_ready", "resume_pending"])
-with col4:
-    exp_fit_filter = st.multiselect("Experience Fit",
-        ["exact", "near", "over", "under"],
-        default=["exact", "near", "over"])
+with st.expander("🔍 Filters", expanded=False):
+    fc1, fc2, fc3, fc4 = st.columns(4)
+    with fc1: min_score = st.slider("Min Match Score", 20, 100, 40, 5)
+    with fc2: remote_f  = st.multiselect("Remote Type", ["Remote","Hybrid","Onsite","Not specified"], default=["Remote","Hybrid"])
+    with fc3: status_f  = st.multiselect("Status", ["matched","resume_ready","resume_pending","applied","skipped"], default=["matched","resume_ready","resume_pending"])
+    with fc4: exp_fit_f = st.multiselect("Exp Fit", ["exact","near","over","under"], default=["exact","near","over"])
 
-# ── Fetch Jobs ────────────────────────────────────────────────
-remote_sql = "', '".join(remote_filter) if remote_filter else "Remote"
-status_sql = "', '".join(status_filter) if status_filter else "matched"
-exp_sql    = "', '".join(exp_fit_filter) if exp_fit_filter else "exact"
+rf_str  = "', '".join(remote_f)  if remote_f  else "Remote"
+sf_str  = "', '".join(status_f)  if status_f  else "matched"
+ef_str  = "', '".join(exp_fit_f) if exp_fit_f else "exact"
 
-jobs_df = run_sql(f"""
+# ── Load jobs ─────────────────────────────────────────────────
+jobs_df = query_df(f"""
     SELECT
         m.match_id, m.match_score, m.skill_match_pct, m.experience_fit,
         m.skill_overlap, m.skill_gap, m.status, m.resume_generated,
-        m.matched_at,
-        j.job_title, j.company_name, j.location, j.remote_type,
+        m.matched_at, m.resume_id,
+        j.job_hash, j.job_title, j.company_name, j.location, j.remote_type,
         j.salary_range, j.tech_stack, j.apply_link, j.easy_apply_link,
         j.hr_email, j.portal, j.experience_min, j.experience_max,
-        j.ai_summary, j.visa_sponsorship, j.job_hash
+        j.ai_summary, j.visa_sponsorship, j.roles_summary,
+        j.job_description, j.requirements_section
     FROM {CATALOG}.default.user_job_matches m
     JOIN {CATALOG}.default.jobs_clean_silver j ON m.job_hash = j.job_hash
     WHERE m.user_id = '{user_id}'
       AND m.match_score >= {min_score}
-      AND m.status IN ('{status_sql}')
-      AND m.experience_fit IN ('{exp_sql}')
-      {'AND j.remote_type IN (' + chr(39) + remote_sql + chr(39) + ')' if remote_filter else ''}
+      AND m.status IN ('{sf_str}')
+      AND m.experience_fit IN ('{ef_str}')
     ORDER BY m.match_score DESC
     LIMIT 200
 """)
 
 if jobs_df.empty:
-    st.info("No matched jobs found with current filters. Try lowering the score or changing filters.")
+    st.info("No matched jobs found. Adjust filters or run the matching notebook.")
     st.stop()
 
-st.markdown(f"**Found {len(jobs_df)} matching jobs**")
+st.markdown(f"<span class='badge badge-blue'>{len(jobs_df)} jobs</span>", unsafe_allow_html=True)
 
 # ── Batch Actions ─────────────────────────────────────────────
-col_a, col_b, col_c = st.columns([2, 2, 4])
-with col_a:
-    if st.button("🤖 Generate 10 Resumes", type="primary", use_container_width=True):
-        st.info("🔄 Triggering resume generation notebook... Check back in ~30 minutes.")
-        # In production: trigger Databricks job via REST API
-        # requests.post(f"{DATABRICKS_HOST}/api/2.1/jobs/run-now", ...)
-        st.success("Notebook triggered! Resumes will be ready soon.")
-with col_b:
-    if st.button("🔄 Refresh", use_container_width=True):
-        st.rerun()
+bac1, bac2, bac3 = st.columns([2, 2, 6])
+with bac1:
+    if st.button("🤖 Generate 10 Resumes (Batch)", type="primary", use_container_width=True):
+        st.info("🔄 Notebook triggered — resumes will be ready in ~20 mins.")
+with bac2:
+    if st.button("📤 Export All Jobs CSV", use_container_width=True):
+        import pandas as pd
+        csv = jobs_df[["job_title","company_name","location","match_score","status","apply_link"]].to_csv(index=False)
+        st.download_button("⬇️ Download CSV", csv, "jobs.csv", "text/csv", use_container_width=True)
 
 st.markdown("---")
 
-# ── Job Cards ─────────────────────────────────────────────────
-for _, job in jobs_df.iterrows():
-    score      = int(job["match_score"] or 0)
-    score_color= "#22c55e" if score >= 70 else "#f59e0b" if score >= 50 else "#ef4444"
-    status_html, _ = status_badge(job["status"])
-    exp_html       = exp_fit_badge(job.get("experience_fit", ""))
+# ══════════════════════════════════════════════════════════════
+# THREE-PANEL LAYOUT
+# ══════════════════════════════════════════════════════════════
+list_col, detail_col, resume_col = st.columns([1.2, 2, 1.8])
 
-    with st.container():
+# ── STATE: which job is selected ─────────────────────────────
+if "selected_match_id" not in st.session_state:
+    st.session_state["selected_match_id"] = jobs_df.iloc[0]["match_id"] if not jobs_df.empty else None
+
+# ── PANEL 1: Job List ─────────────────────────────────────────
+with list_col:
+    st.markdown("<div class='section-title'>Job Matches</div>", unsafe_allow_html=True)
+    for _, job in jobs_df.iterrows():
+        score  = int(float(job["match_score"] or 0))
+        sc     = score_color(score)
+        is_sel = st.session_state.get("selected_match_id") == job["match_id"]
+        border = "border-color:#6366f1; box-shadow:0 0 12px rgba(99,102,241,0.3);" if is_sel else ""
+
         st.markdown(f"""
-        <div class='job-card'>
-            <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
+        <div class='syntra-card' style='padding:12px 14px; cursor:pointer; {border}'>
+            <div style='display:flex; justify-content:space-between; align-items:center;'>
                 <div>
-                    <span style='font-size:17px; font-weight:700; color:#1e293b;'>{job['job_title']}</span>
-                    <span style='font-size:13px; color:#64748b; margin-left:10px;'>@ {job['company_name']}</span>
+                    <div style='font-weight:700; font-size:13px; color:#f1f5f9;'>{str(job['job_title'])[:35]}</div>
+                    <div style='font-size:11px; color:#64748b; margin-top:2px;'>{str(job['company_name'])[:30]}</div>
+                    <div style='font-size:10px; color:#475569;'>📍 {str(job['location'])[:25]}</div>
                 </div>
                 <div style='text-align:right;'>
-                    <span style='font-size:22px; font-weight:800; color:{score_color};'>{score}%</span>
-                    <div style='font-size:10px; color:#94a3b8;'>match</div>
+                    <div style='font-size:20px; font-weight:800; color:{sc};'>{score}%</div>
+                    <div class='score-bar'>
+                        <div class='score-fill' style='width:{score}%; background:{sc};'></div>
+                    </div>
                 </div>
             </div>
-            <div style='margin:6px 0; display:flex; gap:8px; flex-wrap:wrap;'>
-                {status_html} {exp_html}
-                <span class='badge-gray'>📍 {job['location']}</span>
-                <span class='badge-gray'>🌐 {job['remote_type']}</span>
-                <span class='badge-gray'>🏢 {job['portal']}</span>
-                {'<span class="badge-green">📧 HR Email</span>' if job.get("hr_email") else ''}
-                {'<span class="badge-blue">💼 ' + job['salary_range'] + '</span>' if job.get("salary_range") and job['salary_range'] != 'Not Specified' else ''}
-            </div>
-            <div style='font-size:12px; color:#64748b; margin-top:4px;'>
-                <strong>Skills matched:</strong> {(job.get('skill_overlap') or 'N/A')[:120]}
-            </div>
-            <div style='font-size:12px; color:#ef4444; margin-top:2px;'>
-                <strong>Gap:</strong> {(job.get('skill_gap') or 'None')[:100]}
-            </div>
-            <div style='font-size:12px; color:#475569; margin-top:4px; font-style:italic;'>
-                {(job.get('ai_summary') or '')[:200]}
-            </div>
-            <div class='score-bar' style='margin-top:8px;'>
-                <div class='score-fill' style='width:{score}%; background:{score_color};'></div>
-            </div>
+            <div style='margin-top:6px;'>{status_badge(job['status'])}</div>
         </div>
         """, unsafe_allow_html=True)
 
-        # Action buttons
-        bcol1, bcol2, bcol3, bcol4 = st.columns([1, 1, 1, 3])
-        with bcol1:
-            apply_url = job.get("easy_apply_link") or job.get("apply_link") or "#"
-            if st.button(f"🔗 Apply", key=f"apply_{job['match_id']}"):
-                # Mark as applied when user clicks apply link
-                if spark:
-                    try:
-                        spark.sql(f"""
-                            UPDATE {CATALOG}.default.user_job_matches
-                            SET status = 'applied'
-                            WHERE match_id = '{job['match_id']}'
-                        """)
-                        # Also record in submissions
-                        import uuid
-                        spark.sql(f"""
-                            INSERT INTO {CATALOG}.default.job_submissions
-                            VALUES ('{uuid.uuid4()}', '{user_id}', '{job['job_hash']}',
-                                    '{job['match_id']}', NULL, current_timestamp(),
-                                    'link_opened', 'submitted')
-                        """)
-                    except Exception:
-                        pass
-                st.markdown(f"[👉 Open Job Link]({apply_url})", unsafe_allow_html=False)
+        if st.button("View →", key=f"sel_{job['match_id']}", use_container_width=True):
+            st.session_state["selected_match_id"] = job["match_id"]
+            st.rerun()
 
-        with bcol2:
-            if job["status"] not in ("resume_ready",) and st.button("📄 Generate Resume", key=f"gen_{job['match_id']}"):
-                if spark:
-                    spark.sql(f"""
-                        UPDATE {CATALOG}.default.user_job_matches
-                        SET status = 'resume_pending'
-                        WHERE match_id = '{job['match_id']}'
-                    """)
-                st.success("Queued for generation!")
+# ── Get selected job ─────────────────────────────────────────
+sel_id  = st.session_state.get("selected_match_id")
+sel_row = jobs_df[jobs_df["match_id"] == sel_id]
+if sel_row.empty:
+    sel_row = jobs_df.iloc[:1]
+job = sel_row.iloc[0]
 
-        with bcol3:
-            if st.button("⏭️ Skip", key=f"skip_{job['match_id']}"):
-                if spark:
-                    spark.sql(f"""
-                        UPDATE {CATALOG}.default.user_job_matches
-                        SET status = 'skipped'
-                        WHERE match_id = '{job['match_id']}'
+# ── PANEL 2: Job Details ──────────────────────────────────────
+with detail_col:
+    st.markdown("<div class='section-title'>Job Details</div>", unsafe_allow_html=True)
+
+    score = int(float(job["match_score"] or 0))
+    sc    = score_color(score)
+
+    st.markdown(f"""
+    <div class='syntra-card'>
+        <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
+            <div>
+                <h3 style='margin:0; color:#f1f5f9;'>{job['job_title']}</h3>
+                <div style='font-size:15px; color:#94a3b8; margin:4px 0;'>@ {job['company_name']}</div>
+            </div>
+            <div style='text-align:right;'>
+                <div style='font-size:36px; font-weight:900; color:{sc};'>{score}%</div>
+                <div style='font-size:11px; color:#64748b;'>Match Score</div>
+            </div>
+        </div>
+        <div style='display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;'>
+            {status_badge(job['status'])}
+            {exp_fit_badge(str(job.get('experience_fit') or ''))}
+            <span class='badge badge-gray'>📍 {job['location']}</span>
+            <span class='badge badge-gray'>🌐 {job['remote_type']}</span>
+            <span class='badge badge-gray'>🏢 {job['portal']}</span>
+            {'<span class="badge badge-green">📧 HR Email Available</span>' if job.get("hr_email") else ''}
+            {'<span class="badge badge-blue">💚 Visa Sponsorship</span>' if str(job.get("visa_sponsorship")) == "true" else ''}
+            {'<span class="badge badge-yellow">💰 ' + str(job['salary_range']) + '</span>' if job.get("salary_range") and str(job['salary_range']) not in ("Not Specified","None","") else ''}
+        </div>
+        <div style='font-size:12px; color:#64748b; margin-top:8px;'>
+            <strong>Exp Required:</strong> {job.get('experience_min',0)}–{job.get('experience_max',99)} yrs
+            &nbsp;|&nbsp; <strong>Skills Match:</strong> {int(float(job.get('skill_match_pct') or 0))}%
+        </div>
+        <div class='score-bar' style='margin-top:8px;'>
+            <div class='score-fill' style='width:{score}%; background:{sc};'></div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Match analysis
+    if job.get("skill_overlap"):
+        st.markdown("<div class='section-title'>Skills Matched</div>", unsafe_allow_html=True)
+        for s in str(job["skill_overlap"]).split(","):
+            s = s.strip()
+            if s: st.markdown(f"<span class='badge badge-green'>{s}</span>", unsafe_allow_html=True)
+
+    if job.get("skill_gap"):
+        st.markdown("<div class='section-title'>Skills Gap</div>", unsafe_allow_html=True)
+        for s in str(job["skill_gap"]).split(","):
+            s = s.strip()
+            if s: st.markdown(f"<span class='badge badge-red'>{s}</span>", unsafe_allow_html=True)
+
+    # AI Summary
+    if job.get("ai_summary"):
+        st.markdown("<div class='section-title'>AI Summary</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='syntra-card' style='padding:12px; font-size:13px; color:#94a3b8;'>{job['ai_summary']}</div>", unsafe_allow_html=True)
+
+    # Job tabs
+    jt1, jt2, jt3 = st.tabs(["📋 Responsibilities", "📌 Requirements", "🔗 Apply"])
+
+    with jt1:
+        roles = str(job.get("roles_summary") or job.get("job_description") or "Not available")[:3000]
+        if "•" in roles:
+            for line in roles.split("\n"):
+                if line.strip():
+                    st.write(line)
+        else:
+            st.markdown(f"<div style='font-size:13px; color:#94a3b8; white-space:pre-wrap;'>{roles[:2000]}</div>", unsafe_allow_html=True)
+
+    with jt2:
+        req = str(job.get("requirements_section") or job.get("tech_stack") or "See job description")
+        st.markdown(f"<div style='font-size:13px; color:#94a3b8; white-space:pre-wrap;'>{req[:2000]}</div>", unsafe_allow_html=True)
+
+    with jt3:
+        apply_url  = str(job.get("easy_apply_link") or job.get("apply_link") or "")
+        hr_email   = str(job.get("hr_email") or "")
+
+        if hr_email and hr_email not in ("None", ""):
+            st.success(f"📧 HR Email found: **{hr_email}**")
+            st.info("Go to Email Outreach page to send your application with resume attached.")
+
+        if apply_url and apply_url not in ("None", ""):
+            st.markdown(f"**[🔗 Open Job Listing]({apply_url})**")
+            if st.button("📤 Mark as Applied (link)", key=f"apply_link_{job['match_id']}"):
+                execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'applied' WHERE match_id = '{job['match_id']}'")
+                try:
+                    insert_row(f"{CATALOG}.default.job_submissions", {
+                        "submission_id":      str(uuid.uuid4()),
+                        "user_id":            user_id,
+                        "job_hash":           str(job["job_hash"]),
+                        "match_id":           str(job["match_id"]),
+                        "resume_id":          str(job.get("resume_id") or ""),
+                        "submitted_at":       datetime.now(),
+                        "submission_method":  "link_opened",
+                        "status":             "submitted",
+                    })
+                except Exception: pass
+                st.success("✅ Marked as Applied!")
+                st.rerun()
+        else:
+            st.warning("No direct apply link found in our database.")
+
+    # Action row
+    st.markdown("---")
+    ac1, ac2, ac3 = st.columns(3)
+    with ac1:
+        if job["status"] not in ("resume_ready", "applied") and st.button("📄 Queue Resume Gen", key=f"gen_{job['match_id']}", use_container_width=True, type="primary"):
+            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'resume_pending' WHERE match_id = '{job['match_id']}'")
+            st.success("Queued!")
+            st.rerun()
+    with ac2:
+        if st.button("⏭️ Skip Job", key=f"skip_{job['match_id']}", use_container_width=True):
+            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'skipped' WHERE match_id = '{job['match_id']}'")
+            st.rerun()
+    with ac3:
+        if st.button("♻️ Re-match", key=f"rematch_{job['match_id']}", use_container_width=True):
+            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'matched' WHERE match_id = '{job['match_id']}'")
+            st.rerun()
+
+# ── PANEL 3: Resume Panel ─────────────────────────────────────
+with resume_col:
+    st.markdown("<div class='section-title'>Resume for This Job</div>", unsafe_allow_html=True)
+
+    resume_id = str(job.get("resume_id") or "")
+
+    if job["status"] == "resume_ready" and resume_id and resume_id not in ("None", ""):
+        # Load resume data
+        res_df = query_df(f"""
+            SELECT gr.resume_id, gr.docx_path, gr.pdf_path,
+                   gr.experience_years_used, gr.skills_highlighted,
+                   gr.tailored_bullets_json, gr.resume_version,
+                   gr.is_user_edited, gr.generated_at, gr.basic_knowledge_added
+            FROM {CATALOG}.default.generated_resumes gr
+            WHERE gr.resume_id = '{resume_id}' AND gr.is_latest = true
+        """)
+
+        if res_df.empty:
+            res_df = query_df(f"""
+                SELECT gr.resume_id, gr.docx_path, gr.pdf_path,
+                       gr.experience_years_used, gr.skills_highlighted,
+                       gr.tailored_bullets_json, gr.resume_version,
+                       gr.is_user_edited, gr.generated_at, gr.basic_knowledge_added
+                FROM {CATALOG}.default.generated_resumes gr
+                WHERE gr.user_id = '{user_id}' AND gr.job_hash = '{job["job_hash"]}' AND gr.is_latest = true
+                LIMIT 1
+            """)
+
+        if not res_df.empty:
+            r = res_df.iloc[0]
+            gen_dt = str(r.get("generated_at") or "")[:10]
+            edit_tag = "✏️ Edited" if r.get("is_user_edited") else "🤖 AI Gen"
+
+            st.markdown(f"""
+            <div class='syntra-card'>
+                <div style='font-weight:700;'>📄 v{int(float(r.get('resume_version') or 1))}</div>
+                <div style='font-size:11px; color:#64748b;'>Generated {gen_dt} · {edit_tag}</div>
+                <div style='margin-top:8px; font-size:12px;'>
+                    <strong>Exp shown:</strong> {r.get('experience_years_used',0)} yrs
+                </div>
+                <div style='font-size:11px; color:#94a3b8; margin-top:4px;'>
+                    <strong>Skills:</strong> {(str(r.get('skills_highlighted') or ''))[:150]}
+                </div>
+                {'<div style="font-size:11px;color:#f59e0b;margin-top:4px;">+ Familiar with: ' + str(r.get("basic_knowledge_added") or "")[:80] + '</div>' if r.get("basic_knowledge_added") else ''}
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Tailored bullets preview
+            bullets_json = json.loads(r.get("tailored_bullets_json") or "[]")
+            if bullets_json:
+                st.markdown("<div class='section-title'>Tailored Bullets (AI)</div>", unsafe_allow_html=True)
+                for item in bullets_json[:2]:  # Show first 2 roles
+                    bullets = item.get("bullets", [])
+                    st.markdown(f"**Role {item.get('role_index', 0)+1}**")
+                    for b in bullets[:3]:
+                        st.markdown(f"<div style='font-size:11px; color:#94a3b8; margin:2px 0;'>• {b[:120]}</div>", unsafe_allow_html=True)
+
+            # Download buttons
+            st.markdown("<div class='section-title'>Download</div>", unsafe_allow_html=True)
+            default_fmt = st.session_state.get("default_download_format", "DOCX")
+
+            d1, d2 = st.columns(2)
+            with d1:
+                # Primary download (global default)
+                if st.button(f"⬇️ {default_fmt}", key=f"dl_def_{resume_id}", use_container_width=True, type="primary"):
+                    st.info(f"Download {default_fmt} from DBFS path:\n`{r.get('docx_path','—')}`")
+            with d2:
+                alt_fmt = "PDF" if default_fmt == "DOCX" else "DOCX"
+                if st.button(f"⬇️ {alt_fmt}", key=f"dl_alt_{resume_id}", use_container_width=True):
+                    st.info(f"Download {alt_fmt} from DBFS path:\n`{r.get('pdf_path','—')}`")
+
+            # Edit button — opens form in expander
+            with st.expander("✏️ Edit Bullets", expanded=False):
+                for i, item in enumerate(bullets_json):
+                    st.markdown(f"**Role {item.get('role_index', i)+1}**")
+                    new_bullets = []
+                    for j, bullet in enumerate(item.get("bullets", [])):
+                        new_b = st.text_area(
+                            f"B{j+1}",
+                            value=bullet,
+                            height=70,
+                            key=f"b_{resume_id}_{i}_{j}",
+                            label_visibility="collapsed",
+                        )
+                        new_bullets.append(new_b)
+                    bullets_json[i]["bullets"] = new_bullets
+
+                if st.button("💾 Save Edits", key=f"save_edit_{resume_id}", type="primary"):
+                    execute_sql(f"""
+                        UPDATE {CATALOG}.default.generated_resumes
+                        SET tailored_bullets_json = '{json.dumps(bullets_json).replace("'","\\'").replace(chr(10)," ")}',
+                            is_user_edited = true,
+                            last_edited_at = current_timestamp()
+                        WHERE resume_id = '{resume_id}'
                     """)
+                    st.success("✅ Saved!")
+
+            if st.button("🔄 Regenerate (new version)", key=f"regen_{resume_id}", use_container_width=True):
+                execute_sql(f"UPDATE {CATALOG}.default.generated_resumes SET is_latest = false WHERE resume_id = '{resume_id}'")
+                execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'matched', resume_generated = false, resume_id = NULL WHERE match_id = '{job['match_id']}'")
+                st.success("Queued for regeneration!")
                 st.rerun()
 
-        st.markdown("---")
+    elif job["status"] == "resume_pending":
+        st.markdown("""
+        <div class='syntra-card' style='text-align:center; padding:30px;'>
+            <div style='font-size:32px;'>🔄</div>
+            <div style='font-weight:700; margin:8px 0;'>Generating Resume</div>
+            <div style='color:#64748b; font-size:12px;'>AI is tailoring your resume for this job. Check back in ~15 min.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif job["status"] == "applied":
+        st.markdown("""
+        <div class='syntra-card' style='text-align:center; padding:30px;'>
+            <div style='font-size:32px;'>📤</div>
+            <div style='font-weight:700; margin:8px 0; color:#a78bfa;'>Applied!</div>
+            <div style='color:#64748b; font-size:12px;'>Application submitted. Watch for recruiter replies.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    else:
+        st.markdown("""
+        <div class='syntra-card' style='text-align:center; padding:30px;'>
+            <div style='font-size:32px;'>📄</div>
+            <div style='font-weight:700; margin:8px 0;'>No Resume Yet</div>
+            <div style='color:#64748b; font-size:12px;'>Click "Queue Resume Gen" to create an AI-tailored resume for this job.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("🤖 Generate Resume Now", key=f"gen_now_{job['match_id']}", type="primary", use_container_width=True):
+            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'resume_pending' WHERE match_id = '{job['match_id']}'")
+            st.success("✅ Queued! Resume will be ready in ~15 minutes.")
+            st.rerun()

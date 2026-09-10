@@ -1,24 +1,27 @@
 # ── Databricks App (Streamlit) ───────────────────────────────
 streamlit>=1.35.0
-databricks-connect>=14.3
-databricks-sdk>=0.28.0
+databricks-sdk>=0.28.0       # Databricks REST API client
 
 # ── AI & HTTP ────────────────────────────────────────────────
 requests>=2.31.0
-openai>=1.30.0           # Optional (if using OpenAI instead of NVIDIA)
 
-# ── Resume Generation ────────────────────────────────────────
-python-docx>=1.1.2       # DOCX builder
-pdfplumber>=0.11.0       # PDF resume parser
-reportlab>=4.2.0         # PDF fallback generation
-cryptography>=42.0.0     # AES-256 email password encryption
+# ── Resume Parsing ───────────────────────────────────────────
+pdfplumber>=0.11.0           # Better PDF text extraction (primary)
+PyPDF2>=3.0.0                # PDF fallback parser
+python-docx>=1.1.2           # DOCX reader (parse uploaded) + DOCX builder (generate)
+
+# ── PDF Generation ───────────────────────────────────────────
+reportlab>=4.2.0             # PDF fallback generation
+
+# ── Security ─────────────────────────────────────────────────
+cryptography>=42.0.0         # AES-256 email password encryption
 
 # ── Data Processing ──────────────────────────────────────────
 pandas>=2.2.0
-numpy>=1.26.0
 
 # ── Local Scraper ────────────────────────────────────────────
-python-dotenv>=1.0.0     # .env loader for jsearch_local.py
+python-dotenv>=1.0.0         # .env loader
 
-# ── Optional: Better PDF conversion (if LibreOffice available) ─
-# docx2pdf>=0.1.8        # Uncomment if LibreOffice installed on Databricks node
+# ── Testing ──────────────────────────────────────────────────
+# Run: python test_pipeline.py
+# (no extra deps beyond the above)
