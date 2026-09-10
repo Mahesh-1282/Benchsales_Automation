@@ -1,25 +1,24 @@
-# Python version: 3.14.4
-# Required packages to run the Benchsales Automation project (Scraper + Resume Gen + Notebooks)
+# ── Databricks App (Streamlit) ───────────────────────────────
+streamlit>=1.35.0
+databricks-connect>=14.3
+databricks-sdk>=0.28.0
 
-# ── Core Web Scraping & Anti-Bot ──
-playwright==1.62.0
-playwright-stealth==2.0.3
-beautifulsoup4==4.15.0
+# ── AI & HTTP ────────────────────────────────────────────────
+requests>=2.31.0
+openai>=1.30.0           # Optional (if using OpenAI instead of NVIDIA)
 
-# ── AI API & Network ──
-requests==2.34.2
+# ── Resume Generation ────────────────────────────────────────
+python-docx>=1.1.2       # DOCX builder
+pdfplumber>=0.11.0       # PDF resume parser
+reportlab>=4.2.0         # PDF fallback generation
+cryptography>=42.0.0     # AES-256 email password encryption
 
-# ── Search Engine Connectors (Greenhouse/Lever) ──
-duckduckgo_search==8.1.1
+# ── Data Processing ──────────────────────────────────────────
+pandas>=2.2.0
+numpy>=1.26.0
 
-# ── Console Formatting ──
-tabulate==0.10.0
+# ── Local Scraper ────────────────────────────────────────────
+python-dotenv>=1.0.0     # .env loader for jsearch_local.py
 
-# ── Automated Resume Generation ──
-python-docx==1.2.0
-
-# ── Notebooks & Interactive ──
-jupyter_client==8.9.1
-jupyter_core==5.9.1
-ipykernel==7.3.0
-ipython==9.16.1
+# ── Optional: Better PDF conversion (if LibreOffice available) ─
+# docx2pdf>=0.1.8        # Uncomment if LibreOffice installed on Databricks node
