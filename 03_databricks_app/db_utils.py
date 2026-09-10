@@ -50,8 +50,11 @@ def _get_headers():
 # ── Core SQL Execution ────────────────────────────────────────
 def _execute_statement(sql: str, wait_timeout: int = 30) -> dict:
     """Execute SQL via Databricks Statement Execution API."""
-    host  = os.getenv("DATABRICKS_HOST", DATABRICKS_HOST).rstrip("/")
-    wh_id = os.getenv("DATABRICKS_SQL_WAREHOUSE_ID", SQL_WAREHOUSE_ID)
+    host  = os.getenv("DATABRICKS_HOST", DATABRICKS_HOST).strip().rstrip("/")
+    if host and not host.startswith("http"):
+        host = f"https://{host}"
+    
+    wh_id = os.getenv("DATABRICKS_SQL_WAREHOUSE_ID", SQL_WAREHOUSE_ID).strip()
 
     if not host:
         return {"error": "DATABRICKS_HOST not set"}
@@ -178,7 +181,10 @@ def update_row(table: str, set_dict: dict, where: str) -> tuple:
 
 def get_env_status() -> dict:
     """Check which env vars are configured — safe to display."""
-    host  = os.getenv("DATABRICKS_HOST", DATABRICKS_HOST)
+    host  = os.getenv("DATABRICKS_HOST", DATABRICKS_HOST).strip().rstrip("/")
+    if host and not host.startswith("http"):
+        host = f"https://{host}"
+    
     token = os.getenv("DATABRICKS_TOKEN", DATABRICKS_TOKEN)
     wh    = os.getenv("DATABRICKS_SQL_WAREHOUSE_ID", SQL_WAREHOUSE_ID)
     nvidia= os.getenv("NVIDIA_NIM_API_KEY", "")

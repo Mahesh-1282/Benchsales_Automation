@@ -1,30 +1,30 @@
 """
-syntra_styles.py — Shared SYNTRA dark theme CSS
+syntra_styles.py — Shared SYNTRA Light & Violet theme CSS
 Import this in every page: from syntra_styles import inject_styles; inject_styles()
 """
 import streamlit as st
 
 
-DARK_CSS = """
+LIGHT_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* ── Root Variables ── */
 :root {
-    --bg-primary:    #0a0f1e;
-    --bg-secondary:  #0f172a;
-    --bg-card:       #131c31;
-    --border:        rgba(99,102,241,0.2);
-    --border-hover:  rgba(99,102,241,0.5);
-    --accent:        #6366f1;
-    --accent-light:  #818cf8;
-    --accent-glow:   rgba(99,102,241,0.3);
+    --bg-primary:    #ffffff;
+    --bg-secondary:  #f8fafc;
+    --bg-card:       #ffffff;
+    --border:        #e2e8f0;
+    --border-hover:  #8b5cf6;
+    --accent:        #8b5cf6; /* Violet */
+    --accent-light:  #a78bfa;
+    --accent-glow:   rgba(139, 92, 246, 0.15);
     --success:       #10b981;
     --warning:       #f59e0b;
     --danger:        #ef4444;
-    --text-primary:  #f1f5f9;
-    --text-secondary:#94a3b8;
-    --text-muted:    #475569;
+    --text-primary:  #0f172a;
+    --text-secondary:#475569;
+    --text-muted:    #64748b;
 }
 
 /* ── Global Reset ── */
@@ -40,16 +40,29 @@ html, body, [class*="css"], .main, .stApp {
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #070d1a 0%, #0d1526 100%) !important;
+    background: #f8fafc !important;
     border-right: 1px solid var(--border) !important;
 }
 [data-testid="stSidebar"] * { color: var(--text-primary) !important; }
 [data-testid="stSidebar"] a {
     border-radius: 8px !important;
     transition: all 0.2s !important;
+    color: var(--text-secondary) !important;
 }
 [data-testid="stSidebar"] a:hover {
     background: var(--accent-glow) !important;
+    color: var(--accent) !important;
+}
+[data-testid="stSidebar"] [data-testid="stSidebarNav"] li a {
+    border-radius: 8px !important;
+    margin: 2px 8px !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s !important;
+}
+[data-testid="stSidebar"] [data-testid="stSidebarNav"] li a:hover {
+    background: var(--accent-glow) !important;
+    border-left: 3px solid var(--accent) !important;
+    color: var(--accent) !important;
 }
 
 /* ── Headings ── */
@@ -60,33 +73,35 @@ h1, h2, h3, h4 { color: var(--text-primary) !important; }
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
     transition: all 0.25s ease;
 }
 .syntra-card:hover {
     border-color: var(--border-hover);
-    box-shadow: 0 0 20px var(--accent-glow);
+    box-shadow: 0 10px 15px -3px rgba(139,92,246,0.1), 0 4px 6px -2px rgba(139,92,246,0.05);
     transform: translateY(-2px);
 }
 .metric-card {
-    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(99,102,241,0.08) 100%);
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(139,92,246,0.05) 100%);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 18px 20px;
+    padding: 20px;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
-.metric-card .value { font-size: 30px; font-weight: 800; color: var(--accent-light); }
-.metric-card .label { font-size: 11px; color: var(--text-secondary); margin-top:4px; text-transform:uppercase; letter-spacing:0.8px; }
+.metric-card .value { font-size: 32px; font-weight: 800; color: var(--accent); }
+.metric-card .label { font-size: 12px; color: var(--text-muted); margin-top:4px; text-transform:uppercase; letter-spacing:0.8px; }
 
 /* ── Badges ── */
-.badge { display:inline-block; padding:3px 12px; border-radius:20px; font-size:11px; font-weight:600; margin:2px; }
-.badge-green  { background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); }
-.badge-yellow { background:rgba(245,158,11,0.15);  color:#f59e0b; border:1px solid rgba(245,158,11,0.3); }
-.badge-blue   { background:rgba(99,102,241,0.15);  color:#818cf8; border:1px solid rgba(99,102,241,0.3); }
-.badge-red    { background:rgba(239,68,68,0.15);   color:#f87171; border:1px solid rgba(239,68,68,0.3); }
-.badge-gray   { background:rgba(100,116,139,0.15); color:#94a3b8; border:1px solid rgba(100,116,139,0.3); }
-.badge-purple { background:rgba(167,139,250,0.15); color:#a78bfa; border:1px solid rgba(167,139,250,0.3); }
+.badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; margin:2px; }
+.badge-green  { background:rgba(16,185,129,0.15); color:#059669; border:1px solid rgba(16,185,129,0.3); }
+.badge-yellow { background:rgba(245,158,11,0.15);  color:#d97706; border:1px solid rgba(245,158,11,0.3); }
+.badge-blue   { background:rgba(59,130,246,0.15);  color:#2563eb; border:1px solid rgba(59,130,246,0.3); }
+.badge-red    { background:rgba(239,68,68,0.15);   color:#dc2626; border:1px solid rgba(239,68,68,0.3); }
+.badge-gray   { background:rgba(100,116,139,0.15); color:#475569; border:1px solid rgba(100,116,139,0.3); }
+.badge-purple { background:rgba(139,92,246,0.15);  color:#7c3aed; border:1px solid rgba(139,92,246,0.3); }
 
 /* ── Buttons ── */
 .stButton > button {
@@ -97,19 +112,22 @@ h1, h2, h3, h4 { color: var(--text-primary) !important; }
     border: 1px solid var(--border) !important;
     background: var(--bg-card) !important;
     color: var(--text-primary) !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
 }
 .stButton > button:hover {
     border-color: var(--accent) !important;
-    box-shadow: 0 0 12px var(--accent-glow) !important;
+    box-shadow: 0 4px 6px -1px var(--accent-glow) !important;
     transform: translateY(-1px) !important;
+    color: var(--accent) !important;
 }
 .stButton > button[kind="primary"] {
-    background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa) !important;
     border: none !important; color: white !important;
 }
 .stButton > button[kind="primary"]:hover {
-    background: linear-gradient(135deg, #4338ca, #4f46e5) !important;
-    box-shadow: 0 4px 20px rgba(99,102,241,0.5) !important;
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6) !important;
+    box-shadow: 0 4px 15px rgba(139,92,246,0.4) !important;
+    color: white !important;
 }
 
 /* ── Inputs ── */
@@ -117,11 +135,12 @@ h1, h2, h3, h4 { color: var(--text-primary) !important; }
 .stTextArea > div > div > textarea,
 .stSelectbox > div > div,
 .stNumberInput > div > div > input {
-    background: rgba(15,23,42,0.8) !important;
-    border: 1px solid var(--border) !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
     border-radius: 10px !important;
     color: var(--text-primary) !important;
     font-family: 'Inter', sans-serif !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.03) !important;
 }
 .stTextInput > div > div > input:focus,
 .stTextArea > div > div > textarea:focus {
@@ -134,6 +153,7 @@ label, .stSelectbox label, .stTextInput label, .stTextArea label,
 .stNumberInput label, .stSlider label, .stRadio label, .stCheckbox label {
     color: var(--text-secondary) !important;
     font-size: 13px !important;
+    font-weight: 500 !important;
 }
 
 /* ── Tabs ── */
@@ -148,10 +168,12 @@ label, .stSelectbox label, .stTextInput label, .stTextArea label,
     border-radius: 8px !important;
     color: var(--text-secondary) !important;
     font-weight: 500 !important;
+    padding: 8px 16px !important;
 }
 .stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa) !important;
     color: white !important;
+    box-shadow: 0 2px 4px rgba(139,92,246,0.2) !important;
 }
 
 /* ── Expander ── */
@@ -162,8 +184,9 @@ label, .stSelectbox label, .stTextInput label, .stTextArea label,
     color: var(--text-primary) !important;
 }
 .streamlit-expanderContent {
-    background: rgba(15,23,42,0.6) !important;
+    background: #ffffff !important;
     border: 1px solid var(--border) !important;
+    border-top: none !important;
     border-radius: 0 0 10px 10px !important;
 }
 
@@ -173,7 +196,7 @@ label, .stSelectbox label, .stTextInput label, .stTextArea label,
 .stSuccess { background: rgba(16,185,129,0.1) !important; border-left-color:#10b981 !important; color:var(--text-primary) !important; }
 .stError   { background: rgba(239,68,68,0.1) !important;  border-left-color:#ef4444 !important; color:var(--text-primary) !important; }
 .stWarning { background: rgba(245,158,11,0.1) !important; border-left-color:#f59e0b !important; color:var(--text-primary) !important; }
-.stInfo    { background: rgba(99,102,241,0.1) !important; border-left-color:#6366f1 !important; color:var(--text-primary) !important; }
+.stInfo    { background: rgba(139,92,246,0.1) !important; border-left-color:#8b5cf6 !important; color:var(--text-primary) !important; }
 
 /* ── Dataframes ── */
 [data-testid="stDataFrame"] {
@@ -181,40 +204,61 @@ label, .stSelectbox label, .stTextInput label, .stTextArea label,
     border-radius: 12px !important;
     overflow: hidden !important;
 }
+[data-testid="stDataFrame"] th {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+}
 
 /* ── Score bar ── */
-.score-bar  { height:5px; background:rgba(99,102,241,0.15); border-radius:3px; margin-top:6px; }
-.score-fill { height:5px; border-radius:3px; }
+.score-bar  { height:6px; background:rgba(139,92,246,0.15); border-radius:3px; margin-top:8px; }
+.score-fill { height:6px; border-radius:3px; background: linear-gradient(90deg, #a78bfa, #8b5cf6); }
 
 /* ── Section title ── */
 .section-title {
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1.5px; color: var(--text-muted); margin: 18px 0 8px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--text-muted); margin: 20px 0 10px;
 }
 
 /* ── SYNTRA logo ── */
 .syntra-logo {
-    font-size: 28px; font-weight: 800;
-    background: linear-gradient(135deg, #6366f1, #a78bfa, #06b6d4);
+    font-size: 32px; font-weight: 800;
+    background: linear-gradient(135deg, #8b5cf6, #c084fc, #3b82f6);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; letter-spacing: -0.5px;
+    background-clip: text; letter-spacing: -1px;
 }
 
 /* ── Divider ── */
-hr { border-color: var(--border) !important; }
+hr { border-color: var(--border) !important; margin: 2rem 0 !important; }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width:6px; height:6px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background:#334155; border-radius:4px; }
+::-webkit-scrollbar { width:8px; height:8px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius:4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 /* ── Hide Streamlit chrome ── */
 #MainMenu, footer { visibility: hidden !important; }
+
+/* ── Upload Area Tweaks ── */
+section[data-testid="stFileUploadDropzone"] {
+    background-color: var(--bg-secondary) !important;
+    border: 2px dashed #cbd5e1 !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    transition: all 0.2s ease !important;
+}
+section[data-testid="stFileUploadDropzone"]:hover {
+    border-color: var(--accent) !important;
+    background-color: var(--accent-glow) !important;
+}
+section[data-testid="stFileUploadDropzone"] svg {
+    fill: var(--accent) !important;
+}
 </style>
 """
 
 
 def inject_styles():
-    """Call at the top of every page to apply SYNTRA dark theme."""
-    st.markdown(DARK_CSS, unsafe_allow_html=True)
+    """Call at the top of every page to apply SYNTRA light violet theme."""
+    st.markdown(LIGHT_CSS, unsafe_allow_html=True)

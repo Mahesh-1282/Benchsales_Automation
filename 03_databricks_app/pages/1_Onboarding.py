@@ -312,13 +312,17 @@ tab1, tab2, tab3, tab4 = st.tabs(["📄 Resume Upload", "👤 Profile Details", 
 # TAB 1: AI Resume Upload & Parse
 # ════════════════════════════════════════════════════════
 with tab1:
+    st.markdown("<div class='syntra-card'>", unsafe_allow_html=True)
     st.markdown("<div class='section-title'>Upload & AI-Parse Resume</div>", unsafe_allow_html=True)
-
+    st.markdown("Upload your existing resume to automatically extract your skills, work history, and contact info.")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
     uploaded = st.file_uploader(
         "Drop your PDF or DOCX resume here",
         type=["pdf", "docx"],
         help="AI will extract ALL details automatically",
     )
+    st.markdown("</div>", unsafe_allow_html=True)
 
     if uploaded:
         file_bytes = uploaded.read()
