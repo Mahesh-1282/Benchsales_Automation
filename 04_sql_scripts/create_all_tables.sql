@@ -5,6 +5,9 @@
 -- Two schemas: default (jobs) and users_schema (user data)
 -- ============================================================
 
+-- Step 0: Create Catalog
+CREATE CATALOG IF NOT EXISTS jobs_automation_db;
+
 -- Step 1: Create the users schema (separate from jobs schema)
 CREATE SCHEMA IF NOT EXISTS jobs_automation_db.users_schema;
 
