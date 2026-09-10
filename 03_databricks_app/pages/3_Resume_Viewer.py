@@ -13,24 +13,19 @@ import pandas as pd
 import json, io, os
 from datetime import datetime
 
-@st.cache_resource
-def get_spark():
-    try:
-        from databricks.connect import DatabricksSession
-        return DatabricksSession.builder.getOrCreate()
-    except Exception:
-        return None
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from db_utils import query_df, execute_sql, esc
+from syntra_styles import inject_styles
 
-spark = get_spark()
+inject_styles()  # Dark theme
+
 CATALOG = "jobs_automation_db"
 
 def run_sql(q):
-    if spark:
-        try:
-            return spark.sql(q).toPandas()
-        except Exception as e:
-            st.error(f"DB Error: {e}")
-    return pd.DataFrame()
+    """Execute SQL and return pandas DataFrame via REST API."""
+    return query_df(q)
 
 def load_docx_from_dbfs(dbfs_path: str) -> bytes | None:
     """Load DOCX bytes from DBFS."""

@@ -1,13 +1,19 @@
-"""
-SYNTRA — AI-Powered Bench Sales Automation
-Main Streamlit entry point
-"""
-
 import streamlit as st
-import os
-from dotenv import load_dotenv
+import os, sys
+from pathlib import Path
 
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", "01_local_scraper", ".env"))
+# Load .env — check app dir first (works in Databricks Apps)
+_app_dir = Path(__file__).parent
+sys.path.insert(0, str(_app_dir))
+
+try:
+    from dotenv import load_dotenv
+    for _env in [_app_dir / ".env", _app_dir.parent / "01_local_scraper" / ".env", _app_dir.parent / ".env"]:
+        if _env.exists():
+            load_dotenv(_env, override=False)
+            break
+except ImportError:
+    pass
 
 st.set_page_config(
     page_title="SYNTRA",
@@ -15,6 +21,10 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+from syntra_styles import inject_styles
+inject_styles()
+
 
 # ══════════════════════════════════════════════════════════════
 # GLOBAL PREMIUM CSS — SYNTRA DARK THEME

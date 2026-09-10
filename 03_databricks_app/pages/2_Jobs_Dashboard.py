@@ -9,7 +9,10 @@ from pathlib import Path
 from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from db_utils import query_df, execute_sql, insert_row
+from db_utils import query_df, execute_sql, insert_row, esc
+from syntra_styles import inject_styles
+
+inject_styles()  # Dark theme on every page
 
 CATALOG = "jobs_automation_db"
 
@@ -401,13 +404,15 @@ with resume_col:
                     bullets_json[i]["bullets"] = new_bullets
 
                 if st.button("💾 Save Edits", key=f"save_edit_{resume_id}", type="primary"):
-                    execute_sql(f"""
-                        UPDATE {CATALOG}.default.generated_resumes
-                        SET tailored_bullets_json = '{json.dumps(bullets_json).replace("'","\\'").replace(chr(10)," ")}',
-                            is_user_edited = true,
-                            last_edited_at = current_timestamp()
-                        WHERE resume_id = '{resume_id}'
-                    """)
+                    # Pre-escape JSON string (Python 3.11: no backslash in f-string)
+                    bullets_str = esc(json.dumps(bullets_json))
+                    execute_sql(
+                        f"UPDATE {CATALOG}.default.generated_resumes "
+                        f"SET tailored_bullets_json = '{bullets_str}', "
+                        f"is_user_edited = true, "
+                        f"last_edited_at = current_timestamp() "
+                        f"WHERE resume_id = '{resume_id}'"
+                    )
                     st.success("✅ Saved!")
 
             if st.button("🔄 Regenerate (new version)", key=f"regen_{resume_id}", use_container_width=True):

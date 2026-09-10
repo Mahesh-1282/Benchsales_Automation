@@ -8,9 +8,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from db_utils import query_df, execute_sql
+from syntra_styles import inject_styles
+
+inject_styles()  # Dark theme
 
 CATALOG    = "jobs_automation_db"
 ADMIN_PASS = os.getenv("SYNTRA_ADMIN_PASSWORD", "syntra_admin_2024")
+
 
 st.markdown("<h2 style='color:#f1f5f9;'>👑 Admin Panel</h2>", unsafe_allow_html=True)
 st.markdown("<p style='color:#64748b;'>System overview — restricted to admins.</p>", unsafe_allow_html=True)

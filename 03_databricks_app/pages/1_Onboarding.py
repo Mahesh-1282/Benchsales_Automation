@@ -8,9 +8,12 @@ import uuid, json, re, io, os, requests, sys
 from datetime import datetime
 from pathlib import Path
 
-# Add parent dir to path for db_utils
+# Add parent dir to path for db_utils + styles
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from db_utils import execute_sql, insert_row, query_df
+from db_utils import execute_sql, insert_row, query_df, esc
+from syntra_styles import inject_styles
+
+inject_styles()  # Apply dark theme on every page load
 
 CATALOG = "jobs_automation_db"
 NVIDIA_API_KEY = os.getenv("NVIDIA_NIM_API_KEY", "")
@@ -557,25 +560,34 @@ with tab2:
                 # Try INSERT first; if user exists, UPDATE
                 ok_user, err_user = insert_row(f"{CATALOG}.users_schema.users", user_row)
                 if not ok_user:
-                    # Try UPDATE (user already exists)
-                    ok_user, err_user = execute_sql(f"""
-                        UPDATE {CATALOG}.users_schema.users SET
-                            full_name = '{full_name.replace("'","\\'")}',
-                            preferred_name = '{(preferred_name or full_name.split()[0]).replace("'","\\'")}',
-                            current_title = '{current_title.replace("'","\\'")}',
-                            target_title = '{target_title.replace("'","\\'")}',
-                            total_experience_years = {total_exp},
-                            phone = '{phone}',
-                            city = '{city}',
-                            state = '{state}',
-                            linkedin_url = '{linkedin_url}',
-                            github_url = '{github_url}',
-                            min_match_score = {int(min_match_score)},
-                            daily_resume_limit = {int(daily_limit)},
-                            updated_at = current_timestamp()
-                        WHERE user_id = '{user_id}'
-                    """)
-                    ok_user = ok_user[0] if isinstance(ok_user, tuple) else ok_user
+                    # Pre-escape all strings (Python 3.11: no backslash inside f-string)
+                    e_name  = esc(full_name)
+                    e_pref  = esc(preferred_name or full_name.split()[0])
+                    e_curr  = esc(current_title)
+                    e_tgt   = esc(target_title)
+                    e_phone = esc(phone)
+                    e_city  = esc(city)
+                    e_state = esc(state)
+                    e_li    = esc(linkedin_url)
+                    e_gh    = esc(github_url)
+                    update_sql = (
+                        f"UPDATE {CATALOG}.users_schema.users SET "
+                        f"full_name = '{e_name}', "
+                        f"preferred_name = '{e_pref}', "
+                        f"current_title = '{e_curr}', "
+                        f"target_title = '{e_tgt}', "
+                        f"total_experience_years = {total_exp}, "
+                        f"phone = '{e_phone}', "
+                        f"city = '{e_city}', "
+                        f"state = '{e_state}', "
+                        f"linkedin_url = '{e_li}', "
+                        f"github_url = '{e_gh}', "
+                        f"min_match_score = {int(min_match_score)}, "
+                        f"daily_resume_limit = {int(daily_limit)}, "
+                        f"updated_at = current_timestamp() "
+                        f"WHERE user_id = '{user_id}'"
+                    )
+                    ok_user, _, err_user = execute_sql(update_sql)
 
                 ok_res, err_res = insert_row(f"{CATALOG}.users_schema.user_resumes", resume_row)
 

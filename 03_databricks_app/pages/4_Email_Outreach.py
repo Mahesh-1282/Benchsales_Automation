@@ -16,25 +16,20 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 from datetime import datetime
+import sys
+from pathlib import Path
 
-@st.cache_resource
-def get_spark():
-    try:
-        from databricks.connect import DatabricksSession
-        return DatabricksSession.builder.getOrCreate()
-    except Exception:
-        return None
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from db_utils import query_df, execute_sql, insert_row, esc
+from syntra_styles import inject_styles
 
-spark = get_spark()
+inject_styles()  # Dark theme
+
 CATALOG = "jobs_automation_db"
 
 def run_sql(q):
-    if spark:
-        try:
-            return spark.sql(q).toPandas()
-        except Exception as e:
-            st.error(f"DB Error: {e}")
-    return pd.DataFrame()
+    """Execute SQL and return pandas DataFrame via REST API."""
+    return query_df(q)
 
 def decrypt_password(encrypted: str) -> str:
     """Decrypt AES-256 encrypted app password."""
