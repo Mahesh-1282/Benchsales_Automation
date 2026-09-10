@@ -1,0 +1,8 @@
+streamlit
+pandas
+databricks-connect
+cryptography
+requests
+pdfplumber
+python-docx
+reportlab
