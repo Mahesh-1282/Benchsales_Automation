@@ -10,7 +10,7 @@ from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from db_utils import query_df, execute_sql, insert_row, esc
-from syntra_styles import inject_styles
+from syntara_styles import inject_styles
 
 inject_styles()  # Dark theme on every page
 
@@ -99,15 +99,17 @@ st.markdown("---")
 
 # ── Filters ───────────────────────────────────────────────────
 with st.expander("🔍 Filters", expanded=False):
-    fc1, fc2, fc3, fc4 = st.columns(4)
-    with fc1: min_score = st.slider("Min Match Score", 20, 100, 40, 5)
+    fc1, fc2, fc3, fc4, fc5 = st.columns(5)
+    with fc1: min_score = st.slider("Min Match Score", 0, 100, 0, 5)
     with fc2: remote_f  = st.multiselect("Remote Type", ["Remote","Hybrid","Onsite","Not specified"], default=["Remote","Hybrid"])
     with fc3: status_f  = st.multiselect("Status", ["matched","resume_ready","resume_pending","applied","skipped"], default=["matched","resume_ready","resume_pending"])
     with fc4: exp_fit_f = st.multiselect("Exp Fit", ["exact","near","over","under"], default=["exact","near","over"])
+    with fc5: skills_f  = st.text_input("Skills/Tech", placeholder="e.g. Python")
 
 rf_str  = "', '".join(remote_f)  if remote_f  else "Remote"
 sf_str  = "', '".join(status_f)  if status_f  else "matched"
 ef_str  = "', '".join(exp_fit_f) if exp_fit_f else "exact"
+skills_sql = f"AND LOWER(j.tech_stack) LIKE LOWER('%{skills_f}%')" if skills_f else ""
 
 # ── Load jobs ─────────────────────────────────────────────────
 jobs_df = query_df(f"""
@@ -126,6 +128,7 @@ jobs_df = query_df(f"""
       AND m.match_score >= {min_score}
       AND m.status IN ('{sf_str}')
       AND m.experience_fit IN ('{ef_str}')
+      {skills_sql}
     ORDER BY m.match_score DESC
     LIMIT 200
 """)
@@ -139,8 +142,15 @@ st.markdown(f"<span class='badge badge-blue'>{len(jobs_df)} jobs</span>", unsafe
 # ── Batch Actions ─────────────────────────────────────────────
 bac1, bac2, bac3 = st.columns([2, 2, 6])
 with bac1:
-    if st.button("🤖 Generate 10 Resumes (Batch)", type="primary", use_container_width=True):
-        st.info("🔄 Notebook triggered — resumes will be ready in ~20 mins.")
+    if st.button("🤖 Generate Selected Resumes", type="primary", use_container_width=True):
+        selected_ids = [j["match_id"] for _, j in jobs_df.iterrows() if st.session_state.get(f"chk_{j['match_id']}")]
+        if not selected_ids:
+            st.warning("No jobs selected via checkboxes.")
+        else:
+            for mid in selected_ids:
+                execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'resume_pending' WHERE match_id = '{mid}'")
+            st.success(f"Queued {len(selected_ids)} resumes for generation!")
+            st.rerun()
 with bac2:
     if st.button("📤 Export All Jobs CSV", use_container_width=True):
         import pandas as pd
@@ -168,7 +178,7 @@ with list_col:
         border = "border-color:#6366f1; box-shadow:0 0 12px rgba(99,102,241,0.3);" if is_sel else ""
 
         st.markdown(f"""
-        <div class='syntra-card' style='padding:12px 14px; cursor:pointer; {border}'>
+        <div class='syntara-card' style='padding:12px 14px; cursor:pointer; {border}'>
             <div style='display:flex; justify-content:space-between; align-items:center;'>
                 <div>
                     <div style='font-weight:700; font-size:13px; color:#f1f5f9;'>{str(job['job_title'])[:35]}</div>
@@ -185,10 +195,14 @@ with list_col:
             <div style='margin-top:6px;'>{status_badge(job['status'])}</div>
         </div>
         """, unsafe_allow_html=True)
-
-        if st.button("View →", key=f"sel_{job['match_id']}", use_container_width=True):
-            st.session_state["selected_match_id"] = job["match_id"]
-            st.rerun()
+        
+        c_chk, c_btn = st.columns([1, 4])
+        with c_chk:
+            st.checkbox(" ", key=f"chk_{job['match_id']}", label_visibility="collapsed")
+        with c_btn:
+            if st.button("View Details →", key=f"sel_{job['match_id']}", use_container_width=True):
+                st.session_state["selected_match_id"] = job["match_id"]
+                st.rerun()
 
 # ── Get selected job ─────────────────────────────────────────
 sel_id  = st.session_state.get("selected_match_id")
@@ -205,7 +219,7 @@ with detail_col:
     sc    = score_color(score)
 
     st.markdown(f"""
-    <div class='syntra-card'>
+    <div class='syntara-card'>
         <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
             <div>
                 <h3 style='margin:0; color:#f1f5f9;'>{job['job_title']}</h3>
@@ -252,7 +266,7 @@ with detail_col:
     # AI Summary
     if job.get("ai_summary"):
         st.markdown("<div class='section-title'>AI Summary</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='syntra-card' style='padding:12px; font-size:13px; color:#94a3b8;'>{job['ai_summary']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='syntara-card' style='padding:12px; font-size:13px; color:#94a3b8;'>{job['ai_summary']}</div>", unsafe_allow_html=True)
 
     # Job tabs
     jt1, jt2, jt3 = st.tabs(["📋 Responsibilities", "📌 Requirements", "🔗 Apply"])
@@ -350,7 +364,7 @@ with resume_col:
             edit_tag = "✏️ Edited" if r.get("is_user_edited") else "🤖 AI Gen"
 
             st.markdown(f"""
-            <div class='syntra-card'>
+            <div class='syntara-card'>
                 <div style='font-weight:700;'>📄 v{int(float(r.get('resume_version') or 1))}</div>
                 <div style='font-size:11px; color:#64748b;'>Generated {gen_dt} · {edit_tag}</div>
                 <div style='margin-top:8px; font-size:12px;'>
@@ -423,7 +437,7 @@ with resume_col:
 
     elif job["status"] == "resume_pending":
         st.markdown("""
-        <div class='syntra-card' style='text-align:center; padding:30px;'>
+        <div class='syntara-card' style='text-align:center; padding:30px;'>
             <div style='font-size:32px;'>🔄</div>
             <div style='font-weight:700; margin:8px 0;'>Generating Resume</div>
             <div style='color:#64748b; font-size:12px;'>AI is tailoring your resume for this job. Check back in ~15 min.</div>
@@ -432,7 +446,7 @@ with resume_col:
 
     elif job["status"] == "applied":
         st.markdown("""
-        <div class='syntra-card' style='text-align:center; padding:30px;'>
+        <div class='syntara-card' style='text-align:center; padding:30px;'>
             <div style='font-size:32px;'>📤</div>
             <div style='font-weight:700; margin:8px 0; color:#a78bfa;'>Applied!</div>
             <div style='color:#64748b; font-size:12px;'>Application submitted. Watch for recruiter replies.</div>
@@ -441,7 +455,7 @@ with resume_col:
 
     else:
         st.markdown("""
-        <div class='syntra-card' style='text-align:center; padding:30px;'>
+        <div class='syntara-card' style='text-align:center; padding:30px;'>
             <div style='font-size:32px;'>📄</div>
             <div style='font-weight:700; margin:8px 0;'>No Resume Yet</div>
             <div style='color:#64748b; font-size:12px;'>Click "Queue Resume Gen" to create an AI-tailored resume for this job.</div>

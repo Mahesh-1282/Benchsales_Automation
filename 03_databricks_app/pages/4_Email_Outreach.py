@@ -21,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from db_utils import query_df, execute_sql, insert_row, esc
-from syntra_styles import inject_styles
+from syntara_styles import inject_styles
 
 inject_styles()  # Dark theme
 

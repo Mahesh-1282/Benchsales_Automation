@@ -1,6 +1,6 @@
 """
-syntra_styles.py — Shared SYNTRA Light & Violet theme CSS
-Import this in every page: from syntra_styles import inject_styles; inject_styles()
+syntara_styles.py — Shared SYNTARA Light & Violet theme CSS
+Import this in every page: from syntara_styles import inject_styles; inject_styles()
 """
 import streamlit as st
 
@@ -69,7 +69,7 @@ html, body, [class*="css"], .main, .stApp {
 h1, h2, h3, h4 { color: var(--text-primary) !important; }
 
 /* ── Cards ── */
-.syntra-card {
+.syntara-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -78,7 +78,7 @@ h1, h2, h3, h4 { color: var(--text-primary) !important; }
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
     transition: all 0.25s ease;
 }
-.syntra-card:hover {
+.syntara-card:hover {
     border-color: var(--border-hover);
     box-shadow: 0 10px 15px -3px rgba(139,92,246,0.1), 0 4px 6px -2px rgba(139,92,246,0.05);
     transform: translateY(-2px);
@@ -160,20 +160,31 @@ label, .stSelectbox label, .stTextInput label, .stTextArea label,
 .stTabs [data-baseweb="tab-list"] {
     background: var(--bg-secondary) !important;
     border-radius: 12px !important;
-    padding: 4px !important;
-    gap: 4px !important;
+    padding: 6px !important;
+    gap: 8px !important;
     border: 1px solid var(--border) !important;
+    margin-bottom: 12px !important;
 }
 .stTabs [data-baseweb="tab"] {
     border-radius: 8px !important;
     color: var(--text-secondary) !important;
     font-weight: 500 !important;
-    padding: 8px 16px !important;
+    padding: 8px 20px !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    transition: all 0.2s ease !important;
+}
+.stTabs [data-baseweb="tab"]:hover {
+    color: var(--accent) !important;
 }
 .stTabs [aria-selected="true"] {
     background: linear-gradient(135deg, #8b5cf6, #a78bfa) !important;
     color: white !important;
     box-shadow: 0 2px 4px rgba(139,92,246,0.2) !important;
+}
+div[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
+    display: none !important; /* Hide the default streamlit bottom line */
 }
 
 /* ── Expander ── */
@@ -220,8 +231,8 @@ label, .stSelectbox label, .stTextInput label, .stTextArea label,
     letter-spacing: 1.5px; color: var(--text-muted); margin: 20px 0 10px;
 }
 
-/* ── SYNTRA logo ── */
-.syntra-logo {
+/* ── SYNTARA logo ── */
+.syntara-logo {
     font-size: 32px; font-weight: 800;
     background: linear-gradient(135deg, #8b5cf6, #c084fc, #3b82f6);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -260,5 +271,5 @@ section[data-testid="stFileUploadDropzone"] svg {
 
 
 def inject_styles():
-    """Call at the top of every page to apply SYNTRA light violet theme."""
+    """Call at the top of every page to apply SYNTARA light violet theme."""
     st.markdown(LIGHT_CSS, unsafe_allow_html=True)

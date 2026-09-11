@@ -1,5 +1,5 @@
 """
-SYNTRA — Page 5: Admin Panel
+# SYNTARA — Page 5: Admin Panel
 Admin-only view: all users, stats, pipeline health
 """
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from db_utils import query_df, execute_sql
-from syntra_styles import inject_styles
+from syntara_styles import inject_styles
 
 inject_styles()  # Dark theme
 

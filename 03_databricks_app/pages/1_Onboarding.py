@@ -11,7 +11,7 @@ from pathlib import Path
 # Add parent dir to path for db_utils + styles
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from db_utils import execute_sql, insert_row, query_df, esc
-from syntra_styles import inject_styles
+from syntara_styles import inject_styles
 
 inject_styles()  # Apply dark theme on every page load
 
@@ -312,7 +312,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["📄 Resume Upload", "👤 Profile Details", 
 # TAB 1: AI Resume Upload & Parse
 # ════════════════════════════════════════════════════════
 with tab1:
-    st.markdown("<div class='syntra-card'>", unsafe_allow_html=True)
+    st.markdown("<div class='syntara-card'>", unsafe_allow_html=True)
     st.markdown("<div class='section-title'>Upload & AI-Parse Resume</div>", unsafe_allow_html=True)
     st.markdown("Upload your existing resume to automatically extract your skills, work history, and contact info.")
     
@@ -348,7 +348,7 @@ with tab1:
         # Preview in two columns
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("<div class='syntra-card'>", unsafe_allow_html=True)
+            st.markdown("<div class='syntara-card'>", unsafe_allow_html=True)
             st.markdown("**📋 Personal Info Extracted**")
             st.write(f"👤 **Name:** {parsed.get('full_name', '—')}")
             st.write(f"💼 **Title:** {parsed.get('current_title', '—')}")
@@ -360,7 +360,7 @@ with tab1:
             st.markdown("</div>", unsafe_allow_html=True)
 
         with col2:
-            st.markdown("<div class='syntra-card'>", unsafe_allow_html=True)
+            st.markdown("<div class='syntara-card'>", unsafe_allow_html=True)
             st.markdown("**🛠️ Skills Extracted**")
             skills = parsed.get("skills", "")
             if skills:
@@ -392,7 +392,7 @@ with tab1:
 
     else:
         st.markdown("""
-        <div class='syntra-card' style='text-align:center; padding:40px;'>
+        <div class='syntara-card' style='text-align:center; padding:40px;'>
             <div style='font-size:48px;'>📄</div>
             <div style='font-size:16px; font-weight:600; margin:12px 0 8px;'>Upload Your Resume</div>
             <div style='color:#64748b; font-size:13px;'>Supported: PDF, DOCX • AI extracts name, phone, skills, work history, education</div>
@@ -479,22 +479,37 @@ with tab2:
             daily_limit     = st.number_input("Daily Resume Generation Limit", 5, 50, 10)
 
         st.markdown("---")
-        st.markdown("**💼 Work History** (review AI-extracted data)")
-        wh_default = json.dumps(parsed.get("work_history", []), indent=2)
-        work_history_json = st.text_area(
-            "Work History JSON",
-            value=wh_default,
-            height=220,
-            help='JSON array — each entry: {"company":"..","title":"..","start":"..","end":"..","bullets":["..."]}'
+        st.markdown("**💼 Work History** (review and edit AI-extracted data)")
+        
+        # Format for data_editor (convert bullets list to string)
+        wh_raw = parsed.get("work_history", [])
+        wh_for_editor = []
+        for job in wh_raw:
+            wh_for_editor.append({
+                "Company": job.get("company", ""),
+                "Title": job.get("title", ""),
+                "Start": job.get("start", ""),
+                "End": job.get("end", ""),
+                "Bullets (newline separated)": "\\n".join(job.get("bullets", []))
+            })
+            
+        edited_wh = st.data_editor(
+            wh_for_editor,
+            num_rows="dynamic",
+            use_container_width=True,
+            height=250,
+            column_config={
+                "Bullets (newline separated)": st.column_config.TextColumn("Bullets", width="large")
+            }
         )
 
         st.markdown("**🎓 Education**")
-        edu_default = json.dumps(parsed.get("education", []), indent=2)
-        education_json = st.text_area(
-            "Education JSON",
-            value=edu_default,
-            height=90,
-            help='[{"degree":"M.S. in Data Science","school":"UNT","year":"2025","gpa":"3.66"}]'
+        edu_raw = parsed.get("education", [])
+        edited_edu = st.data_editor(
+            edu_raw,
+            num_rows="dynamic",
+            use_container_width=True,
+            height=150
         )
 
         st.markdown("---")
@@ -504,17 +519,21 @@ with tab2:
         if not full_name or not target_title:
             st.error("Full Name and Target Job Title are required!")
         else:
-            # Parse JSONs safely
-            try:
-                wh_parsed = json.loads(work_history_json)
-            except Exception:
-                wh_parsed = parsed.get("work_history", [])
-                st.warning("Work history JSON was invalid — using AI-extracted version")
-
-            try:
-                edu_parsed = json.loads(education_json)
-            except Exception:
-                edu_parsed = parsed.get("education", [])
+            # Re-parse Work History from data editor
+            wh_parsed = []
+            for row in edited_wh:
+                # ignore fully empty rows
+                if row.get("Company") or row.get("Title"):
+                    bullets = [b.strip() for b in row.get("Bullets (newline separated)", "").split("\\n") if b.strip()]
+                    wh_parsed.append({
+                        "company": row.get("Company", ""),
+                        "title": row.get("Title", ""),
+                        "start": row.get("Start", ""),
+                        "end": row.get("End", ""),
+                        "bullets": bullets
+                    })
+                    
+            edu_parsed = edited_edu
 
             # Generate or reuse user_id
             if not user_id:
@@ -723,7 +742,7 @@ with tab3:
 with tab4:
     st.markdown("<div class='section-title'>Application Clipboards</div>", unsafe_allow_html=True)
     st.markdown("""
-    <div class='syntra-card'>
+    <div class='syntara-card'>
         <p style='color:#94a3b8; font-size:13px; margin:0;'>
         Clipboards let you apply with <strong>different personas</strong> for the same candidate.
         Create one clipboard per experience level or resume style you want to present.
@@ -821,7 +840,7 @@ with tab4:
             for _, clip in clips_df.iterrows():
                 default_badge = "<span class='badge badge-green'>DEFAULT</span>" if clip.get("is_default") else ""
                 st.markdown(f"""
-                <div class='syntra-card' style='padding:14px 18px;'>
+                <div class='syntara-card' style='padding:14px 18px;'>
                     <div style='display:flex; justify-content:space-between;'>
                         <strong>{clip['clipboard_name']}</strong> {default_badge}
                         <span class='badge badge-blue'>{clip.get('years_experience_override') or 'Original'} yrs</span>
