@@ -1,0 +1,3379 @@
+id,job_hash,fetch_date,portal,search_keyword,job_title,company_name,location,remote_type,salary_range,experience_years,tech_stack,posted_date,job_description,description_length,roles_responsibilities,requirements_section,roles_summary,apply_link,easy_apply_link,company_career_url,company_website,hr_email,job_id,visa_sponsorship,validation_score,validation_status,ai_summary,detail_fetched
+78e9e1ec-1394-4d01-a13b-10f96aaed8d7,9a8f0a2e074b9e72bb41908eb174f31b,2026-09-13,JSearch,Data Engineer in USA,Senior AI Software Engineer - (Enterprise Transformation),General Motors,"Mountain View, California",Not specified,,,"python, aws, gcp, scala, java, git, ci/cd, typescript",2026-09-11,"Job Description
+
+
+
+The Role
+
+
+
+In this role, you will own the end-to-end transformation of business workflows using AI. Rather than just building prompts or standalone agents, you will design secure, reusable, enterprise-grade AI solutions that modernize how work gets done across GM. You will partner closely with engineering, product, and business teams to define platform standards, shape architecture, and scale AI adoption, from intake and solution design through governance and long-term sustainment. You will also work directly with business teams to identify high-value workflow transformation opportunities and drive consistent AI patterns across both collaboration and enterprise AI platforms.
+
+
+
+What You’ll Do
+
+
+
+
+
+- Write clean, scalable, and secure backend services and integrations using Python and/or JavaScript frameworks (Node.js, TypeScript).
+- Build and operate cloud-native, event-driven services on GCP using Cloud Run, Pub/Sub, Cloud Functions, and API Gateway.
+- Code data pipelines and integration layers to migrate legacy enterprise workflows (e.g., M365) into native GCP environments.
+- Implement robust security in integrations using GCP IAM, OAuth2, service accounts, and enterprise access controls.
+- Build and maintain automated testing frameworks, CI/CD pipelines (GitHub), and structured release environments.
+- Engineer and deploy production-grade multi-step AI agents and bot-driven workflows integrated with Vertex AI, Gemini, and external LLMs.
+- Architect and code Human-in-the-Loop (HITL) validation nodes into automated pipelines for critical business processes.
+- Design, test, and optimize production prompts and agent instructions with guardrails, exception handling, and failure-recovery logic.
+- Implement telemetry, structured logging, and evaluation frameworks to monitor agent performance, accuracy, and latency.
+- Evaluate ambiguous business requests and author technical designs that translate them into clear execution pathways.
+- Own technical intake decisions: recommend when to use platform capabilities, configuration, or custom AI solutions.
+- Create reusable architecture patterns, code templates, and shared libraries that enable internal developers to scale AI workflows.
+- Deliver comprehensive technical documentation, API specifications, blueprint repositories, and operational runbooks with all deployed code.
+- Lead rigorous code reviews for peer engineering levels to maintain code quality, security, and architectural alignment.
+
+
+
+
+
+
+
+Your Skills & Abilities (Required Qualifications)
+
+
+
+
+
+- 10+ years of hands-on experience in software engineering, platform architecture, or enterprise workflow automation in complex, highly matrixed corporate environments.
+- Proven experience leading or contributing to GCP-based transformations, including cloud migration, modernization of enterprise workloads, and adoption of scalable, secure, AI-enabled solutions.
+- Strong track record navigating large-scale technology transformations, including tenant-to-tenant migrations and platform shifts (e.g., migrating workflows out of Microsoft M365).
+- Demonstrated success modernizing legacy or manual workflows into API-driven, event-based, or agent-assisted applications.
+- Bachelor’s degree in Computer Science, Software Engineering, Information Systems, or a related technical field, or equivalent practical experience.
+- Experience designing and deploying AI agents or bot-driven workflows using frameworks integrated with Vertex AI, Gemini, or external LLMs.
+- Deep understanding of multi-step workflow orchestration, including tool use, state handling, and integration across enterprise services.
+- Practical experience building reliable, production-grade prompts and agent instructions with strong guardrails and failure handling.
+- Demonstrated experience implementing telemetry, logging, and evaluation frameworks for production AI agents.
+- Strong hands-on experience with GCP services such as Cloud Run, Pub/Sub, Cloud Functions, IAM, and API Gateway in event-driven designs.
+- Proven ability to integrate bots/agents with enterprise systems (ITSM, HR, CRM, internal APIs) using secure REST/webhook patterns.
+- Deep understanding of GCP IAM, OAuth2, service accounts, and enterprise access controls in multi-system integrations.
+- Strong proficiency in Python and/or JavaScript frameworks (Node.js, TypeScript) building production-ready backend services and integrations.
+- Mastery of core software engineering guardrails, including GitHub-based version control, automated testing, and structured release practices.
+- Proven capability to evaluate ambiguous business requests and define clear execution paths (out-of-the-box vs. custom engineering).
+- Strong foundational knowledge of corporate identity and access management and corporate data security policies.
+- History of delivering clean documentation, handover plans, and operational runbooks alongside deployed code.
+- Exceptional communication skills with experience running code reviews, collaborating with TPMs, and leading technical workshops.
+
+
+
+
+
+
+
+What Can Give You a Competitive Advantage (Preferred Qualifications)
+
+
+
+
+
+- Deep experience leveraging Vertex AI Agent Builder, LangChain, or LlamaIndex on GCP to build enterprise-grade, multi-agent systems.
+- Proven success migrating legacy enterprise workflows (e.g., Microsoft M365, Power Automate, SharePoint) into native GCP architectures (Cloud Run, Pub/Sub, Vertex AI).
+- Experience implementing advanced LLM evaluation frameworks (e.g., Vertex AI AutoSxS, Ragas) and security guardrails (e.g., NeMo Guardrails) for safe production use.
+- Practical experience designing complex agentic workflows with HITL validation nodes for highly regulated business processes.
+- Track record of building repeatable platform architecture patterns, shared code libraries, and boilerplate templates that enable federated business units to build AI workflows independently.
+- Demonstrated success driving cultural and technical adoption of AI tools, including training frameworks and technical enablement workshops.
+- Professional Google Cloud certifications such as Professional Cloud Architect, Professional Data Engineer, or Professional Machine Learning Engineer (PMLE).
+
+
+
+
+
+
+
+This job may be eligible for relocation benefits.
+
+
+
+GM DOES NOT PROVIDE IMMIGRATION-RELATED SPONSORSHIP FOR THIS ROLE. DO NOT APPLY FOR THIS ROLE IF YOU WILL NEED GM IMMIGRATION SPONSORSHIP (e.g., H-1B, TN, STEM OPT, etc.) NOW OR IN THE FUTURE.
+
+
+
+For a California-only role, use:
+
+
+
+Compensation: The compensation information is a good-faith estimate only. It is based on what a successful applicant might be paid in accordance with applicable state laws. The compensation may not be representative for positions located outside of the California Bay Area.
+
+
+
+Salary Range: The salary range for this role in California is 
+$202k–$310k per year. The actual base salary offered will vary based on factors relevant to the position.
+
+
+
+Bonus Potential: An incentive pay program offers payouts based on company performance, job level, and individual performance.
+
+
+
+About GM
+
+
+
+Our vision is a world with Zero Crashes, Zero Emissions and Zero Congestion and we embrace the responsibility to lead the change that will make our world better, safer and more equitable for all.
+
+
+
+Why Join Us
+
+
+
+We believe we all must make a choice every day – individually and collectively – to drive meaningful change through our words, our deeds and our culture. Every day, we want every employee to feel they belong to one General Motors team.
+
+
+
+Benefits Overview
+
+
+
+From day one, we're looking out for your well-being–at work and at home–so you can focus on realizing your ambitions. Learn how GM supports a rewarding career that rewards you personally by visiting
+Total Rewards resources.
+
+
+
+Non-Discrimination and Equal Employment Opportunities (U.S.)
+
+
+
+General Motors is committed to being a workplace th",1281,,,,https://www.linkedin.com/jobs/view/senior-ai-software-engineer-enterprise-transformation-at-general-motors-4454303999?trk=bingjobs,,,,,YmluZzoxMTUzODcwMzQ3LlJldHJv,True,0,Pending,,False
+05b4d31a-aab3-41ce-9743-6aea85877f15,c989b99c585fd7278d231a1efd23db49,2026-09-13,JSearch,Data Engineer in USA,Lead Cybersecurity Engineer (Regulated Industries),Red Oak Technologies,"Pleasanton, California",Hybrid,,7+ years of experience,scala,2026-09-11,"Since 1995, Red Oak Technologies has been a trusted partner in the tech industry, delivering innovative talent solutions that drive progress. We specialize in quickly acquiring and efficiently matching top-tier professional talent with clients in immediate need of highly skilled contract, permanent or project management based resources.
+
+
+
+
+
+Position: Cybersecurity Lead Engineer
+
+Role: Full time Hybrid
+
+Location: Pleasanton,, CA or Irvine, CA
+
+Base Salary: $179-210K Depending on experience
+
+
+
+
+
+The Technical Leader for the Product Cybersecurity Program and Product Security Incident Response Team (PSIRT) provides leadership for medical device cybersecurity across company's portfolio. This role owns the strategy, governance, and execution of the product cybersecurity program, ensuring compliance with FDA cybersecurity requirements and global standards while driving program maturity across the organization and product lifecycle. This position serves as the authoritative technical leader for product cybersecurity, accountable for vulnerability management, incident response, regulatory alignment, and cross functional coordination. The role operates at the program level, enabling and guiding product teams rather than replacing their functional ownership.
+
+
+
+
+
+How You'll Make An Impact:
+
+
+
+
+
+Program Leadership & Governance
+
+• Own and evolve the Product Cybersecurity Program, including PSIRT governance, operating model, decision authority, and escalation paths.
+
+• Establish and maintain alignment with FDA medical device cybersecurity expectations, including premarket and post-market requirements for vulnerability management, coordinated disclosure, and incident response.
+
+• Define and maintain the cybersecurity framework aligned to NIST CSF 2.0, ISO 81001 5 1, ISO/IEC TS 27110, and ISO/IEC 27032, and ensure integration with Global IT security practices.
+
+• Embed product cybersecurity requirements into the Global Quality Management System (QMS), including Design Controls, risk management, and change management.
+
+
+
+
+
+Cross Functional Enablement
+
+• Lead the cross functional Cybersecurity Core Team, ensuring sustained engagement and prioritization across R&D, Software, Systems, QA/RA, Global Supply Chain (Manufacturing and
+
+
+
+
+
+Procurement), and Global Information Security.
+
+• Provide clear expectations, guidance, and oversight to product teams for secure design, development, and maintenance, without assuming direct development ownership.
+
+• Ensure cybersecurity considerations are integrated throughout the product lifecycle, from concept and design through post market support.
+
+
+
+
+
+Vulnerability & Incident Management (PSIRT)
+
+• Serve as the single point of accountability for product cybersecurity intake, triage, and prioritization.
+
+• Oversee end to end vulnerability management, including risk assessment, remediation planning, regulatory timelines, and customer deployment.
+
+• Lead technical coordination for cybersecurity incident investigations, containment, and remediation, ensuring timely and effective response to high severity issues.
+
+• Guide product teams on mitigations, patches, and workarounds to ensure security and regulatory expectations are met.
+
+
+
+
+
+Regulatory & External Communication
+
+• Ensure cybersecurity incidents and disclosures comply with FDA, international regulatory, and internal quality requirements.
+
+• Oversee the development and approval of security advisories, customer notifications, and regulatory communications.
+
+• Act as the technical authority in engagements with external security researchers, customers, regulators, and industry groups.
+
+
+
+
+
+Training, Metrics & Continuous Improvement
+
+• Drive cybersecurity awareness and training for R&D, Support, and Quality teams to reinforce a security first culture.
+
+• Define, track, and report program level cybersecurity and PSIRT performance metrics to leadership.
+
+• Continuously improve program effectiveness based on metrics, lessons learned, and evolving regulatory expectations.
+
+
+
+
+
+What You Bring:
+
+• Bachelor’s degree in Computer Science, Information Security, Engineering or a related field.
+
+• 7+ years of experience in cybersecurity, including architecture design in a regulated environment (preferably FDA, healthcare, or medical devices).
+
+• A system thinker with deep expertise in medical device cybersecurity, including FDA premarket and post market cybersecurity requirements.
+
+• Expert knowledge of NIST CSF 2.0, ISO 81001 5 1, ISO/IEC TS 27110, and ISO/IEC 27032.
+
+• Proven ability to lead cross functional programs in complex, matrixed organizations.
+
+• Strong technical judgment, communication skills, and executive presence.
+
+• Demonstrated ability to build, mature, and scale cybersecurity programs across organizations.
+
+• Preferred: Master’s degree in a technical field.
+
+• Certifications: CISSP, CSSLP, CISM, or equivalent.
+
+• Experience with cloud-based systems, IoT security, or medical device security.
+
+
+
+
+
+Location: This position must be based in Hercules, CA or Irvine, CA and requires the employee to be located within commuting distance of the office.
+
+
+
+
+
+Red Oak Technologies is made up of people from a wide variety of backgrounds and lifestyles. We embrace diversity and invite applications from people of all walks of life. See what it’s like to be at the top; connect with one of our recruiters and apply today.
+
+
+
+
+
+Let us help you find your next career opportunity! JOIN RED OAK TECHNOLOGIES!
+
+
+
+
+
+Learn what it’s like to be a Red Oak Consultant!
+
+
+
+
+
+Red Oak Five (Core Values): Relationships First Exceptional Quality and Service Unwavering Integrity and Trust Be Easy To Do Business With Respect Everyone",759,,,,https://www.linkedin.com/jobs/view/lead-cybersecurity-engineer-regulated-industries-at-red-oak-technologies-4448580961?trk=bingjobs,,,,,YmluZzotMjAyMzAzOTMzMy5SZXRybw,,0,Pending,,False
+6e893222-4a05-481c-8703-919fcb72813c,6af7d3919b383f6c9d1e5d708efce757,2026-09-13,JSearch,Data Engineer in USA,Staff Software Engineer (Continuous Integration),Affirm,"Nashville, Tennessee",Remote,,,"python, aws, scala, java, kubernetes, git, ci/cd",2026-09-11,"At Affirm, we exist for the moments that matter—giving people a clear, predictable way to pay over time, with no hidden fees, no surprises, and no tradeoffs on what matters most.
+
+
+
+We are seeking a seasoned Staff Engineer to help drive our 
+Continuous Integration (CI) team. This role is critical in ensuring the reliability, scalability, and efficiency of our development pipelines, enabling engineers across the company to ship high-quality software quickly and confidently. The Staff Engineer will help drive the design, implementation, and optimization of systems that support automated testing, build orchestration, and deployment.
+
+
+
+What You’ll Do
+
+
+
+
+
+- Systems & Operations
+
+- Own the design, scalability, and reliability of build and pipelines across multiple services and platforms.
+- Ensure fast, reliable feedback cycles for developers by optimizing build times, test coverage, and reporting.
+- Implement monitoring, alerting, and incident response processes for CI systems to minimize downtime.
+
+
+
+- Collaboration & Enablement
+
+- Work closely with across engineering to ensure smooth integrations and deployment workflows.
+- Identify developer pain points and lead initiatives to improve productivity through tooling, automation, and best practices.
+- Evangelize CI/CD practices across the organization to raise engineering efficiency standards.
+
+
+
+- Leadership & Strategy
+
+- Contribute to and help drive the vision for continuous integration and developer productivity infrastructure.
+- Lead and mentor other CI engineers, fostering a culture of ownership, collaboration, and technical excellence.
+- Partner with engineering leadership to align CI systems with broader product and platform goals.
+
+
+
+
+
+What We Look For
+
+
+
+
+
+- Proven experience driving and leading engineering efforts in CI, build systems, or developer productivity domains.
+- Strong background in modern build systems (e.g. GitHub, Buildkite, Artifactory).
+- Familiarity with cloud-native environments (AWS, Kubernetes) and infrastructure-as-code practices.
+- Solid programming background (Python, Kotlin, Java, or similar) and ability to guide technical decision-making.
+- Excellent problem-solving skills, with the ability to balance long-term vision with short-term impact.
+- This position requires either equivalent practical experience or a Bachelor’s degree in a related field
+- Proficiency with managing build systems and frameworks for large monorepos
+- Active contributor to open source projects or previous experience with large-scale software development at a leading tech company is a plus.
+- This position requires either equivalent practical experience or a Bachelor’s degree in a related field.
+
+
+
+
+
+About You
+
+
+
+
+
+- You are driven by a passion for CI/CD and possess a deep commitment to enhancing developer experiences.
+- You excel in a collaborative team setting, valuing diverse perspectives and contributions.
+- You are proactive, taking initiative to solve complex systems challenges and drive impact across the organization.
+- Demonstrates curiosity about AI tools and emerging technologies, with a willingness to learn and leverage them to enhance productivity, collaboration, or decision-making.
+
+
+
+
+
+Base Pay Grade - P
+
+
+
+Equity Grade - 13
+
+
+
+Employees new to Affirm typically come in at the start of the pay range. Affirm focuses on providing a simple and transparent pay structure which is based on a variety of factors, including location, experience and job-related skills.
+
+
+
+Base pay is part of a total compensation package that may include equity rewards, monthly stipends for health, wellness and tech spending, and benefits (including 100% subsidized medical coverage, dental and vision for you and your dependents.)
+
+
+
+USA base pay range (CA, WA, NY, NJ, CT) per year: $230,000 - $290,000
+
+
+
+USA base pay range (all other U.S. states) per year: $204,000 - $264,000
+
+
+
+Remote-first with flexibility built in
+
+
+
+Affirm is proud to be a remote-first company. Most roles can be done from almost anywhere within the country of employment. Some positions may occasionally require in-person work at an Affirm office, and a few are office-based due to the nature of the work. All new hires will be invited to attend an in-person onboarding experience.
+
+
+
+Benefits Designed For You
+
+
+
+Our benefits reflect our commitment to care, transparency, and flexibility. Here are a few highlights:
+
+
+
+
+- Health coverage at no cost: We cover 100% of premiums for employees and their dependents.
+- Spending stipends: Monthly stipends support your tech setup, and the ability to choose health and wellness options that are right for you.
+- Time off to recharge: Flexible time off and generous holiday calendars help you rest when you need to.
+- Own a piece of what you build: Our employee stock purchase plan (ESPP) lets you buy Affirm stock at a discount.
+
+
+
+
+
+We’re committed to providing an inclusive interview process, including accommodations for candidates with disabilities. If you need support, we’re happy to help.
+
+
+
+For positions based in San Francisco or Los Angeles: Affirm considers qualified applicants with arrest and conviction records, as required by law.
+
+
+
+By clicking ""Submit Application,"" you acknowledge that you have read Affirm's Global Candidate Privacy Notice and consent to the use of your personal information as described.",792,,,,https://www.linkedin.com/jobs/view/staff-software-engineer-continuous-integration-at-affirm-4418864810?trk=bingjobs,,,,,YmluZzotNTYwMTAxNzUuUmV0cm8,,0,Pending,,False
+a91b3066-b60a-47ba-9c12-5a133d007ddc,c27c14ff0e95ed3e2b9496440bcd644d,2026-09-13,JSearch,Data Engineer in USA,"SAP Data Conversion, Transformation Analyst",Deloitte,"Boston, Massachusetts",Not specified,,1+ year of experience,scala,2026-09-11,"Talent transformation today demands a blend of business process knowledge, analytical rigor, and technology-enabled problem solving. As an Analyst, Functional Transformation, you will support teams that help clients improve operations, enable large-scale transformation programs, and enhance the effectiveness of core business functions. This role offers the opportunity to contribute to requirements gathering, process analysis, testing, stakeholder coordination, and implementation support across transformation initiatives.
+
+
+
+Recruiting for this role ends on 10/31/2026.
+
+
+
+Work You'll Do:
+
+
+
+As an Analyst, Functional Transformation on the Functional Transformation team, you will be responsible for...
+
+
+
+
+- Support business and functional transformation projects by gathering requirements, documenting current and future state processes, and maintaining project deliverables
+- Analyze business processes, identify gaps, and assist in developing recommendations to improve efficiency, controls, and user experience
+- Participate in testing activities, including test script development, execution, defect tracking, and validation of system or process changes
+- Prepare status updates, meeting materials, process documentation, and stakeholder communications for project teams and client discussions
+- Collaborate with cross-functional teams to support implementation activities, issue resolution, and adoption of transformation initiatives
+
+
+
+
+
+A successful candidate would possess these skills:
+
+
+
+
+- Ability to work independently and collaborate as part of a team
+- Effective written and verbal communication skills
+- Meticulous attention to detail and quality of work product
+- Ability to build and sustain professional relationships
+- Ability to lead projects or workstreams
+- Ability to manage and prioritize multiple tasks in a fast-paced and dynamic environment
+- Strong interpersonal skills and professional demeanor
+- Ability to meet deadlines
+- Ability to provide clear guidance to others
+
+
+
+
+
+The Team
+
+
+
+The Functional Transformation team works with organizations to improve how work gets done across business functions through process redesign, technology enablement, and implementation support. Team members collaborate across strategy, operations, and technology to help clients address complex business challenges and deliver practical, scalable solutions. This role may support initiatives involving enterprise platforms, process optimization, and change adoption across a range of client environments.
+
+
+
+Qualifications
+
+
+
+Required:
+
+
+
+
+- Bachelor's degree
+- Must be able to obtain and maintain the required Secret cle-arance for this role
+- 1+ year of experience supporting business process improvement, technology implementation, or transformation initiatives
+- 6+ months of experience with SAP
+- Experience documenting business requirements, process flows, test scripts, or other project deliverables
+- Experience using Microsoft Excel, PowerPoint, and Word in a business environment
+- Ability to travel 25%, on average, based on the work you do and the clients and industries/sectors you serve.
+- Must be legally authorized to work in the United States without the need for employer sponsorship, now or at any time in the future.
+
+
+
+
+
+Preferred:
+
+
+
+
+- Experience with SAP S/4HANA
+- Experience supporting user acceptance testing, defect tracking, or deployment activities
+- Experience with process mapping or requirements documentation tools
+- Experience working on cross-functional project teams
+- Experience in consulting, professional services, or client-facing project environments
+
+
+
+
+
+The wage range for this role takes into account the wide range of factors that are considered in making compensation decisions including but not limited to skill sets; experience and training; licensure and certifications; and other business and organizational needs. The disclosed range estimate has not been adjusted for the applicable geographic differential associated with the location at which the position may be filled. At Deloitte, it is not typical for an individual to be hired at or near the top of the range for their role and compensation decisions are dependent on the facts and circumstances of each case. A reasonable estimate of the current range is $64,700 to $127,600.
+
+
+
+#GPSEP2026",594,,,,https://www.linkedin.com/jobs/view/sap-data-conversion-transformation-analyst-at-deloitte-4457038376?trk=bingjobs,,,,,YmluZzoxMzQyMjY5NzczLlJldHJv,,0,Pending,,False
+bdfb07ca-1ff3-4854-9b5d-cc0a8c7e96f3,4a7905fa249690e3244b011152ade114,2026-09-13,JSearch,Data Engineer in USA,Senior Research Scientist- Robotics AI,Bosch USA,"Sunnyvale, California",Not specified,,,"python, aws, scala, tensorflow, pytorch",2026-09-11,"Company Description
+
+
+
+The Bosch Research and Technology Center North America with offices in Sunnyvale, California, Pittsburgh, Pennsylvania, and Cambridge, Massachusetts is a part of the global Bosch Group (www.bosch.com), a company with over 70 billion euro revenue, 400,000 employees worldwide, a very diverse product portfolio, and a history spanning over 125 years. The Research and Technology Center North America (RTC-NA) is dedicated to providing technologies and system solutions for various Bosch business fields, primarily in the field of artificial intelligence, energy technologies, internet technologies, circuit design, semiconductors and wireless, as well as advanced MEMS design.
+
+
+
+As a part of the global research, our AI research in Silicon Valley focuses on Foundation Models, Big Data Visual Analytics, Explainable AI (XAI), Natural Language Processing, Computer Vision & Mixed Reality, Cloud Robotics, Data Science, AI System Engineering, Time-series Analysis. We develop scalable, intelligent, and trustworthy AIoT solutions for Bosch products and services in application areas such as automated driving, advanced driver assistance systems (ADAS), robotics, smart manufacturing, enterprise AI, health care, smart home and building solutions.
+
+
+
+Originating from the AI research in Silicon Valley, our Intelligent Autonomous Systems group is responsible for enabling future autonomous Bosch products by pushing the boundaries of automated driving, advanced driver assistance systems (ADAS), robotics and automation through key innovations that encompass system architecture and AI components. These include methods for motion planning, high level task planning and decision making as well as systems for making these technologies work on real products by building frameworks that take advantage of technologies in the field of reliable distributed computing. We work with internal partners of different Bosch business units to transfer our solutions into future products. We also actively collaborate with leading groups in academia and industry to promote research ideas and publish research findings in internationally renowned conferences and journals such as CVPR, ICRA, IROS, RSS, NeurIPS and CoRL.
+
+
+
+Job Description
+
+
+
+As a Senior Research Scientist- Robotics AI, you contribute to research projects at the forefront of the ADAS/AD industry. Key responsibilities include:
+
+
+
+
+- Conduct research and engineering in core AI and machine learning fields to enable Embodied AI (including computer vision, autonomous planning, open-world learning, and so on) for related business domains of ADAS/AD, industrial automation, robotics etc.
+- Push the boundaries in AI based Robotics, incorporating advancements in large vision-language-(action) models to aid reasoning capabilities and explainability.
+- Collaborate cross-functionally with global research and engineering teams to ensure seamless technology transfer and system integration.
+- Implement research results to solve real-world challenges, ensuring high-quality system integration within Bosch's existing platforms.
+- Stay at the forefront of innovation by actively engaging with academic and industry communities through conferences, workshops, and technical events.
+- Document and disseminate research findings through high-caliber publications and/or patent submissions.
+
+
+
+
+
+Qualifications
+
+
+
+Basic Qualifications
+
+
+
+
+
+- Ph.D. in Computer Science, Robotics or a related discipline or Master's degree with >= 2/4 years industry experience after graduation.
+- A minimum of 5 years of R&D experience, or an equivalent graduate research background, primarily in AI technologies including Computer Vision and Robotic or Automotive Motion and Behavioral Planning.
+- Proficiency in one or more programming languages commonly used in machine learning (e.g., Python, C++, Rust).
+- Strong interpersonal, communication, and teamwork capabilities.
+- Knowledge of major machine learning frameworks like TensorFlow or PyTorch.
+- Hands-on experience in reinforcement learning for behavior or motion planning or other applicable contexts and familiarity with common RL techniques (e.g. PPO, DQN, DDPG).
+- A strong portfolio of publications in premier machine learning, deep learning, robotics and computer vision journals and conferences.
+
+
+
+
+
+Preferred Qualifications
+
+
+
+
+
+- Experience with real-world product development and deployment of autonomous systems.
+- Hands-on experience building and applying multimodal transformer-based sequence-to-sequence models, especially multimodal vision-language-action models.
+- Hands-on experience in computer vision and deep learning, with work in any of the following areas: multimodal transformers, multimodal language models, diffusion models, NeRF, gaussian splatting, object detection / segmentation, 3D scene understanding, sensor calibration, SfM, voxel/BEV grid-based feature representation.
+
+
+
+
+
+Additional Information
+
+
+
+We offer a competitive base salary for this position with a range in US-California of --$185,000 - $215,000 along with an annual corporate bonus, and a long-term incentive bonus designed to reward sustained impact and contribution over time. Within the salary range, the individual pay is determined based on several factors, including, but not limited to, work experience and job knowledge, complexity of the role, job location, etc.
+
+
+
+Your well-being matters at Bosch! We offer a a benefits package designed to empower you in every area of your life. This includes premium health coverage, a 401(k) with generous matching, resources for financial planning and goal setting, ample paid time off, parental leave, and comprehensive life and disability protection. Your Recruiter can share more details for this position during the interview process.
+
+
+
+Learn more about our full benefits offerings by visiting: https://www.myboschbenefits.com/public/welcome.
+
+
+
+Equal Opportunity Employer, including disability / veterans.
+
+
+
+
+
+- Bosch adheres to Federal, State, and Local laws regarding drug-testing. Employment is contingent upon the successful completion of a drug screen and background check. Candidates who have been offered the position must pass both screenings before their start date.",847,,,,https://www.linkedin.com/jobs/view/senior-research-scientist-robotics-ai-at-bosch-usa-4453488568?trk=bingjobs,,,,,YmluZzotNDg0OTYzNjg3LlJldHJv,,0,Pending,,False
+8f2b5da7-b48c-4632-b918-619943b3b045,17b6b0de6b326ff14ecd0b44e6848cbf,2026-09-13,JSearch,Data Engineer in USA,"Analytics Lead, Strategic Insights (Compliance)",Affirm,"Palo Alto, California",Remote,,,"python, sql, databricks, snowflake",2026-09-11,"At Affirm, we exist for the moments that matter—giving people a clear, predictable way to pay over time, with no hidden fees, no surprises, and no tradeoffs on what matters most.
+
+
+
+About The Legal, Compliance, And Public Affairs Team
+
+
+
+The Legal, Compliance, and Public Affairs team is a group of dedicated professionals committed to helping Affirm scale, innovate, and provide outstanding products for consumers, merchants, and key partners. We combine legal, compliance, and policy expertise to guide growth, shape products, and build trust across our ecosystem. Our work spans multiple professional disciplines and provides the foundation for Affirm’s mission to deliver honest financial products.
+
+
+
+About The Role
+
+
+
+Compliance Shared Services delivers the horizontal capabilities that power Affirm's consumer compliance program: regulatory compliance monitoring, compliance data analytics, issues management, compliance training, regulatory change management, and bank partner audit and exam support. The team sits in the second line of defense and partners across Compliance, Legal, Engineering, Product, Internal Audit, and our bank partners to ensure obligations are monitored, exceptions are investigated and remediated, and evidence stands up to regulator and auditor scrutiny.
+
+
+
+As the Analytics Lead, Strategic Insights for Compliance Shared Services, you will own the compliance analytics and automated monitoring function for a multi-product, multi-partner consumer lending business. The work requires fluency in both regulation and data, and it runs in both directions: you translate regulatory obligations into automated, evidence-producing data checks, and you translate data anomalies back into clear regulatory answers.
+
+
+
+You will report to the Senior Manager, Compliance Programs, and operate as the senior individual contributor for the analytics function. A supporting data analyst carries much of the recurring execution workload; you will provide that analyst with day-to-day technical direction, structured training, and quality review while you focus on monitoring design, examination data ownership, exception judgment, and automation.
+
+
+
+The outputs of this role are consumed by state regulators, bank partners, internal and external auditors, and senior leadership. The quality bar is evidence-grade and reproducible, and the operating rhythm combines a steady weekly monitoring cadence with high-intensity examination and incident surges that arrive on external timelines.
+
+
+
+What you'll do
+
+
+
+
+
+- Own the design, operation, and governance of automated compliance monitoring: translate regulatory obligations into rule-based detective controls that run on defined frequencies, surface exceptions, and produce audit-ready evidence.
+
+- Serve as the primary data owner for regulatory examinations, licensing audits, and bank partner exam requests: scope requests into defined populations and extraction logic, validate results across source systems, document methodology and assumptions, and support responses through multi-round follow-ups under external deadlines.
+- Triage monitoring exceptions and data anomalies, distinguishing true compliance exceptions from data artifacts and process gaps, route findings to the appropriate resolution path, and support remediation through validation and evidence review.
+
+- Map automated checks to specific regulatory requirements, converting query logic into control statements that feed the compliance control inventory and close the loop between monitoring exceptions and tracked compliance issues.
+
+- Drive the automation roadmap: identify recurring manual reporting and repeat data requests and convert them into automated pipelines and self-service tools, applying AI-assisted development with disciplined human-in-the-loop validation.
+
+- Steward the compliance data environment: adjudicate source-of-truth questions, resolve data access and quality constraints, and maintain the query repository, runbooks, and methodology documentation.
+
+- Provide day-to-day technical direction, structured onboarding and training, work prioritization, and quality review for a supporting data analyst, coaching for independence and end-to-end ownership.
+
+- Partner with Engineering, Legal, Product, Internal Audit, and bank partners to resolve data definition and quality questions, and expand monitoring coverage across new products, requirements, and jurisdictions.
+
+
+
+
+
+
+What we look for
+
+
+
+
+- 5+ years in compliance analytics, monitoring or surveillance, transaction testing, audit analytics, or a comparable data role in consumer lending, banking, fintech, or another regulated industry.
+
+- Advanced SQL and hands-on experience with a modern cloud data stack such as Snowflake and Databricks, including building and operating automated pipelines, dashboards, and data quality checks.
+
+- Working knowledge of consumer credit regulations such as TILA/Reg Z, ECOA/Reg B, EFTA/Reg E, FCRA, SCRA, MLA, TCPA, and state lending, licensing, and usury requirements, and the ability to convert those obligations into data logic.
+
+- Bidirectional fluency: you read a regulation and know the data question it implies, and you read a data anomaly and know the regulatory question it raises.
+
+- Evidence-grade rigor: you reconcile, validate, reproduce, and document your work so it stands up to examiners and auditors, and you have delivered regulatory or audit data under hard deadlines with multi-round follow-ups.
+
+- AI fluency: you use AI-assisted development tools to accelerate query building, troubleshooting, and workflow automation, and you validate outputs before relying on them.
+
+- Experience training, guiding, or reviewing the work of junior analysts, with the judgment to coach for independence rather than absorb the work yourself.
+
+- A builder disposition: comfort with ambiguity, self-directed prioritization, and clear written and verbal communication that translates technical findings for legal, compliance, and executive audiences.
+
+- Nice to Have
+
+- Lightweight application development (Streamlit or similar) and Python.
+- GRC platform exposure (AuditBoard or similar) and control inventory or control documentation experience.
+
+- Familiarity with bank partnership or sponsor bank operating models.
+- Experience expanding monitoring or reporting coverage across jurisdictions (US, Canada, UK).
+
+
+
+
+
+
+Base Pay Grade - K
+
+
+
+Equity Grade - 6
+
+
+
+Employees new to Affirm typically come in at the start of the pay range. Affirm focuses on providing a simple and transparent pay structure which is based on a variety of factors, including location, experience and job-related skills.
+
+
+
+Base pay is part of a total compensation package that may include equity rewards, monthly stipends for health, wellness and tech spending, and benefits (including 100% subsidized medical coverage, dental and vision for you and your dependents.)
+
+
+
+USA base pay range (CA, WA, NY, NJ, CT) per year: $145,000 - $205,000
+
+
+
+USA base pay range (all other U.S. states) per year: $128,000 - $188,000
+
+
+
+Remote-first with flexibility built in
+
+
+
+Affirm is proud to be a remote-first company. Most roles can be done from almost anywhere within the country of employment. Some positions may occasionally require in-person work at an Affirm office, and a few are office-based due to the nature of the work. All new hires will be invited to attend an in-person onboarding experience.
+
+
+
+Benefits Designed For You
+
+
+
+Our benefits reflect our commitment to care, transparency, and flexibility. Here are a few highlights:
+
+
+
+
+- Health coverage at no cost: We cover 100% of premiums for employees and their dependents.
+- Spending stipends: Monthly stipends support your tech setup, and the ability to choose health and wellness options that are right for you.
+- Time off to recharge: Flexible time off and generous holiday calendars help you rest when you need to.
+- Own a piece of wha",1209,,,,https://www.linkedin.com/jobs/view/analytics-lead-strategic-insights-compliance-at-affirm-4446909384?trk=bingjobs,,,,,YmluZzoxNDkxMTA0MjI3LlJldHJv,,0,Pending,,False
+61b4dec2-23e1-48c7-96b8-5a1795d8e773,4ef0a259a5b006455a977539b777fff8,2026-09-13,JSearch,Data Engineer in USA,"Supervisor, Scheduling",Raytheon,"Andover, Massachusetts",Hybrid,,100 years of experience,,2026-09-11,"Date Posted:
+
+
+
+2026-09-10
+
+
+
+Country:
+
+
+
+United States of America
+
+
+
+Location:
+
+
+
+US-MA-ANDOVER-AN1 ~ 350 Lowell St ~ AN1 ESSEX BLDG
+
+
+
+Position Role Type:
+
+
+
+Onsite
+
+
+
+U.S. Citizen, U.S. Person, or Immigration Status Requirements:
+
+
+
+Active and transferable U.S. government issued security clearance is required prior to start date. U.S. citizenship is required, as only U.S. citizens are eligible for a security clearance
+
+
+
+Security Clearance Type:
+
+
+
+DoD Clearance: Confidential
+
+
+
+Security Clearance Status:
+
+
+
+Ability to obtain INTERIM U.S. government issued security clearance is required prior to start date
+
+
+
+At Raytheon, the foundation of everything we do is rooted in our values and a higher calling – to help our nation and allies defend freedoms and deter aggression. We bring the strength of more than 100 years of experience and renowned engineering expertise to meet the needs of today’s mission and stay ahead of tomorrow’s threat. Our team solves tough, meaningful problems that create a safer, more secure world.
+
+
+
+Raytheon has an opening for a Production Control Supervisor at our Andover, MA facility within the Circuit Card Manufacturing value stream. The successful candidate utilizes data-driven decision making to enable effective material and workforce forecasting. This role requires successful daily interaction with cross functional teams, programs, and business units to maintain and meet organizational goals and objectives. These groups include program, planning, production control, operations, quality, and manufacturing/test/design engineering. You will be responsible for creating and maintaining execution plans to meet critical customer deadlines with supply chain strategies and financial targets.
+
+
+
+What You Will Do
+
+
+
+
+
+- Managing a high visibility, high mix area
+- Material Availability Analysis, Tracking, and Reporting. Manage Kit Readiness including working with cross-functional team in BOM, Material Master, Process Engineering, Operations, and Document Control
+- Provide production floor support including replacement part management, shop floor material staging, Work in Progress (WIP) movement through shared resource areas, completion of units in shop floor and MRP system, delivery to next step (inventory or shipment), and meeting MRP schedule.
+- Material handler supervisor
+- This will be an onsite role in our Andover, MA location.
+
+
+
+
+
+Qualifications You Must Have
+
+
+
+
+
+- Typically requires a University Degree or equivalent experience and a minimum of 2 years prior relevant experience with specialized knowledge of technical or operational practices.
+
+- Experience within planning, scheduling, production control, operations, Manufacturing, or other production driven environments.
+
+- Experience leading daily team operations and/or comparable leadership experience.
+
+- Ability to obtain Interim Confidential U.S. government issued security clearance is required prior to start date.
+
+
+
+
+
+
+Qualifications We Prefer
+
+
+
+
+
+- Experience interfacing, collaborating, and communicating with all levels of an organization, as well as with a large external customer base, to accomplish tasks.
+
+- Experience with MRP/ERP systems (special program access or equivalent)
+- Experience in Material and Inventory Control-type systems such as Kanban, SMI, Continuous Flow Manufacturing
+- Experience with Six Sigma methodology (CORE) and/or tools such as lean manufacturing, diagnostic, process optimization and continuous improvement
+
+- Experience with MS Office (Word, Excel, Power Point and Outlook/Skype
+
+
+
+
+
+What We Offer
+
+
+
+
+
+- Our values drive our actions, behaviors, and performance with a vision for a safer, more connected world. At RTX we value: Safety, Trust, Respect, Accountability, Collaboration, and Innovation.
+
+
+
+
+
+
+Learn More & Apply Now!
+
+
+
+
+- Please consider the following role type definition as you apply for this role.
+
+- Onsite: Employees who are working in Onsite roles will work primarily onsite. This includes all production and maintenance employees, as they are essential to the development of our products.
+
+- Clearance Information: This position requires a security clearance. DCSA Consolidated Adjudication Services (DCSA CAS), an agency of the Department of Defense, handles and adjudicates the security clearance process. More information about Security Clearances can be found on the US Department of State government website here: https://www.state.gov/m/ds/clearances/c10978.htm
+
+
+
+
+
+
+As part of our commitment to maintaining a secure hiring process, candidates may be asked to attend select steps of the interview process in-person at one of our office locations, regardless of whether the role is designated as on-site, hybrid or remote.
+
+
+
+The salary range for this role is 68,900 USD - 131,100 USD. The salary range provided is a good faith estimate representative of all experience levels. RTX considers several factors when extending an offer, including but not limited to, the role, function and associated responsibilities, a candidate’s work experience, location, education/training, and key skills.
+
+
+
+Hired applicants may be eligible for benefits, including but not limited to, medical, dental, vision, life insurance, short-term disability, long-term disability, 401(k) match, flexible spending accounts, flexible work schedules, employee assistance program, Employee Scholar Program, parental leave, paid time off, and holidays. Specific benefits are dependent upon the specific business unit as well as whether or not the position is covered by a collective-bargaining agreement.
+
+
+
+Hired applicants may be eligible for annual short-term and/or long-term incentive compensation programs depending on the level of the position and whether or not it is covered by a collective-bargaining agreement. Payments under these annual programs are not guaranteed and are dependent upon a variety of factors including, but not limited to, individual performance, business unit performance, and/or the company’s performance.
+
+
+
+This role is a U.S.-based role. If the successful candidate resides in a U.S. territory, the appropriate pay structure and benefits will apply.
+
+
+
+RTX anticipates the application window closing approximately 40 days from the date the notice was posted. However, factors such as candidate flow and business necessity may require RTX to shorten or extend the application window.
+
+
+
+RTX is an Equal Opportunity Employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, age, disability or veteran status, or any other applicable state or federal protected class. RTX provides affirmative action in employment for qualified Individuals with a Disability and Protected Veterans in compliance with Section 503 of the Rehabilitation Act and the Vietnam Era Veterans’ Readjustment Assistance Act.
+
+
+
+Privacy Policy and Terms:
+
+
+
+Click on this link to read the Policy and Terms",986,,,,https://www.linkedin.com/jobs/view/supervisor-scheduling-at-raytheon-4465879100?trk=bingjobs,,,,,YmluZzotMTMxNjgzNDcwMC5SZXRybw,,0,Pending,,False
+37375247-6e0e-47f1-bf9f-ac68946d1951,fa09b1e0187d42a918bf74270568e925,2026-09-13,JSearch,Data Engineer in USA,Java / Oracle Commerce Developer,innovitusa,"Harrisburg, Pennsylvania",Not specified,,,"sql, java, mongodb",2026-09-11,"The position will support several nonproduction environments that are used for testing. They will progress the code and change through the environments. The environments are to be kept in a clean state so as not to cause confusion. This is the responsibility of all developers in the PLCB.
+
+The position will serve as a subject matter expert for the various systems owned and integrated with, in addition to development tools, processes, policies, and the code base. When called upon they are to give information on any of the topics.
+
+Business requests to change packaged and customized application software (ex: Oracle Commerce Cloud, Fine Wine and Good Spirits website, Licensee Online Ordering Portal, etc.) are evaluated by the incumbent. They also advise on functional management of the most efficient technical solution.
+
+Status reports are to be provided to the group manager. These reports include individual status, project status, performance, and training. Status reports are for project management and identify progress and/or deviations from objectives.
+
+The position assists in the assessment of software products and makes recommendations for purchase to meet organizational and Commonwealth objectives. This can be done as a team or individually depending on the business need.
+
+This position will also serve in advanced troubleshooting, investigating, and debugging of problems and defects found in the supported systems. Problems are found and logged by internal staff. This position will research the problems found, log input and findings into the ticket and theorize a solution.
+
+At times this position will perform maintenance activities as needed. Updates to the various systems require the stopping jobs and restarting of certain jobs. This function is typically conducted off hours (after 5:00 PM and before 8:00 AM). Other maintenance activities include restarting integration between the systems and system monitoring.
+
+System performance is to be monitored and operational deficiencies relative to program execution are to be identified by the incumbent. Recommendations, implementation of solutions, and remedial actions to ensure acceptable performance are the responsibility of the Senior Application developer.
+
+The position cooperates with other developers and IT staff to provide security and quality assurance measures. These activities include backup, recovery, data security, error handling, and system controls.
+
+This position adheres to established bureau, commonwealth and industry standards, policies and procedures. These include proper testing documentation in all environments, security policies and procedures applied to development, PCI (Payment Card Industry) standards, and ecommerce team standards. These practices must be met to ensure the integrity and safety of the data and keep in compliance with the industry. The incumbent also assists in the establishment of standards, guidelines, and acceptable customer service levels relating to web applications for the PLCB.
+
+Documentation of design decisions, requirements, level of effort estimations and similar are required by the incumbent. These documents are developed with other IT staff and the business end users.
+
+Performs other related job duties as needed.
+
+
+
+System Years Experience
+
+HTML/CSS 2-5
+
+SQL 2-5
+
+XML/JSON 2-5
+
+JavaScript 2-5
+
+Java 2-5
+
+Oracle SQL Developer 0-2
+
+Open Storefront Framework 2-5
+
+DevOps 0-2
+
+Visual Studio 0-2
+
+MongoDB. 2-5
+
+
+
+
+- 
+Skill
+
+
+
+Required / Desired
+
+
+
+
+
+HTML/CSS
+
+Required
+
+
+
+
+
+SQL
+
+Required
+
+
+
+
+
+XML/JSON
+
+Required
+
+
+
+
+
+JavaScript
+
+Required
+
+
+
+
+
+Java
+
+Required
+
+
+
+
+
+Open Storefront Framework
+
+Required
+
+
+
+
+
+MongoDB
+
+Required
+
+
+
+
+
+Oracle SQL Developer
+
+Required
+
+
+
+
+
+DevOps
+
+Required
+
+
+
+
+
+Visual Studio
+
+Required",534,,,,"https://www.ziprecruiter.com/c/innovit-usa/Job/Java-Oracle-Commerce-Developer/-in-Harrisburg,PA?jid=f327416275c8d854&trk=bingjobs",,,,,YmluZzoxNTMwNTI3MjA2LlJldHJv,,0,Pending,,False
+23296891-3e3d-4f41-adae-f0e754cca137,7347548d8d8e3518eb8828459a56f76e,2026-09-13,JSearch,PySpark Engineer in USA,Sr. Product Support Engineer (Medical Devices),Philips,"Cambridge, Massachusetts",Onsite,,8+ years of experience,"sql, scala",2026-09-11,"Job Title
+
+
+
+Sr. Product Support Engineer (Medical Devices)
+
+
+
+Job Description
+
+
+
+Your role:
+
+
+
+
+
+- Leads the end-to-end design, implementation, and deployment of complex infrastructure solutions, ensuring technical architectures align with client requirements, business objectives, and industry best practices. Serves as a trusted advisor to clients and stakeholders, providing expert guidance on infrastructure strategies, emerging technologies, and solution roadmaps that support informed decision-making.
+- Drives the implementation, integration, and optimization of advanced infrastructure environments, ensuring seamless interoperability across platforms, third-party applications, and legacy systems. Collaborates closely with stakeholders to define system architectures, recommend deployment strategies, and deliver scalable, reliable, and secure solutions.
+- Functions as a senior technical expert responsible for troubleshooting highly complex infrastructure issues, conducting in-depth root cause analysis, and implementing long-term corrective actions to prevent recurrence. Performs advanced testing, validation, and performance optimization activities to maximize system reliability, security, and operational efficiency.
+- Establishes and maintains robust configuration management, version control, and governance processes that ensure consistency, traceability, and stability across infrastructure environments. Develops comprehensive technical documentation, operational procedures, and knowledge-sharing resources to support ongoing maintenance and organizational effectiveness.
+- Champions continuous improvement and innovation by staying current with emerging technologies, industry trends, and evolving best practices. Leverages deep expertise in company products and services to provide advanced technical support, introduce new solutions, and drive enhancements that improve performance, resilience, and client outcomes.
+
+
+
+
+
+You're The Right Fit If
+
+
+
+
+- You’ve acquired 8+ years of experience in areas such as Infrastructure Engineering Support, Cloud Technologies, System Administration, Systems Architecture or similar, within a Health Tech, Hospital or Med device environment.
+- Your skills include:
+
+- In depth IT knowledge including proficiency in virtualization, SQL, Microsoft OS, Linux and Citrix.
+- Ability to manage multiple projects simultaneously in a highly complex, customer-facing and global environment.
+- Experience with Rhapsody and supporting/deploying XML and/or DICOM interfaces - strongly preferred.
+- You have a bachelor's or master's degree in Computer Science, Software Engineering, Information Technology or similar field of study.
+- You must be able to successfully perform the following minimum Physical, Cognitive and Environmental job requirements with or without accommodation for this position.
+
+- You thrive in a highly collaborative team environment, building strong relationships across cross-functional teams and key stakeholders to drive shared success. Through effective communication, knowledge sharing, and day-to-day coordination, you contribute to successful outcomes while fostering a positive, inclusive, and high-performing team culture.
+
+
+
+
+
+How We Work Together
+
+
+
+We believe that we are better together than apart. For our office-based teams, this means working in-person at least 3 days per week. Onsite roles require full-time presence in the company’s facilities. Field roles are most effectively done outside of the company’s main facilities, generally at the customers’ or suppliers’ locations.
+
+
+
+This is an office role.
+
+
+
+About Philips
+
+
+
+We are a health technology company. We built our entire company around the belief that every human matters, and we won't stop until everybody everywhere has access to the quality healthcare that we all deserve. Do the work of your life to help improve the lives of others.
+
+
+
+
+- Learn more about our business.
+- Discover our rich and exciting history.
+- Learn more about our purpose.
+- Learn more about our culture.
+
+
+
+
+
+Philips Transparency Details
+
+
+
+The pay range for this position in MA is $142,000 to $227,000.
+
+
+
+The actual base pay offered may vary within the posted ranges depending on multiple factors including job-related knowledge/skills, experience, business needs, geographical location, and internal equity.  
+
+
+
+In addition, other compensation, such as an annual incentive bonus, sales commission or long-term incentives may be offered. Employees are eligible to participate in our comprehensive Philips Total Rewards benefits program, which includes a generous PTO, 401k (up to 7% match), HSA (with company contribution), stock purchase plan, education reimbursement and much more. Details about our benefits can be found here.
+
+
+
+At Philips, it is not typical for an individual to be hired at or near the top end of the range for their role and compensation decisions are dependent upon the facts and circumstances of each case.
+
+
+
+Additional Information
+
+
+
+US work authorization is a precondition of employment. The company will not consider candidates who require sponsorship for a work-authorized visa, now or in the future.
+
+
+
+Company relocation benefits will not be provided for this position. For this position, you must reside in
+or within commuting distance to Cambridge, MA.
+
+
+
+#ConnectedCare
+
+
+
+This requisition is expected to stay active for 45 days but may close earlier if a successful candidate is selected or business necessity dictates. Interested candidates are encouraged to apply as soon as possible to ensure consideration.
+
+
+
+Philips is an Equal Employment and Opportunity Employer including Disability/Vets and maintains a drug-free workplace.",774,,,,https://www.linkedin.com/jobs/view/sr-product-support-engineer-medical-devices-at-philips-4431876745?trk=bingjobs,,,,,YmluZzo2NjQzMjU5MTAuUmV0cm8,,0,Pending,,False
+93727e0b-ab5f-4ad2-9082-71e262a9c03e,12ba0e238d98848fc9f5cf4b482aefd4,2026-09-13,JSearch,PySpark Engineer in USA,Process Engineer,Arrotek Medical Ltd,"North Attleboro, Massachusetts",Not specified,,,,2026-09-11,"Be part of a mission that matters—join Theragenics as a Senior Engineer - Molding Process Development and help drive the production of life-saving medical devices used in cutting-edge treatments.
+
+
+
+In this critical role, you'll lead plastic molding and overmolding process development from early feasibility through validated production transfer, contributing directly to the creation of minimally invasive solutions that improve and extend lives. If you're passionate about technology, precision, and making a meaningful impact in healthcare, this is your opportunity to help shape the future of patient care.
+
+
+
+Company Overview
+
+
+
+At Theragenics, we're passionate about transforming healthcare and enhancing patient outcomes. Our commitment to innovation drives us to push the boundaries of what's possible, ensuring a brighter future for patients everywhere. Theragenics is a leader in developing medical devices that focus on minimally invasive treatments for cancer, blood vessel procedures, and surgical applications. The company is based in Atlanta, Georgia, and has facilities in Costa Rica, Texas, and Massachusetts. Theragenics proudly operates Arrotek, a visionary medical device design consultancy in the U.S. and Ireland, dedicated to pioneering minimally invasive solutions that enhance lives.
+
+
+
+Role Summary
+
+
+
+As a Senior Engineer - Molding Process Development, you’ll play a pivotal role in driving plastic molding and overmolding process optimization, collaborating with cross-functional teams and external partners to deliver cutting-edge solutions in medical device component manufacturing.
+
+
+
+Key Responsibilities
+
+
+
+
+
+- Lead molding process development and DOE-based optimization for plastic injection molded and insert/overmolded medical device components.
+- Support tooling strategy and mold design reviews (parting line, gating, cooling, steel-safe conditions, etc.) with internal teams and external fabricators.
+- Specialize in overmolding development onto metal tubes, hypotubes, wireforms, cannulae, and precision medical substrates.
+- Drive transfer from prototype to production, including T0/T1/T2 sampling, process characterization, and capability analysis.
+- Own validation deliverables, including IQ/OQ/PQ strategy, protocols, reports, and compliance with FDA/ISO 13485 standards.
+- Troubleshoot complex molding issues (flash, knit lines, sink, warpage, adhesion) and perform DFM/DFA evaluations with design engineers and customers.
+- Serve as a primary technical interface with customers on molding feasibility, risks, and validation readiness.
+
+
+
+
+
+Qualifications & Skills
+
+
+
+
+
+- Education: Bachelor's Degree in Plastics, Mechanical, Manufacturing, Biomedical Engineering, or a related technical discipline.
+- Experience: Minimum 7 years of relevant experience in injection molding, mold engineering, or medical device manufacturing.
+- Technical Expertise: Strong background in scientific molding principles, mold flow analysis (Moldflow, SolidWorks Plastics), and engineering/medical-grade polymers (PEEK, TPU, PC, Nylon).
+- Regulatory Knowledge: Familiarity with FDA QSR/QMSR expectations, ISO 13485, process validation, design controls, and risk management.
+- Preferred Attributes: RJG/Paulson or equivalent scientific molding training, hands-on shop-floor mindset, and experience with micro-molding or catheter components.
+
+
+
+
+
+Why Join Us
+
+
+
+
+
+- Career Growth: Lead high-impact engineering initiatives and mentor upcoming talent in a rapidly expanding field.
+- Innovative Projects: Work at the forefront of medical device design, tackling complex overmolding and micro-molding challenges.
+- Collaborative Culture: Partner closely with cross-functional teams, global manufacturing facilities, and external customers.
+- Competitive Benefits: Enjoy comprehensive rewards designed to support your health, well-being, and financial future.
+- Purpose-Driven Work: Every project you touch directly contributes to life-saving medical treatments and better patient care.
+
+
+
+
+
+Ready to make a difference? Apply today and be part of something extraordinary?",530,,,,https://www.linkedin.com/jobs/view/process-engineer-at-arrotek-medical-ltd-4456774947?trk=bingjobs,,,,,YmluZzotMTc1MTcxODc2LlJldHJv,,0,Pending,,False
+98b6625f-6f9e-4ce1-bc3c-c94e2ff41475,9b92957143eb831dd393a2f3f16701ba,2026-09-13,JSearch,PySpark Engineer in USA,Sr. Systems Engineer 2 - Azure Cloud Platform,Exelon,"Baltimore, Maryland",Hybrid,,,"sql, databricks, azure, scala, power bi",2026-09-11,"Who We Are
+
+
+
+We're powering a cleaner, brighter future.
+
+
+
+Exelon is leading the energy transformation, and we're calling all problem solvers, innovators, community builders and change makers. Work with us to deliver solutions that make our diverse cities and communities stronger, healthier and more resilient.
+
+
+
+We're powered by purpose-driven people like you who believe in being inclusive and creative, and value safety, innovation, integrity and community service. We are a Fortune 200 company, 19,000 colleagues strong serving more than 10 million customers at six energy companies -- Atlantic City Electric (ACE), Baltimore Gas and Electric (BGE), Commonwealth Edison (ComEd), Delmarva Power & Light (DPL), PECO Energy Company (PECO), and Potomac Electric Power Company (Pepco).
+
+
+
+In our relentless pursuit of excellence, we elevate diverse voices, fresh perspectives and bold thinking. And since we know transforming the future of energy is hard work, we provide competitive compensation, incentives, excellent benefits and the opportunity to build a rewarding career.
+
+
+
+Are you in?
+
+
+
+Primary Purpose
+
+
+
+PRIMARY PURPOSE OF POSITION
+
+
+
+
+
+- This is a multiple‑location posting. The selected candidate may be based out of our Exelon Corporate Office locations in Philadelphia, PA, Kenneth Square, PA, Baltimore, MD, Chicago, IL, Oak Brook, IL, Oakbrook Terrace, IL, Washington, DC**
+
+
+
+
+
+
+The IT Sr Systems Engineer II position serves as a senior technical role within the IT department. It requires demonstrated experience of information technology, problem-solving skills, and the ability to work effectively both independently, as a mentor and as part of a team. Candidate will possess the self-motivation, experience and skills to serve by providing technical insights driving the design, implementation, and optimization of complex systems under the guidance of a Principal Engineer or Manager. Collaborates with IT architecture to define strategy and work with various teams to implement high quality systems to meet business requirements. Delivers and supports IT infrastructure, product and platform solutions. Designs and delivers complex IT system initiatives, to include cloud, non-cloud and hybrid-cloud systems. Influences other IT teams, leadership, enterprise business partners, vendors and project/design teams, in all aspects of the secure & reliable hosting of applications throughout Exelon's large & complex enterprise and real time operational environments.
+
+
+
+Primary Duties
+
+
+
+PRIMARY DUTIES AND ACCOUNTABILITIES
+
+
+
+
+
+- Independently coordinates and leads discussions with business partners and vendors to gather information. Consults with leadership, architecture, project teams and end users to identify system requirements and perform feasibility analysis on potential changes related to existing and future security and technical architectures. Writes and disseminates system specifications, logical & physical architecture diagrams, and implementation plans. Delivers practical, efficient, and cost -effective solutions that satisfy business needs, including hands-on configuration, troubleshooting and optimization and supporting metrics for the same. (30%)
+- Work closely with others to develop future plans, resource requirements, migration strategies, and project schedules. Creates and delivers presentations to Engineering , Architecture Review Boards, and business partners. Possesses a deep understanding of current technologies and service offerings within the industry. Provides coaching and oversite for less experienced engineers (25%)
+- Design, support and maintain custom system integration with other platforms, specific to the needs of the customers. Maintain relevancy and knowledge in current and evolving emerging IT systems technologies. Provide emerging technology recommendations to solve business problems. (20%)
+- Ensure all risks and issues are identified and are captured following set process and are actioned appropriately. Responsible for providing supporting data to leadership and peers. (15%)
+- Maintains knowledge of and ensures others are compliant with preferred technologies, methodologies, standards and policies. Maintain technical knowledge and business acumen within own discipline or function. Advanced debuaainq and problem-solvinq skills; lead peer code reviews. (10%)
+
+
+
+
+
+Job Scope
+
+
+
+JOB SCOPE
+
+
+
+Designing, implementing, supporting, and documenting infrastructure systems Maintains deep knowledge of technology and its application across our business areas or for our customers Leads in technological innovation to drive new business opportunities and solve complex business problems, inclusive of partner, vendor and other IT professionals. Requires advanced skill set and proficiency in technical discipline. Conducts work assignments of higher complexity, under occasional supervision with latitude for independent judgment Creates and contributes to a development-centric work environment where employees are challenged, coached and engaged. Will lead and supervise interns and apprentices and will serve as peer coach for system engineers.
+
+
+
+Minimum Qualifications
+
+
+
+MINIMUM QUALIFICATIONS
+
+
+
+
+
+- Bachelor's Degree in Computer Science, Information Systems, Computer Networking 4 - 7 years' experience in IT infrastructure design, application design, cloud computing, disaster/recovery, or 6-9 years of relevant experience
+- Experience with system administration
+- Demonstrated ability to design and document processes & procedures
+- Has led operational hand offs
+- Maintained experience supporting cloud computing platforms, specifically Microsoft Azure.
+- Demonstrated competence with business acumen within cloud architecture strategy, cost and capacity management, and security and compliance.
+- Demonstrated ability to solve complex problems
+- Expert in articulating sensitive and mission-critical information to a wide variety of target audiences (written and verbal, inclusive to senior leaders)
+- Demonstrates ability to help team members make informed decisions in alignment with the sub-department strategic plans
+- Proactively comprehends what a business partner is requesting and develops a strategy to address
+- Demonstrates ability to influence up, down, and across the organization. Drives innovative process and improvements by leveraging alternative perspectives and emerging technologies to deliver creative solutions across many teams
+- Demonstrated ability to deliver work aligning to project management principles & framework
+- Demonstrated ability to provide financial impact analysis, inclusive of assessing cost optimization opportunities
+- Troubleshooting & Monitoring: Demonstration of advanced capabilities to apply monitoring tools. Independently makes informed decisions on monitoring settings such as sample size, level of criticality, and self-healing opportunities
+- Cloud Technologies: Develops white papers, conducting presentations as needed
+- Security Basics: Applies solutions against current security requirements and future industry trends
+- Scripting & Automation: Proficient in PowerShell, Ansible, or other appropriate scripting tool. Able to independently create, modify, and troubleshoot scripts for automation, reporting, and monitoring tasks
+
+
+
+
+
+Preferred Qualifications
+
+
+
+PREFERRED QUALIFICATIONS
+
+
+
+
+
+- Relevant certifications (e.g. Azure Solutions Architect, Azure Fundamentals, Power BI, Databricks) are highly valued.
+- Familiarity with emerging Azure analytics technologies (e.g. Microsoft Fabric, Azure AI, Azure ML, Azure Databricks) and a drive for continuous learning are pluses.
+- Familiarity with cloud computing, physical and virtual hardware models, patching processes, vulnerability and security controls remediation a plus.
+- Azure Cloud Expertise. Proven experience designing and managing Microsoft Azure environments for data analytics (e.g. Azure Data Lake, Azure Databricks, Synapse, SQL",1266,,,,https://www.linkedin.com/jobs/view/sr-systems-engineer-2-azure-cloud-platform-at-exelon-4457017002?trk=bingjobs,,,,,YmluZzozMDQ4NDc3MTkuUmV0cm8,,0,Pending,,False
+988eab96-99b0-45a8-aeed-e5e0369c472f,6cc85fe05988f8906a7961a7d201c355,2026-09-13,JSearch,PySpark Engineer in USA,Founding Frontend Engineer (AI-Native),Skiffra,"Los Ángeles, California",Hybrid,,,"git, react, typescript",2026-09-11,"About Skiffra
+
+
+
+Skiffra is building the intelligence layer for the physical world. We translate complex, real-world environments into clear, actionable data.
+
+
+
+While most AI companies focus on digital industries, we design AI native orchestration systems for the sectors that extract, move, and build ecosystems around us. We turn messy, high stakes operations into intelligent, adaptive workflows that improve decisions in real time.
+
+
+
+Our first proving ground is mining and natural resources, but the platform is modular by design and built to scale into any industry where decisions are expensive and the consequences are real.
+
+
+
+What You'll Do
+
+
+
+
+
+- Own frontend architecture and implementation for Skiffra’s customer-facing products, partnering closely with product and design to create polished user experiences
+- Build end-to-end user-facing product features, collaborating with AI, data, and backend engineers on services, integrations, and API contracts
+- Translate ambiguous, operationally complex customer problems and AI outputs into clear, intuitive product experiences
+- Prototype quickly, observe real users working with the product, and iterate based on user behavior and field feedback
+- Establish reusable component patterns, automated testing, accessibility, performance, and frontend engineering standards from scratch
+- Help implement and evolve the product’s visual system and interaction patterns in partnership with product and design
+- Shape hiring and engineering culture as part of the founding team
+
+
+
+
+
+What We're Looking For
+
+
+
+
+
+- Strong frontend engineering skills (React, TypeScript) with a track record of shipping polished, customer-facing web apps
+- Strong product and UX judgment, including the ability to identify confusing interactions and improve incomplete designs
+- Strong judgment building data-dense, high-stakes interfaces, including dashboards, real-time monitoring, alerts, and complex workflows, with sound data-visualization instincts
+- Experience shipping responsive web applications across desktop, tablet, and mobile browser form factors
+- Proven ability to take a feature from concept to shipped product with minimal direction
+- Experience integrating frontend applications with APIs, asynchronous services, and data-intensive systems
+- Comfort building interfaces for asynchronous and AI-assisted workflows, including streaming responses, long-running tasks, evidence, confidence, approvals, and human overrides
+- Working knowledge of web accessibility fundamentals, including semantic HTML, keyboard navigation, focus management, screen-reader support, and WCAG standards
+- Strong debugging skills across frontend applications, browser and network behavior, API integrations, and production environments
+- Portfolio or work samples demonstrating polished frontend execution across dashboards, data visualization, and complex workflow interfaces
+- Comfortable collaborating in Figma, interpreting designs, identifying interaction problems, and proposing practical improvements
+- Clear communicator, bias toward action and simplicity, comfortable in ambiguity
+
+
+
+
+
+Nice to Have
+
+
+
+
+
+- Experience with Next.js and modern frontend tooling
+- Experience building interfaces for AI-augmented or agentic products
+- Experience building component libraries or design systems at scale
+- Prior startup, founding-engineer, or zero-to-one experience
+- Experience building software for industrial, operational, or field users, including challenging lighting, time pressure, large touch targets, or error-sensitive workflows
+- Familiarity with real-time data, streaming interfaces, and complex application state
+- Experience building resilient web applications for intermittent connectivity, including local caching, retry behavior, and recovery from interrupted sessions
+
+
+
+
+
+How We Work
+
+
+
+We value speed, clarity, and technical rigor. We favor simple systems over clever ones, prototypes over over-planning, and ownership over handoffs. You’ll work directly with founders and ship things that matter quickly.
+
+
+
+Location & Work Model
+
+
+
+This is a hybrid role with regular in-person collaboration in Los Angeles or the San Francisco Bay Area. We are not a remote-only company.
+
+
+
+Work Authorization
+
+
+
+Candidates must be authorized to work in the United States. We are not able to offer visa sponsorship for this role.
+
+
+
+Benefits & Eligibility
+
+
+
+This position is eligible for Skiffra’s standard benefits, including health insurance and retirement plans, and may also qualify for participation in the Company’s bonus and incentive programs.
+
+
+
+Equal Opportunity
+
+
+
+Skiffra is an equal opportunity employer. We value diversity and do not discriminate on the basis of race, color, religion, sex, gender identity or expression, sexual orientation, age, national origin, disability, veteran status, or any other protected characteristic.
+
+
+
+Compensation Range: $180K - $220K",660,,,,https://www.linkedin.com/jobs/view/founding-frontend-engineer-ai-native-at-skiffra-4440290840?trk=bingjobs,,,,,YmluZzotMTkxODk3MzI5MC5SZXRybw,True,0,Pending,,False
+0e706f45-064f-4ae3-81d7-1dcf495091b4,4e14dc8c4b35ab01d110323ca0d78c53,2026-09-13,JSearch,PySpark Engineer in USA,"Senior Portfolio Manager, Workflow Engine (Remote)",Stryker,"California, US",Remote,,,"scala, git, s3",2026-09-10,"- While this role is remote, there is a preference to candidates that reside near our Fort Wayne (IN), Portage (MI), or San Jose (CA) offices.
+
+
+
+
+
+
+This role serves as the business and product leader for Workflow Engine and related integration technologies, partnering closely with customers, engineering, architecture, UX, sales, and operations teams to bring innovative solutions to market. The Portfolio Manager will identify unmet customer needs, evaluate market opportunities, and develop strategies that enable healthcare organizations to seamlessly connect systems, automate workflows, and unlock greater value from the SmartCare platform.
+
+
+
+Product Strategy & Portfolio Leadership
+
+
+
+
+
+- Define and communicate the strategic vision, roadmap, and investment priorities for Workflow Engine and SmartCare integration capabilities.
+- Develop multi-year product strategies aligned with customer needs, market opportunities, business objectives, and platform architecture.
+- Balance customer value, technical feasibility, scalability, security, interoperability, and commercial objectives when prioritizing product investments.
+- Ensure alignment across engineering, architecture, portfolio management, commercial teams, and executive stakeholders around common goals and priorities.
+- Lead portfolio planning activities, including business case development, investment recommendations, roadmap prioritization, and lifecycle management.
+- Partner closely with Solution Architecture and Engineering teams to translate strategy into execution.
+
+
+
+
+
+Innovation & Market Opportunity Development
+
+
+
+
+
+- Identify emerging technologies, industry trends, and innovation opportunities related to middleware, APIs, workflow automation, interoperability, orchestration, cloud platforms, and digital health ecosystems.
+- Evaluate market opportunities and recommend strategic investments that strengthen SmartCare's competitive position.
+- Challenge conventional thinking and champion innovative solutions that solve complex healthcare workflow challenges.
+- Anticipate future market needs and proactively develop strategies to address evolving healthcare technology landscapes.
+- Drive ""art of the possible"" thinking to identify new ways workflow automation and integrations can deliver customer and business value.
+
+
+
+
+
+Customer & Market Insights
+
+
+
+
+
+- Develop deep expertise in healthcare workflows, integration challenges, interoperability requirements, and customer operational needs.
+- Engage directly with customers, health systems, implementation teams, and key opinion leaders to understand unmet needs and validate product direction.
+- Translate customer feedback into actionable product requirements and strategic recommendations.
+- Establish and maintain relationships with key customers, partners, and industry experts to inform future roadmap decisions.
+- Become a trusted source of market and customer insights for the broader SmartCare organization.
+
+
+
+
+
+Product Development & Cross-Functional Leadership
+
+
+
+
+
+- Lead product discovery efforts and define market requirements for new capabilities and enhancements.
+- Partner with Engineering, UX, Clinical Portfolio Management, Program Management, and Operations teams throughout the product lifecycle.
+- Define product requirements, success metrics, and value propositions for new initiatives.
+- Lead the product planning process from ideation through launch and post-market optimization.
+- Influence product development decisions through data, customer insights, market intelligence, and business analysis.
+- Ensure product strategies consider scalability, deployment, supportability, observability, security, and integration requirements.
+
+
+
+
+
+Ecosystem, Integrations & Platform Expansion
+
+
+
+
+
+- Define the strategy for internal and external integrations across the SmartCare ecosystem.
+- Evaluate partnership opportunities that expand platform capabilities and customer value.
+- Promote reusable, scalable integration frameworks and approaches that accelerate adoption and reduce implementation complexity.
+- Collaborate with platform, middleware, device, and application teams to deliver cohesive, end-to-end customer solutions.
+- Develop strategies that enable seamless interoperability across healthcare applications, devices, and technology ecosystems.
+
+
+
+
+
+Competitive & Industry Intelligence
+
+
+
+
+
+- Monitor competitive offerings, technology trends, emerging standards, and market disruptions.
+- Analyze competitive strengths, weaknesses, market positioning, and innovation investments.
+- Assess industry developments related to interoperability, workflow automation, AI-enabled workflows, cloud infrastructure, and digital health platforms.
+- Translate competitive intelligence into actionable recommendations that influence product strategy and roadmap priorities.
+- Educate stakeholders on market dynamics, industry trends, and competitive threats.
+
+
+
+
+
+Business Performance & Analytics
+
+
+
+
+
+- Develop and maintain business cases, financial models, product forecasts, and investment recommendations.
+- Define key performance indicators and success metrics for the portfolio.
+- Monitor product adoption, utilization, customer satisfaction, commercial performance, and market outcomes.
+- Analyze qualitative and quantitative data to identify growth opportunities and support strategic decision-making.
+- Communicate portfolio performance and strategic recommendations to leadership.
+- Demonstrate strong financial and business acumen when evaluating opportunities and prioritizing investments.
+
+
+
+
+
+Leadership & Influence
+
+
+
+
+
+- Build strong partnerships across business functions and organizational boundaries.
+- Influence decisions and drive alignment without direct authority.
+- Mentor team members and contribute to the development of product management best practices.
+- Communicate effectively with technical, clinical, commercial, and executive audiences.
+- Foster a culture of innovation, customer-centricity, accountability, and continuous improvement.
+- Serve as a recognized subject matter expert in workflow automation, integrations, and platform strategy.
+
+
+
+
+
+What you need (required):
+
+
+
+
+
+- Bachelor's degree required;
+- 6+ years of professional experience
+- Experience in Product Management/Portfolio Management for Enterprise Software, Healthcare Technology, Digital Health, Platform Products, Middleware, or related fields.
+- Experience owning product strategy and roadmaps for software, platform, middleware, API, integration, or workflow automation products.
+- Strong understanding of software development processes, cloud architectures, APIs, integration technologies, and interoperability concepts.
+- Demonstrated ability to identify market opportunities and convert customer needs into successful product strategies.
+- Healthcare IT, interoperability, FHIR, HL7, clinical workflow, or digital health experience preferred.
+- Experience with middleware, workflow orchestration, enterprise integration platforms, or connected ecosystem products strongly preferred.
+
+
+
+
+
+Preferred:
+
+
+
+
+
+- MBA or advanced degree preferred.
+
+
+
+
+
+Posted Date: 09/03/2026 This role will be posted for a minimum of 3 days.
+
+
+
+United States of America Pay Ranges:
+
+
+
+
+
+- USN: $102,600 - $171,000 USD Annual
+- US5: $107,700 - $179,600 USD Annual
+- US10: $112,900 - $188,100 USD Annual
+- US15: $118,000 - $196,600 USD Annual
+- US20: $123,100 - $205,200 USD Annual
+- US30: $133,400 - $222,300 USD Annual
+
+
+
+
+
+View the U.S. work location and transparency guide to find the pay range for your location.
+
+
+
+Health benefits include: Medical and prescription drug insurance, dental insurance, vision insurance, critical illness insurance, accident insurance, hospital indemnity insurance, personalized healthcare support, wellbeing program and tobacco cessation program. Financial benefits include: Health Savings Account (HSA), Flexible Spending Accounts (",1065,,,,https://www.linkedin.com/jobs/view/senior-portfolio-manager-workflow-engine-remote-at-stryker-4461683072?trk=bingjobs,,,,,YmluZzotMTY4MTkwNzg1OS5SZXRybw,,0,Pending,,False
+3e9dc14a-1915-411d-ae6a-b95c102ddb18,dbbac2654d78b5602dbecd678a337efa,2026-09-13,JSearch,PySpark Engineer in USA,Paper Engineering Summer Internship,NSK,"Ann Arbor, Michigan",Not specified,,,,2026-09-11,"Paper Engineering Summer Internship - NSK Corporation
+
+
+
+The Company
+
+
+
+NSK is a global manufacturer of ball and roller bearings, linear motion technology, automotive components, and steering systems with both domestic and overseas manufacturing capabilities. NSK also offers a full range of services including reconditioning, ball screw repair, product integration, application engineering, and predictive and preventative maintenance and reliability services. NSK's products and solutions are everywhere where things are in motion - even under the toughest conditions. NSK's high-precision rolling bearings are used in wind turbines and machine tools, linear components are found in production lines, while automotive components are installed in the vehicles of almost every-well known automaker.
+
+
+
+The Paper Engineering Summer Internship Role
+
+
+
+Are you seeking a paid college internship? NSK has a great opportunity to join our team for the summer as you explore opportunities for life after college. Our internship program provides students with opportunity to gain on the job experience in your field of study.
+
+
+
+As we enter a new year of the NSK Internship Program, we are looking for highly motivated, hardworking individuals who like to problem solve, lead projects, participate in key business leader relationships, and recommend improvements to existing processes.
+
+
+
+Responsibilities
+
+
+
+With the support of your manager, you will be tasked with a project where you will develop your skills and share the results of your project with our executive leadership team. As an intern at NSK, you will work cross-functionally and will have the opportunity to collaborate with the other interns across the region and participate in various activities including social and community service events throughout the summer!
+
+
+
+Qualifications
+
+
+
+
+
+- Currently enrolled in a 4-year Bachelor program with an accredited college.
+- Preference to Engineering majors.
+- Available to work full-time for 12 weeks (May through August).
+
+
+
+
+
+NSK is an Equal Employment Opportunity Employer, and all qualified applicants will receive consideration for employment without regard to race, color, religion, sex, national origin, protected veteran status, or disability status, or any other characteristic protected by law.
+
+
+
+VEVRAA Federal Contractor",336,,,,https://www.linkedin.com/jobs/view/paper-engineering-summer-internship-at-nsk-4465881473?trk=bingjobs,,,,,YmluZzozMjkxMDg1NzYuUmV0cm8,,0,Pending,,False
+118918a5-0494-47ee-9ed1-b2feb50a0fd4,eb82cec66ced846f8c3c759ff65e77b7,2026-09-13,JSearch,PySpark Engineer in USA,Production Operator,Armacell,"NC, US",Not specified,,,,2026-09-11,"Armacell provides numerous and diverse career opportunities. Add your talent to ours and make a difference around the world!
+
+
+
+Performs entry level tasks involved in the manufacturing of rubber insulation and engineered foam products. Follows standard work methods in a safe and efficient manner to deliver a quality product on time. Responsible for operations such as packing sheets or rolls according to customer specifications, mixing and milling raw and semi-finished material together in tubular form for processing via extrusion or expansion, performing quality checks or tests and packaging product for consumer use.
+
+
+
+Job Responsibilities
+
+
+
+Reads and understands the daily production plan
+
+
+
+Track production on communication board
+
+
+
+Safely operate various machinery such as mills, extruders, ovens, etc.
+
+
+
+Pack finished goods into appropriate packaging/boxes and place correct label on packaging
+
+
+
+Place finished goods on pallet
+
+
+
+Troubleshoot simple issues in the workflow and correct
+
+
+
+Ensure accuracy of formulations and weighments
+
+
+
+Ensure internal and external specifications are met
+
+
+
+Perform frequent quality checks of material (visual checks, AIMS, QMS, etc)
+
+
+
+Use various measuring equipment
+
+
+
+Report any issues or concerns to management
+
+
+
+Maintain clean and orderly work area
+
+
+
+Job Requirements
+
+
+
+High school diploma or GED required OR minimum of 10 years of work experience. Some departments will require an additional minimum of 2 years of manufacturing experience.
+
+
+
+Possess basic math and writing skills.
+
+
+
+Possess basic computer inputting skills for Quality purposes
+
+
+
+Ability to work in production area with long periods of standing, walking, bending, stooping and reaching.
+
+
+
+Ability to work on or near large industrial equipment and wear appropriate personal protective equipment
+
+
+
+Time Type
+
+
+
+Full time",260,,,,https://www.linkedin.com/jobs/view/production-operator-at-armacell-4440249796?trk=bingjobs,,,,,YmluZzotMTMzNDg5OTMwMS5SZXRybw,,0,Pending,,False
+2f109ca4-c0d8-463e-8ca8-4a2ca1c1d105,ca1282d11418eac75075a6317f786167,2026-09-13,JSearch,PySpark Engineer in USA,"Consultant (Technical, Public Sector)",Appian,"Morrisville, North Carolina",Not specified,,1+ years of experience,"sql, aws, git",2026-09-11,"Here at Appian, our values of Intensity and Excellence
+define who we are. We set high standards and live up to them, ensuring that everything we do is done with care and quality. We approach every challenge with ambition and commitment, holding ourselves and each other accountable to achieve the best results. When you join Appian, you’ll be part of a passionate team dedicated to accomplishing hard things, together.
+
+
+
+Are you looking to combine your passion for technology with your penchant for strategic problem solving? Appian Customer success is obsessed with great customer outcomes. We deliver
+mission-critical business impact fast and are directly responsible for partnering with our customers to bring their best ideas to life. Joining the Customer Success team provides you with the support and growth you need to strengthen and evolve your consulting skills while driving next-generation, AI-powered digital transformations.
+
+We are seeking a Technical Consultant to join our Customer Success team. In this role, you will be engaging with our customers post-sales to develop software solutions on the Appian platform. These applications help companies drive digital transformation and competitive differentiation. Your primary responsibility will be to work throughout the entire project life-cycle to define, design, develop and implement custom software and AI solutions using Appian’s platform for our commercial clients. This includes working within an agile environment to understand our client’s business processes and technical needs, launch new relational data models in production, and developing APIs to integrate with multiple systems. You’ll brainstorm AI use cases and implement  Appian’s AI tools by applying retrieval augment generation (RAG), agentic workflows, prompt engineering and the latest generative models as a part of transforming how customers run their organization. You will also collaborate with client’s technical teams and business users as needed throughout the entire software and development life cycle and drive adoption by empowering clients to become self-sufficient with building process applications on their own.
+
+This role is based at our HQ in McLean, VA. Appian was built on a culture of in-person collaboration, which we believe is a key driver of our mission to be the best. Employees hired for this position are expected to be in the office 4 - 5 days per week to foster that culture, ensure we thrive through shared ideas and teamwork, and maximize opportunities to connect with the exceptional people across Appian. While working in-person with customers is our main priority, we also believe the office environment enables more opportunities to celebrate wins, collaborate effectively, and build strong relationships across teams.
+
+To be successful in this role, you need:
+
+
+- The ability to work with clients to define business processes and gather functional and technical system requirements
+- Excellent communication skills, passion for technology and continuous learning, and affinity for asking “why” and solving the right problems
+- History of success on cross-functional teams; experience building products using agile methodologies (pair programming, stand-ups, planning sessions, and sprints)
+- Basic understanding of object oriented programming, experience working with relational databases and database design/data modeling, and SQL skills (writing queries, joins, views, etc)
+- Knowledge of software testing practices (test-driven development, automated test suites within a continuous integration framework); integrations experience using APIs such as REST and SOAP, JDBC connections, and web services; familiarity with Amazon Web Services (AWS), Artificial Intelligence (AI), Analytics, Machine Learning, Google Cloud, Application Integration, Database, Developer Tools, Management & Governance, and Elastic Containers (preferred)
+
+
+Basic qualifications:
+
+
+- US Citizenship - candidates being considered for a Public Sector roles must be a U.S. citizen
+- 1+ years of experience with hands-on software development or technical consulting
+- B.S./B.A. in Engineering, Computer Science, Information Systems, Mathematics or related field/degree
+- Willingness to travel; 20% or less annually to support customer engagement
+
+
+
+
+The base salary range provided represents a good faith and reasonable estimate of the range at the time of posting. In addition to the base salary, this position is eligible for a government clearance differential. Actual compensation will be dependent on a number of factors including, but not limited to, the candidate’s relevant work experience, qualifications, internal peer equity, and market and business conditions that exist when extending an offer. A discretionary bonus may be awarded in recognition of individual and company performance.In addition, Appian provides generous benefits offerings that include a 401(k) plan with company match, flexible time off, paid parental leave, medical, dental, and vision plans, life insurance, disability insurance, wellness programs, flexible spending accounts, health savings account contributions, an employee referral bonus program, and learning and development resources. Certain positions may be eligible for equity awards. Pay and benefits are subject to change at any time, consistent with the terms of any applicable compensation, commission, bonus, or benefit plans.
+
+Base Salary Range: $75,000 USD - $175,000 USD
+
+Tools and Resources
+
+
+- Training and Development: During onboarding, we focus on equipping new hires with the skills and knowledge for success through department-specific training. Continuous learning is a central focus at Appian, with dedicated mentorship and the First-Friend program being widely utilized resources for new hires.
+- Growth Opportunities: Appian provides a diverse array of growth and development opportunities, including our leadership program tailored for new and aspiring managers, a comprehensive library of specialized department training through Appian University, skills based training, and tuition reimbursement for those aiming to advance their education. This commitment ensures that employees have access to a holistic range of development opportunities.
+- Community: We’ll immerse you into our community rooted in respect starting on day one. Appian fosters inclusivity through our 8 employee-led affinity groups. These groups help employees build stronger internal and external networks by planning social, educational, and outreach activities to connect with Appianites and larger initiatives throughout the company.
+
+
+Benefits
+
+Appian offers a comprehensive benefits package designed to support your health, wellbeing, and financial future. Benefits may include health coverage, Employee Assistance Program (EAP) with free mental health support, life and disability insurance, an Employee Stock Purchase Program (ESPP), a retirement/pension plan, wellness dollars, tuition reimbursement, family-forming benefits and more. Benefits vary by country—please ask your Talent Acquisition contact for details specific to the location you are applying to.
+
+About Appian
+
+Appian provides AI automation for mission-critical work. We automate complex processes in large enterprises and governments. Our platform is known for its unique reliability and scale. We’ve been automating processes for more than 25 years and understand enterprise operations like no one else. For more information, visit appian.com. [Nasdaq: APPN]
+
+Follow Appian: LinkedIn, Youtube, Instagram, Facebook
+
+Appian is an equal opportunity employer that strives to attract and retain the best talent. All qualified applicants will receive consideration for employment without regard to any characteristic protected by applicable federal, state, or local law.
+
+Appian provides reasonable accommodations to applicants in accordance with all applicable laws. If you need a reasonable accommodation for any part o",1170,,,,https://www.linkedin.com/jobs/view/consultant-technical-public-sector-at-appian-4446817436?trk=bingjobs,,,,,YmluZzotMTQwOTI3MDgxOS5SZXRybw,,0,Pending,,False
+a343f5ba-166c-4d73-a188-113d52264c31,a3bf69a74bf210a46af27927c80c317b,2026-09-13,JSearch,PySpark Engineer in USA,Quality Manager (Medical Devices),"AppLab Systems, Inc","Reedsville, Pennsylvania",Not specified,,,,2026-09-11,"Role: Quality Manager
+
+Location: Reedsville, PA
+
+Employment Type: FTE/ Contract
+
+
+
+
+
+Job Description:
+
+Lead quality remediation and compliance programs for medical devices, ensuring adherence to FDA, ISO 13485, and global regulatory requirements. Provide leadership for QMS processes, audit readiness, CAPA governance, quality metrics, and continuous improvement initiatives across cross-functional teams.
+
+
+
+
+
+Key Responsibilities:
+
+
+- Lead QMS, CAPA, Nonconformance, Complaint, and Audit programs.
+- Support FDA inspections and regulatory audits.
+- Drive quality remediation and compliance initiatives.
+- Monitor quality metrics and management reviews.
+- Lead cross-functional quality improvement activities.
+
+
+
+
+
+
+Required Skills:
+
+
+- Medical Device Quality Management Systems (QMS).
+- CAPA, Nonconformance, Complaint, and Audit Management.
+- FDA 21 CFR Part 820/QMSR and ISO 13485.
+- Risk Management and Design Controls.
+- Quality Metrics, Remediation, and Compliance Programs.
+
+
+
+
+
+
+Preferred Qualifications:
+
+
+- Bachelor's or Master's degree in Engineering or related discipline.
+- 12+ years of Medical Device Quality experience.
+- 5+ years of Quality Management leadership experience.
+- ISO 13485 Lead Auditor or ASQ/CQI certification preferred.
+- Experience supporting FDA inspections and remediation programs",170,,,,https://www.linkedin.com/jobs/view/quality-manager-medical-devices-at-applab-systems-inc-4464594937?trk=bingjobs,,,,,YmluZzoxNDYyNDMwNjM5LlJldHJv,,0,Pending,,False
+21c20a3e-c49e-488c-ae3e-c79f599c984a,e789ba8486afb20719f0bf67d8dfb44d,2026-09-13,JSearch,PySpark Engineer in USA,"Territory Manager, MIS - Washington D.C./ Baltimore",Aesculap (US),"Washington, District of Columbia",Remote,,,,2026-09-11,"B. Braun Medical Inc., a leader in infusion therapy and pain management, develops, manufactures, and markets innovative medical products and services to the healthcare industry. Other key product areas include nutrition, pharmacy admixture and compounding, ostomy and wound care, and dialysis. The company is committed to eliminating preventable treatment errors and enhancing patient, clinician and environmental safety. B. Braun Medical is headquartered in Bethlehem, Pa., and is part of the B. Braun Group of Companies in the U.S., which includes B. Braun Interventional Systems, Aesculap® and CAPS®.
+
+
+
+Globally, the B. Braun Group of Companies employs more than 64,000 employees in 64 countries. Guided by its Sharing Expertise® philosophy, B. Braun continuously exchanges knowledge with customers, partners and clinicians to address the critical issues of improving care and lowering costs. To learn more about B. Braun Medical, visit www.bbraunusa.com
+
+
+
+Position Summary:
+
+
+
+This sales role is responsible for territory sales objectives and representing Aesculap within the assigned geography across the Minimally Invasive Laparoscopic product portfolio. The individual in this role will work cross-functionally with marketing, national sales leadership, corporate accounts, and other internal partners to align commercial strategy with field execution and business objectives.
+
+
+
+Key Responsibilities:
+
+
+
+
+- Achieve and or exceed territory objectives, quotas, and performance expectations aligned with division goals and growth priorities.
+
+- Develop and execute territory business plans that expand market share, increase customer penetration, and accelerate adoption of the laparoscopic surgery portfolio.
+
+- Support product evaluations, trials and conversions, ensuring smooth onboarding and comprehensive training for new customers.
+
+- Lead in-field product demonstrations and clinical education for surgeons, nurses and OR staff to ensure proper product adoption and utilization.
+
+- Partner with marketing and national sales leadership on go-to-market strategy, product launches, campaigns, and commercial initiatives.
+
+- Build and maintain strong relationships with surgeons, nursing staff, supply chain / procurement staff within health systems.
+
+- Support strategic account development and help facilitate complex health systems and IDN sales environments.
+
+- Deliver accurate forecasting, business reviews, and performance updates to regional sales leadership.
+
+
+
+
+
+
+Qualifications:
+
+
+
+
+- Bachelor’s degree required; advanced degree preferred.
+- Minimum of 5-7 years of progressive sales experience, with significant experience in medical device, surgical, or healthcare sales.
+
+- Demonstrated success in building, developing, and maintaining assigned sales territory in a growth-oriented environment.
+
+- Strong track record of delivering revenue growth and sales execution.
+- Experience working with surgeons, hospital systems, and complex healthcare selling environments.
+
+- Strong communication, and cross-functional collaboration skills.
+- Ability to analyze market opportunities, interpret performance data, and translate insights into action.
+
+- Proficiency with CRM systems, forecasting tools, and standard business applications.
+
+
+
+
+
+
+Preferred Experience:
+
+
+
+
+- Experience in minimally invasive surgery, laparoscopic surgery, or related surgical specialties.
+
+- Experience in selling within surgical capital and consumables products model.
+
+- Exposure to strategic account management, GPO/IDN environments, and executive-level customer engagement.
+
+
+
+
+
+
+Location and Travel:
+
+
+
+This is a remote field sales position. The selected candidate should reside within the assigned geography and be willing to travel throughout the territory to support customers and drive commercial execution. Candidates should reside within assigned geography and near a major airport, with expected travel >40%
+
+
+
+Job Function - General:
+
+
+
+
+- Responsible for contributing to the company's strategic objectives of revenue growth, market leadership, and quality customer service through the sale of Aesculap products to assigned accounts. Aids in exceeding territory and regional sales objectives.
+
+- Call on customers and prospects; provides technical, education, marketing and administrative product information and demonstrations; quotes appropriate customer prices.
+
+- Respond to customer needs, influences customer decision making criteria, resolves problems in accordance with Company policy, and acts as a liaison between customer, Customer Service, and commercial departments.
+
+- Develop relationships with appropriate personnel within target accounts.
+- The job function listed is not exhaustive and shall also include any responsibilities assigned by the Supervisor from time to time.
+
+- General: It shall be the duty of every employee while at work to take reasonable care of the safety and health of himself/herself and other persons.
+
+
+
+
+
+
+Limit of Authorization/Authority:
+
+
+
+Please refer to the Corporate Guidelines or BBMUS Guidelines or job specific authorities where applicable. This list is, however, not exhaustive and may be amended by the Management from time to time.
+
+
+
+Education and Professional Knowledge:
+
+
+
+Bachelor's degree required.
+
+
+
+Knowledge and Skills Requirements:
+
+
+
+Requires full working knowledge of relevant business practices and procedures in professional field. Uses standard theories, principles and concepts and integrates them to propose a course of action.
+
+
+
+Supervision Given and Received:
+
+
+
+Work under minimal supervision. Relies on experience and judgement to plan and accomplish assigned goals. May periodically assist in orienting, training, and/or reviewing the work of peers.
+
+
+
+Problem Solving:
+
+
+
+Judgement is required in resolving complex problems based on experience.
+
+
+
+Contacts/Cooperation:
+
+
+
+Interacts with internal and/or external clients and customers to negotiate and interpret information on projects and unit operations. May consult with senior management.
+
+
+
+Additional Requirement:
+
+
+
+Frequent business travel required, Valid driver's license and passport, Ability to work non-standard schedule as needed.
+
+
+
+Base Salary Range: $89,000 - $121,000 (plus commission)
+
+
+
+The targeted range for this role takes into account a range of factors that are considered when making compensation and hiring decisions; included but not limited to: skill sets; experience and training; licensure and certifications; and other business and organizational needs. The disclosed range estimate has not been adjusted for the applicable geographic differential associated with the location at which the position may be filled. Compensation decisions are dependent on the facts and circumstances of each case. The range provided is a reasonable estimate.
+
+
+
+B. Braun offers an excellent benefits package, which includes healthcare, a 401(k) plan, and tuition reimbursement. To learn more about B. Braun and our safety healthcare products or view a listing of our employment opportunities, please visit us on the internet at www.bbraunusa.com.
+
+
+
+Through its “Sharing Expertise®” initiative, B. Braun promotes best practices for continuous improvement of healthcare products and services.
+
+
+
+We are an equal opportunity employer. We evaluate applications without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, age, pregnancy, genetic information, disability, status as a protected veteran, or any other protected characteristic. Know Your Rights: Workplace Discrimination is Illegal, click here.",1021,,,,https://www.linkedin.com/jobs/view/territory-manager-mis-washington-d-c-baltimore-at-aesculap-us-4456091273?trk=bingjobs,,,,,YmluZzotNjIwODA1MzM1LlJldHJv,,0,Pending,,False
+0d108be2-f990-45da-a4d6-35eb537acd45,d2f1dcd1249747d16cdd769f408ddd28,2026-09-13,JSearch,PySpark Engineer in USA,Sales Merchandiser,Pepsi MidAmerica,"Houston, Missouri",Not specified,,,,2026-09-11,"Join the Pepsi MidAmerica Team!
+
+Now Hiring: Dedicated Merchandiser
+
+???? Location: Houston, Roby, and Licking, MO.
+
+???? Pay: $18.00 per hour
+
+Do you take pride in your work, enjoy staying active, and want to make a visible impact in your community? Pepsi MidAmerica is looking for motivated, dependable individuals to help bring our iconic beverages to life on store shelves every day.
+
+As a Merchandiser, you’ll represent the Pepsi brand in local retail stores by building displays, stocking products, and ensuring our beverages look their best. This is a hands-on, fast-paced role perfect for someone who enjoys variety and working independently while being part of a supportive local team.
+
+What You’ll Do
+
+
+- 
+Merchandise and promote Pepsi products at local retail locations
+
+
+- 
+Build, stock, and maintain attractive product displays
+
+
+- 
+Keep shelves and backroom inventory organized, fully stocked, and cleaned
+
+
+- 
+Provide friendly, professional customer service
+
+
+- 
+Build strong relationships with store managers and store teams
+
+
+
+What You’ll Need
+
+
+- 
+High school diploma or GED
+
+
+- 
+Valid driver’s license and reliable transportation
+
+
+- 
+Ability to repeatedly lift to 50 lbs
+
+
+- 
+Strong communication and customer service skills
+
+
+- 
+Availability to work 40 hours per week
+
+
+- 
+Weekend availability
+
+
+- 
+Ability to pass a background check and drug screening
+
+
+- 
+Ability to maintain a clean-shaven appearance
+
+
+
+Why You’ll Love Working Here
+
+
+- 
+Excellent work-life balance
+
+
+- 
+Mileage reimbursement and paid training
+
+
+- 
+Opportunities for advancement
+
+
+- 
+Flexible scheduling options
+
+
+- 
+Health Insurance, Life Insurance, HSA, and retirement plans
+
+
+- 
+Work close to home with a supportive, local team
+
+
+
+
+
+
+
+Apply Today!
+
+Online application and assessment can be located at www.careermapping.com/pepsimidamerica",269,,,,"https://www.ziprecruiter.com/c/Pepsi-MidAmerica/Job/Sales-Merchandiser/-in-Houston,MO?jid=7eee361bf8435301&trk=bingjobs",,,,,YmluZzotNTQzNjI4NjM2LlJldHJv,,0,Pending,,False
+48401e85-deb1-4179-b864-66f2f57dfb71,8fbd7a78b8837e94999058c72ae698ee,2026-09-13,JSearch,PySpark Engineer in USA,Nuclear Medicine Technologist PRN,Methodist Health System,"Midlothian, Texas",Not specified,,,git,2026-09-10,"Hours of Work :
+
+
+
+FLEX
+
+
+
+Days Of Week :
+
+
+
+FLEX
+
+
+
+Work Shift :
+
+
+
+PRN (United States of America)
+
+
+
+Job Description :
+
+
+
+Your Job:
+
+
+
+In this highly technical allied imaging professional position, you'll collaborate with a multidisciplinary team to provide the very best imaging services, which include ultrasound, CT scan, PET scan, interventional radiology, digital mammography, and nuclear medicine. The primary purpose of this position is to provide for and perform diagnostic and therapeutic nuclear medicine procedures and related techniques for the interpretation by or at the request of a license practitioner.
+
+
+
+Your Job Requirements:
+
+
+
+
+- Graduate of an approved Nuclear Medicine Technologist Program
+- Current Basic Life Support certification
+- Current American Registry of Radiologic Technologists« certification — ARRT (NM) or NMTCB
+- Texas Department of State Health certification
+- Work Experience: 1 year required
+
+
+
+
+
+Your Job Responsibilities:
+
+
+
+
+- Communicate clearly and openly
+- Build relationships to promote a collaborative environment
+- Be accountable for your performance
+- Always look for ways to improve the patient experience
+- Take initiative for your professional growth
+- Be engaged and eager to build a winning team
+
+
+
+
+
+Methodist Midlothian Medical Center is the first full-service, acute care hospital in Midlothian, Texas. Serving Midlothian and northern Ellis County, we are a 46-bed hospital that is designed to expand as the community grows. Providing everything from emergency care and advanced surgery to imaging and labor and delivery, our hospital has 16 emergency department beds, two operating suites, and the latest digital and medical technologies. We strive to have a diverse workforce that reflects the communities we serve and welcomes the skills and talents of all groups. Our reputation as an award-winning employer shows in the distinctions we’ve earned:
+
+
+
+
+- 150 Top Places to Work in Healthcare by Becker’s Hospital Review, 2023
+- Top 10 Military Friendly® Employer, Gold Designation, 2023
+- Top 10 Military Spouse Friendly® Employer, 2023
+- Level I Maternal Facility for perinatal care
+- Level I Neonatal Facility
+- Gene Rodgers Community Service Award, Midlothian Chamber of Commerce, 2022
+- Robotic surgery capabilities
+- Cardiac catheterization lab",345,,,,https://www.linkedin.com/jobs/view/nuclear-medicine-technologist-prn-at-methodist-health-system-4465824047?trk=bingjobs,,,,,YmluZzotMjMzNzYxMDIxLlJldHJv,,0,Pending,,False
+a093c798-5f62-4d5c-80f0-5b773eb14d32,6a611dee71d6fb9149238774d72fa722,2026-09-13,JSearch,PySpark Engineer in USA,Inside Sales Support Associate - Firefly Fiber Broadband,Central Virginia Electric Cooperative,"Palmyra, Virginia",Onsite,,,scala,2026-09-11,"Firefly is seeking a motivated, customer focused Inside Sales Support Associate to support our growing business services team. This role serves as a critical link between our business customers, sales team, and technical operations, ensuring customers receive exceptional service from initial inquiry through installation and ongoing support.The ideal candidate is organized, detail-oriented, and passionate about helping customers find and maximize the services that best meet their business needs. If you enjoy building relationships, solving problems, and supporting business growth, we'd love to hear from you.Customer & Sales SupportSupport business customers by providing exceptional service and account assistance.Assist the Business Sales Coordinator with managing customer accounts from initial order through installation and ongoing service.Respond to inquiries from prospective business customers and help assess service needs.Conduct outbound sales calls and customer follow-up activities as directed.Promote customer retention and identify opportunities for additional services.Customer Training & Account ManagementEducate customers on Firefly's business internet and voice services via phone, email, chat, and other communication channels.Follow up with commercial customers after installation to ensure satisfaction and address questions or additional service requests.Maintain accurate customer information across billing, reporting, and CRM systems.Technical Support CoordinationServe as a point of contact for business customers experiencing internet or voice service issues.Partner with Network Operations, Network Engineering, NRTC, and other internal teams to resolve customer concerns.Escalate complex issues as needed and communicate updates to customers.Assist with scheduling commercial installations and service tickets.Administrative & Marketing SupportPerform data entry and account maintenance with a high degree of accuracy.Assist with the development and maintenance of customer-facing materials, including brochures and user guides.Stay current on Firefly products, services, promotions, and industry trends.Participate in ongoing training and professional development opportunities.QualificationsEducation & ExperienceAssociate's or Bachelor's degree, or an equivalent combination of education and experience.Minimum of three (3) years of customer service experience.Telecommunications industry experience (internet, voice, cable, wireless, or VoIP services) preferred.Skills & KnowledgeProficiency with Microsoft Office applications, including Word, Excel, PowerPoint, Outlook, and collaboration tools.Experience with Salesforce or similar CRM and sales management platforms preferred.Familiarity with customer relationship management and online billing systems.Excellent communication and interpersonal skills.Strong organizational skills and attention to detail.Ability to prioritize multiple tasks and meet deadlines in a fast-paced environment.Strong analytical and problem-solving abilities.Ability to work independently and as part of a team.Professional, positive approach to handling customer concerns and resolving issues.Additional RequirementsValid driver's license with a safe driving history.Commitment to supporting the mission, values, policies, and procedures of CVEC and CVSI.Ability to attend occasional training sessions, meetings, and company events outside normal business hours as needed.Work EnvironmentThis position is primarily remote based and requires regular use of a computer, telephone, and other office equipment. Occasional travel or in-office days may be required for training, meetings, or business-related activities.Physical requirements include:Prolonged sitting and computer use.Occasional standing and walking.Ability to occasionally lift, carry, push, or pull items weighing up to 10 pounds.Visual and auditory acuity necessary to perform essential job functions. Must be able to pass background check. We also conduct pre-employment drug testing. Any offer will be based on the results of background and drug testing.
+
+
+
+Job Posted by ApplicantPro
+
+
+
+Skills:
+
+Analysis Skills, Auditory, Background Investigation, Billing, Broadband, Brochures, Business Growth, Business Services, Business Support, Communication Skills, Customer Escalations, Customer Relations, Customer Relationship Management (CRM), Customer Relationship Management (CRM) Systems, Customer Retention/Renewal, Customer Support/Service, Customer Training, Data Entry, Data Quality, Detail Oriented, Develop and Maintain Customers, Driver's License, Establish Priorities, Industry/Trade Analysis, Inside Sales, Internet/Online Service, Interpersonal Skills, Maintenance Services, Marketing, Microsoft Excel, Microsoft Office, Microsoft Outlook, Microsoft PowerPoint, Microsoft Word, Multitasking, Needs Assessment, Network Administration/Management, Network Architecture/Engineering, Office Equipment, Order Picking/Packing, Organizational Skills, Physical Demands, Problem Solving Skills, Resolve Customer Issues, Sales, Sales Management, Sales Prospecting, Sales Support, Salesforce.com, Team Player, Technical Operations, Technical Sales, Technical Support, Telecommunications Industry, Time Management, VoIP (Voice over IP), Wireless Communications
+
+
+
+undefined:
+
+Central Virginia Electric Cooperative",632,,,,https://www.careerbuilder.com/job-details/inside-sales-support-associate-firefly-fiber-broadband-palmyra-va--fbabfb20-df35-425d-8427-c9cfce6cf768?trk=bingjobs,,,,,YmluZzotMjEyNDQ1MjE5Mi5SZXRybw,,0,Pending,,False
+ae0ca0e4-7e77-49b3-ab9c-e5e481a54b41,f6151d9ece1562f902e937d201edfe43,2026-09-13,JSearch,PySpark Engineer in USA,PHYSICIAN - INTERNAL MED,Johns Hopkins Medicine,"Fulton, Maryland",Remote,,,,2026-09-11,"Requisition #:676498 Location:Johns Hopkins Community Physicians, Fulton, MD 20759 Category:Physicians Schedule:Day Shift Employment Type:Full Time
+
+
+
+Johns Hopkins Community Physicians (JHCP) is looking for an Internal Medicine Physician to join our Fulton practice. Johns Hopkins Community Physicians serves Maryland, Northern Virginia and Washington DC with over 40 locations.
+
+
+
+Benefits
+
+
+
+
+
+- Full-time - 32 hours clinical and 8 hours admin
+- Admin time may be remote
+- Night call once per month
+- CME allowance
+- Protected time off
+- Malpractice insurance
+- Productivity model includes bonus eligibility
+- Dedicated medical assistant support
+
+
+
+
+
+Our Providers and leaders are highly engaged and committed to teamwork. At JHCP you will work beside the unequaled talent of
+Johns Hopkins nurses and staff and enjoy extensive benefits and opportunities for personal and professional growth. Our Medical Leadership team are all practicing in our clinics.
+
+
+
+Through the diverse backgrounds and experiences of our employees, we are able to deliver on the promise to improve the health of the communities we serve!
+
+
+
+Put your passion to care towards our role as a Hopkins Provider, where you’ll be responsible for providing the exceptional quality of primary care that our patients expect. You’ll ­­­­­­­­­­­­­enjoy regular hours ample time for work life balance.
+
+
+
+Requirements
+
+
+
+
+
+- MD License in the State of Maryland required
+- CPR Certification required
+
+
+
+
+
+We offer a competitive salary, signing bonuses, excellent benefits and the opportunity to practice high-quality medicine as part of the Johns Hopkins Health System.
+
+
+
+Together we will deliver the Promise of Medicine!
+
+
+
+Apply",249,,,,https://www.linkedin.com/jobs/view/physician-internal-med-at-johns-hopkins-medicine-4462573206?trk=bingjobs,,,,,YmluZzoyMDA1NzMwNDkxLlJldHJv,,0,Pending,,False
+55de5a80-b086-4603-96a1-8a6dcf89271b,f093b5187abebb4841e84ba81f14aff5,2026-09-13,JSearch,ETL Developer in USA,Angular UI Developer.....Only Full Time,Visionary Innovative Technology Solutions LLC,"TX, US",Hybrid,,,"java, git, jenkins, react, typescript, mongodb",2026-09-11,"Position: Sr. Angular UI Developer
+
+Work Location: Irving, TX-Hybrid
+
+Duration: Full Time
+
+
+
+
+
+Role Description:
+
+
+
+
+
+· Must have Extensive Experience in designing and developing front end and largescale intranet internet applications.
+
+· Must have strong hands-on experience of implementing Web application using Angular 8 or above and related technologies like Typescript JavaScript Bootstrap HTML5 JSON CSS Ajax etc.
+
+· Must have working experience on Reactive programming using RxJs.
+
+· Hands on experience on implementing Micro Frontends.
+
+· Candidate should be able to identify commonly used components and should be able to create Library packages from it.
+
+· Candidate should have architectural level knowledge of Angular framework.
+
+· Able to translate Figma UX designs into workable angular components Able to integrate backend APIs with Angular application.
+
+· Knowledge on Jasmine Karma is desired.
+
+· Must have experience in SCMs like GIT and tools like JIRA.
+
+· Agile Scrum methodology experience is required.
+
+· Experience with Jenkins will be an added advantage.
+
+· Experience in MongoDB Oracle databases is an added advantage.
+
+· Strong systems analysis design and architecture fundamentals Unit Testing and other SDLC activities.
+
+· Strong communication skills should be able to communicate effectively with business and other stakeholders.
+
+· Experience in managing and implementing successful projects.
+
+· Subject Matter Expert SME in at least one area of Applications Development.
+
+· Ability to adjust priorities quickly as circumstances dictate.
+
+· Consistently demonstrates clear and concise written and verbal communication.
+
+Skills
+
+Mandatory Skills : Angular, HTML/HTML5, JavaScript, Material UI",247,,,,https://www.linkedin.com/jobs/view/angular-ui-developer-only-full-time-at-visionary-innovative-technology-solutions-llc-4463915183?trk=bingjobs,,,,,YmluZzotMTUyNTI2Mzg4OC5SZXRybw,,0,Pending,,False
+3bb1ca9e-a3a7-4887-8ce5-619bcf0621b9,69dffce6c9d64b080c43fc04cbe3192a,2026-09-13,JSearch,ETL Developer in USA,Intrnl Supply Prod Wrkr I-2,MITER Brands,"Tacoma, Washington",Not specified,,,,2026-09-10,"Wet Coat Operator
+
+
+
+Location: Fife, WA
+
+
+
+Schedule: Monday-Thursday 4AM-2:30PM
+
+
+
+Compensation: $22.00/hour-$25.00/hour (Depending on Experience) + $2.00/hour Third Shift Differential
+
+
+
+Job Summary
+
+
+
+The Wet Coat Operator is responsible for applying liquid coatings (resin or paint systems) to fiberglass sticks during or after the pultrusion process. This role ensures even coating coverage, adherence to quality standards, and proper curing for durability, appearance, and performance.
+
+
+
+Key Responsibilities
+
+
+- Operate wet coating equipment used to apply paint or resin to fiberglass sticks.
+
+- Ensure uniform coating thickness and full surface coverage.
+- Monitor coating materials (resin/paint) for proper viscosity, temperature, and mix ratios.
+
+- Adjust flow rates, rollers, or applicators to maintain consistent coating quality.
+
+- Inspect coated products for defects such as bubbling, streaking, or incomplete coverage.
+
+- Coordinate with pultrusion operators to maintain continuous production flow.
+- Clean and maintain coating equipment, tanks, and application systems.
+- Follow work instructions, production schedules, and quality requirements.
+- Track and document production output and coating parameters.
+- Identify and troubleshoot coating or adhesion issues.
+
+
+
+
+Required Qualifications
+
+
+- High school diploma or equivalent.
+- Experience in manufacturing, coatings, painting, or fiberglass/composites preferred.
+
+- Ability to follow detailed instructions and safety procedures.
+- Basic mechanical skills.
+
+
+
+
+Preferred Qualifications
+
+
+- Experience with industrial coatings, paints, or resin systems.
+- Knowledge of fiberglass or pultrusion processes.
+- Familiarity with curing processes (UV, heat, or ambient).
+
+
+
+
+Skills & Competencies
+
+
+- Attention to detail and consistency
+- Quality inspection skills
+- Mechanical and process troubleshooting
+- Team collaboration
+- Time management
+
+
+
+
+Working Conditions
+
+
+- Manufacturing/industrial environment
+- Exposure to paints, resins, fumes, and fiberglass (PPE required)
+- Standing for long periods
+- Handling long fiberglass rods/sticks
+- May require shift work
+
+
+
+
+Safety Requirements
+
+
+- Follow all company and OSHA safety guidelines
+- Use PPE (gloves, respirator, safety glasses, protective clothing)
+- Proper chemical handling and storage procedures
+- Maintain clean and organized work area
+
+
+
+
+
+
+#MITERtac
+
+
+
+What We Offer
+
+
+
+At MITER Brands, we invest in your health, wealth, and wellness. Our comprehensive benefits package supports you and your eligible spouse/dependents while helping you achieve your personal and professional goals.
+
+
+
+We offer competitive pay, a 401(k) with company match, and generous paid time off to help you maintain a healthy work-life balance.
+
+
+
+Health & Wellness
+
+
+- Three comprehensive medical plan options
+- Prescription drug coverage
+- Dental insurance
+- Vision insurance
+- Teladoc virtual healthcare services
+- Employee Assistance Program (EAP)
+- Annual Wellness Clinic
+
+
+
+
+Financial Protection
+
+
+- Company-paid Life Insurance
+- Voluntary Life Insurance
+- Company-paid Short-Term Disability
+- Company-paid Long-Term Disability
+- Supplemental Hospital Indemnity Insurance
+- Critical Illness Insurance
+- Accident Insurance
+
+
+
+
+Additional Benefits
+
+
+- Paid Time Off (PTO) and paid holidays
+- 401(k) retirement plan with company match
+- Tuition Reimbursement Program
+- Legal Insurance
+- Identity Theft Protection
+- Pet Insurance
+- Team Member Discount Program
+
+
+
+
+
+
+MITER Brands, including MI Windows and Doors, Milgard, and PGT Innovations, is an Equal Opportunity Employer. We are committed to fostering an inclusive workplace and do not discriminate based on race, color, religion, sex, national origin, age, disability, veteran status, genetic information, sexual orientation, or any other protected status under applicable law.
+
+
+
+Work Authorization and Sponsorship Disclosure:
+
+
+
+The Company does not offer employer sponsorship at this time. Therefore, candidates must provide truthful and complete information regarding their eligibility to work in the U.S. and any current or future need for employment sponsorship. Misrepresentation regarding work authorization or sponsorship need at any stage of the hiring process will result in disqualification from consideration, rescission of an employment offer, or termination of employment.",590,,,,"https://www.ziprecruiter.com/c/miter-brands/Job/Intrnl-Supply-Prod-Wrkr-I-2/-in-Tacoma,WA?jid=530179a95d2d4eee&trk=bingjobs",,,,,YmluZzotMTA5ODQ2OTE5MS5SZXRybw,,0,Pending,,False
+ede98ffa-99a8-4f89-b020-ea5377925c81,2656eda036f86e05235a844d77199339,2026-09-13,JSearch,ETL Developer in USA,SAP EAM Test Consultant (Utility Domain),Infosys,"Pomona, California",Not specified,,,git,2026-09-10,"Overview
+
+
+
+The Infosys SURE (Services, Utilities, Resources, Energy) unit is dedicated to empowering businesses within the services, utilities, energy, and resources sectors through strategic digital transformation. We specialize in guiding organizations through the complexities of disruption, enabling them to unlock value and realize sustainable growth. Join us to be part of a pioneering team that leverages advanced AI and digital technologies to drive innovation and operational excellence. You'll have the opportunity to work on transformative projects that shape the future of these critical industries, collaborate with industry experts, and develop resilient strategies that respond to change and seize new opportunities. If you're passionate about AI and eager to make a significant impact, the Infosys SURE unit is the perfect place for you to grow and excel
+
+
+
+In the assigned Job Role of Technology Consultant 2, your Area Of Responsibility will be as below:
+
+
+
+
+
+- Contribute to the requirements elicitation process by documenting assigned parts of business requirements, in line with guidance provided
+- Facilitate software application design discussions, and document design decisions to guide the technical team towards building software solutions
+- Participate in coding and integrate new features or updates into existing applications, with a focus on maintaining system stability
+- Conduct code reviews, do changes to the codebase and maintain code repositories
+- Implement test strategies, analyse results, and coordinate bug fixes to uphold the software quality standards
+- Develop user training programs, documentation, and support frameworks to ensure a smooth transition to new software applications
+- Actively participate in resolving production issues and recommend preventive strategies to enhance system reliability
+- Maintain detailed records of code, testing techniques, and support activities to enrich the knowledge base and assist other similar projects
+
+
+
+
+
+Your Contribution To The Team
+
+
+
+
+
+- A collaborative spirit and excellent communication skills.
+- The ability to handle end to end SDLC phases from requirement gathering to implementation.
+- A knack for translating complex requirements into actionable development tasks.
+- A passion for design and hands-on coding experience
+- A proactive approach to testing, troubleshooting, and refining our applications.
+- The ability to work with cross-functional teams and do software integration.
+
+
+
+
+
+Required Skill And Experience
+
+
+
+
+
+- Functional understanding and testing experience in SAP in EAM (Enterprise Asset Management) or plant maintenance.
+- Knowledge on travel and expense of SAP concur, SAP FICO functionalities including AP, AR, Treasury, Collections, Non Energy Billing, Corporate accounting, Financial closure, Regulatory and tax Accounting, Black line, Collection and Dispute.
+- Experience on all testing activities – preparation, validation, test scripts creation / documentation using MF ALM, SAP ALM.
+- Experience in regression and system integration testing of large SAP S4 HANA implementations in above mentioned SAP applications
+
+
+
+
+
+Preferred Skill And Experience
+
+
+
+
+
+- Experience preferably in Utility domain.
+- Collaborate with cross-functional teams to define project scope, timelines, and resource requirements.
+- Experience in leading and managing testing activities for big SAP transformation projects.
+- Experience in agile testing.
+- Experience with SAP Concur and Financial processes. Should have knowledge of complete end to end process of FICO.
+- Experience on estimating testing scope, and with defect life cycle, test data set up etc.
+
+
+
+
+
+Additional Required Qualifications
+
+
+
+
+
+- Bachelor’s degree or foreign equivalent required from an accredited institution. Will also consider three years of progressive experience in the specialty in lieu of every year of education.
+- This position may require relocation and/or travel to work/project location.
+- Candidates authorized to work for any employer in the United States without employer-based visa sponsorship are welcome to apply. Infosys is unable to provide immigration sponsorship for this role now or in the future.
+
+
+
+
+
+Additional Details
+
+
+
+For candidates based out below Locations, estimated annual compensation will be as mentioned below:
+
+
+
+Pomona, CA and Rosemead, CA- $80,299- $104,389
+
+
+
+Benefits
+
+
+
+Along with competitive pay, as a full-time Infosys employee you are also eligible for the following benefits:
+
+
+
+
+- Medical/Dental/Vision/Life Insurance
+- Long-term/Short-term Disability
+- Health and Dependent Care Reimbursement Accounts
+- Insurance (Accident, Critical Illness , Hospital Indemnity, Legal)
+- 401(k) plan and contributions dependent on salary level
+- Paid holidays plus Paid Time Off
+
+
+
+
+
+About Us
+
+
+
+Infosys is a global leader in next-generation digital services and consulting. We enable clients in more than 50 countries to navigate their digital transformation. With over four decades of experience in managing the systems and workings of global enterprises, we expertly steer our clients through their digital journey. We do it by enabling the enterprise with an AI-powered core that helps prioritize the execution of change. We also empower the business with agile digital at scale to deliver unprecedented levels of performance and customer delight. Our always-on learning agenda drives their continuous improvement through building and transferring digital skills, expertise, and ideas from our innovation ecosystem.
+
+
+
+EEO
+
+
+
+Infosys provides equal employment opportunities to applicants and employees without regard to race; color; sex; gender identity; sexual orientation; religious practices and observances; national origin; pregnancy, childbirth, or related medical conditions; status as a protected veteran or spouse/family member of a protected veteran; or disability.",833,,,,https://www.linkedin.com/jobs/view/sap-eam-test-consultant-utility-domain-at-infosys-4414380438?trk=bingjobs,,,,,YmluZzotMjYyMzY2NzY0LlJldHJv,True,0,Pending,,False
+ca7af72f-e745-4e3a-ba5f-af102fed41ec,8c21af15212049bf40db713abf702434,2026-09-13,JSearch,ETL Developer in USA,Maintenance Technician,Hempel A/S,"Dallas, Texas",Not specified,,,,2026-09-11,"Maintenance Technician I
+
+
+
+Location: Dallas, Texas Area
+
+
+
+Schedule: Full-time
+
+
+
+Reports to: Maintenance Manager
+
+
+
+Classification: Non-Exempt
+
+
+
+Shift: Day
+
+
+
+Hempel, founded in Denmark in 1915, is a world-leading supplier of trusted coating solutions. Across the globe, our products protect and beautify buildings, infrastructure and other assets, and play an essential role in our customers' businesses. They help minimize maintenance costs, improve aesthetics, and increase energy efficiency. Through our brands Hempel, Neogard, Crown Paints, Wattyl and Farrow & Ball, we provide solutions for the Marine, Energy, Infrastructure and Decorative industries.
+
+
+
+Job Summary: At Hempel, we’re more than a coatings company—we protect what matters most. We’re looking for a skilled Maintenance Technician III to join our Dallas team and keep our operations running safely, smoothly, and efficiently.
+
+
+
+Essential Responsibilities
+
+
+
+As a Maintenance Technician, you’ll ensure the reliability of our production equipment and create a safe environment for your colleagues. Your day-to-day will include:
+
+
+
+
+- Follow Standard Work Instructions provided for the assigned department
+- Follow ISO and Hempel e-convention guidelines
+- Ensure operation of machinery and mechanical equipment by completing preventive maintenance requirements on all production equipment including but not limited to, Valves, Motors, Pumps, Conveyors, Mixers, Dissolvers, Filling Lines by referring to manuals and manufacturer’s recommendations and work instructions
+- Repair and rebuild all production equipment including but not limited to, pumps, valves, gearboxes, conveyors, hydraulic systems, pneumatic equipment and all other mechanical equipment as needed.
+
+- Work with production personnel to troubleshoot all mechanical, hydraulic, pneumatic issues that affect production
+
+- Maintain ongoing relationship building according to Hempel’s standard
+- Determine changes in dimensional requirements of parts by inspecting used parts; using rules, calipers, micrometers, and other measuring instruments
+
+- Adjust functional parts of devices and control instruments by using hand tools, levels, plumb bobs, and straightedges
+
+- Control downtime by working with production Supervisors and leads to work on equipment when not needed by production when possible
+
+- Maintain equipment, parts, and supplies inventories by checking stock to determine inventory level; anticipating needed equipment, parts, and supplies
+
+- Work in Confined spaces as required using all required PPE and strictly following all safety rules and regulations and requirements
+
+- Maintain continuity among work teams by documenting and communicating actions, irregularities, and continuing needs. Documentation required in CMMS work order system
+
+- Maintain safe and clean working environment
+- Perform LOTO (Lock out tag out), Isolate and verify, fill out paperwork as needed to insure safe repairs on all equipment before starting work
+
+- Lookup and reference all SDS (MSDS) when needed when working around different chemicals to determine proper PPE needed
+
+- Report all safety and environmental concerns when issues are found and take steps to eliminate or mitigate when necessary to insure a safe working environment
+
+- Maintenance personnel are considered essential staff which requires them to report to work in all emergencies to assist as needed
+
+- Adhere to all safety rules and regulations including industrial hygiene practices
+
+- Develop understanding of Hempel manufacturing process
+
+
+
+
+
+Minimum Qualifications
+
+
+
+
+
+- Ability to learn and follow safety rules and regulations, including C1/D1 environments
+
+- Basic understanding of OSHA safety practices; OSHA 10‑Hour a plus
+- Entry‑level experience or exposure to electrical and mechanical systems preferred
+
+- Willingness to learn industrial manufacturing processes
+- Basic knowledge of multimeters (voltage measurement) and measuring tools (calipers, micrometers)
+
+- Ability to read and follow written and verbal instructions: follow preventive maintenance schedule and instructions
+
+- Basic understanding of mechanical drawings (training provided if needed)
+- Strong mechanical aptitude and attention to detail
+- Basic troubleshooting skills
+- Ability to communicate effectively in English (read and write)
+- Basic computer skills for data entry and documentation
+- Team oriented with a positive, safety‑focused attitude
+- High school diploma or GED required; technical coursework or certifications preferred
+
+- Experience with confined space entries preferred
+
+
+
+
+
+What is in it for you?
+
+
+
+
+
+- Medical, dental and vision insurance coverage options that begin on your first day of employment
+
+- Flexible HSA and FSA options to manage healthcare and dependent care expenses
+
+- 12 paid holidays
+- 15 vacation days to start
+- 6 personal days
+- Paid leave for jury duty and bereavement
+- 401(k) plan options with immediate company match and full vesting from day one
+
+- Basic life insurance, short-term and long-term disability coverage for the unexpected
+
+- Enjoy 16 weeks of fully paid maternity leave or 4 weeks of paid paternity leave, supporting you during life’s most important moments.
+
+- A strong flexibility policy making you thrive both in your job and privately
+
+
+
+
+
+Work Environment
+
+
+
+The work environment characteristics described here are representative of those an employee encounters while performing the essential functions of this job. Reasonable accommodations may be made to enable individuals with disabilities to perform the essential functions.
+
+
+
+Can be hot, cold, and or humid.
+
+
+
+Work at Heights.
+
+
+
+Work in confined spaces.
+
+
+
+The noise level in the work environment is usually moderate.
+
+
+
+Physical Demands
+
+
+
+The physical demands described here are representative of those that must be met by an employee to successfully perform the essential functions of this job. Reasonable accommodations may be made to enable individuals with disabilities to perform the essential functions.
+
+
+
+The employee must occasionally lift and/or move up to 50 pounds. While performing the duties of this Job, the employee is regularly required to sit; use hands and fingers, handle, or feel; reach with hands and arms and talk or hear. The employee is regularly required to stand; walk; climb or balance and stoop, kneel, crouch, or crawl.
+
+
+
+Applicants must be legally authorized to work in the United States. Direct applicants only; we are not engaging with outside recruitment agencies.
+
+
+
+Application due
+
+
+
+2026-09-30
+
+
+
+Seniority Level
+
+
+
+Associate
+
+
+
+Job Functions
+
+
+
+Manufacturing, Other, Production
+
+
+
+Industry
+
+
+
+Chemicals
+
+
+
+At Hempel, you’re welcomed to a global community of +7000 colleagues around the world. A workplace built on shared trust, mutual respect and support for each other.
+
+
+
+We’re on a mission to double our impact. To succeed, we need bright minds and team players. Which is why, from day one, your input, ideas and initiative are not only welcomed, but expected. In return, you will enjoy great opportunities for development in a growing global company – and be part of the solution by contributing to our global impact.
+
+
+
+At Hempel, we are committed to everyone feeling safe, valued and treated equally, in an environment where each employee can bring their authentic selves to work.  We believe that inclusion is key to innovation and by bringing together the most diverse perspectives and talents, we can achieve great things, together.",1091,,,,https://www.linkedin.com/jobs/view/maintenance-technician-at-hempel-a-s-4434889885?trk=bingjobs,,,,,YmluZzoxMzUyODE2ODExLlJldHJv,,0,Pending,,False
+c0b505b8-2758-459d-ade8-c2a7c9e14b66,b8a4dc91782cbb5e16ace60dddc16f16,2026-09-13,JSearch,Analytics Engineer in USA,Data Analyst - Mid/Pogrammer/Analyst II,Amentum,"DC, US",Onsite,,4 years of experience,"aws, power bi",2026-09-11,"Amentum is searching for a Top-Secret cleared Data Analyst to join our team in Washington, DC. You will be working in an organization that’s mission is to accelerate operations through data and new analytical insights. The entire section leverages agile and works to provide enhanced reporting and global searching capabilities to facilitate task management, cross-utilization, and address national intelligence priorities while protecting confidential data and sources.
+
+
+
+The Data Analyst transforms data into actionable insights that support organizational objectives, operational excellence, and informed decision-making. This role collects, validates, analyzes, and reports information from multiple sources to produce accurate reports, executive briefings, dashboards, and recommendations for internal and external stakeholders. Working closely with program leadership and cross-functional teams, the Data Analyst ensures data integrity, supports information management and collaboration processes, and delivers analytical solutions that drive efficiency, transparency, and program success.
+
+
+
+Through strong technical expertise, attention to detail, and stakeholder engagement, this position enables leaders to make data-driven decisions, improves reporting and knowledge-sharing capabilities, and contributes to continuous process improvement across the organization.
+
+
+
+Work Schedule:
+
+
+
+Typically, Monday through Friday 8-hour days onsite. Flexibility within a 2-week pay period to reach 80 hours.
+
+
+
+Essential Responsibilities:
+
+
+
+Responsible for performing analysis on relevant information from a variety of sources to prepare documents, reports, summaries and replies to inquiries, ensuring accuracy and proper format of the information provided. Manages compilation, cataloging, caching, distribution, and retrieval of data. Participates in ad hoc data projects and analyses that produce actionable recommendations that build relevant insights for internal and external stakeholders. Collects data and runs basic reports in response to client inquiries. Works closely with key internal stakeholders to ensure sound knowledge of client requirements to support development of best-in-class analytical solutions. Accurately enters required data into one or more databases, documents and/or spreadsheets.
+
+
+
+Work Environment, Physical Demands, and Mental Demands:
+
+
+
+Minimum Requirements (Knowledge, Skills, and Abilities):
+
+
+
+
+
+- 4 years of experience collectively with the following:
+
+- Demonstrated experience providing administrative or executive support in a fast-paced, deadline-driven environment.
+
+- Demonstrated proficiency with Microsoft 365 applications, including SharePoint, Teams, Outlook, Excel, Word, and PowerPoint.
+
+- Experience building or maintaining SharePoint sites, pages, lists, document libraries, permissions, and collaboration workflows.
+
+- Experience tracking, consolidating, validating, and reporting information from multiple stakeholders or business units.
+
+- Advanced PowerPoint skills, including creating executive briefings, data visualizations, charts, tables, and concise leadership-level presentations.
+
+- Strong writing, editing, proofreading, customer-service, and interpersonal communication skills.
+
+- Strong attention to detail, organization, prioritization, and ability to manage multiple concurrent assignments.
+
+- Ability to work independently, exercise sound judgment, and maintain confidentiality.
+
+
+
+
+
+
+Security Clearance Required: Active Top-Secret clearance with SCI eligibility
+
+
+
+Minimum Education: Bachelor's degree or equivalent specialized experience (1 year of education = 1.5 years of experience).
+
+
+
+Minimum Years of Experience: Minimum of 5 years of relevant experience
+
+
+
+Preferred Qualifications:
+
+
+
+
+
+- Experience supporting senior executives, program leadership, or government clients.
+
+- Experience with Power BI, Power Automate, Microsoft Lists, Planner, or other Microsoft Power Platform tools.
+
+- Experience developing dashboards, metrics, status reports, or executive decision briefs.
+
+- Familiarity with record-management practices, information governance, and accessibility requirements for electronic documents and presentations.
+
+- Active security clearance or ability to obtain and maintain one, if required by the contract.
+
+
+
+
+
+
+Other Responsibilities:
+
+
+
+Safety - Amentum enforces a safety culture whereby all employees have the responsibility for continuously developing and maintaining a safe work environment. As appropriate, each employee is responsible for completing all training requirements and fulfilling all self-aid/buddy aid responsibilities, participating in emergency response tasks and serving on safety committees and teams.
+
+
+
+Quality - Quality is the foundation for the management of our business and the keystone to our goal of customer satisfaction. It is our policy to consistently provide services that meet customer expectations. Accordingly, each employee must conform to the Amentum Quality Policy and carry out job activities in compliance with applicable Amentum Quality System documents and customer contracts. Each employee must read and understand his/her Quality Management and Customer Satisfaction responsibilities.
+
+
+
+Procedure Compliance - Each employee must read, understand and implement the general and specific operational, safety, quality and environmental requirements of all plans, procedures and policies pertaining to his/her job. Qualified applicants will receive consideration for employment without regard to race, color, religion, sex, national origin, sexual orientation, gender identity, disability or protected veteran status.
+
+
+
+#javelin
+
+
+
+Compensation Details:
+
+
+
+US:$128,000 – 140,000
+
+
+
+The compensation range or hourly rate listed for this position is provided as a good-faith estimate of what the company intends to offer for this role at the time this posting was issued. Actual compensation may vary based on factors such as job responsibilities, education, experience, skills, internal equity, market data, applicable collective bargaining agreements, and relevant laws.
+
+
+
+Benefits Overview:
+
+
+
+Our health and welfare benefits are designed to support you and your priorities. Offerings include:
+
+
+
+
+- Health, dental, and vision insurance
+- Paid time off and holidays
+- Retirement benefits (including 401(k) matching)
+- Educational reimbursement
+- Parental leave
+- Employee stock purchase plan
+- Tax-saving options
+- Disability and life insurance
+- Pet insurance
+
+
+
+
+
+Note: Benefits may vary based on employment type, location, and applicable agreements. Positions governed by a Collective Bargaining Agreement (CBA), the McNamara-O'Hara Service Contract Act (SCA), or other employment contracts may include different provisions/benefits.
+
+
+
+Original Posting:
+
+
+
+09/10/2026 - Until Filled
+
+
+
+Amentum anticipates this job requisition will remain open for at least three days, with a closing date no earlier than three days after the original posting. This timeline may change based on business needs.
+
+
+
+Amentum is proud to be an Equal Opportunity Employer. Our hiring practices provide equal opportunity for employment without regard to race, sex, sexual orientation, pregnancy (including pregnancy, childbirth, breastfeeding, or medical conditions related to pregnancy, childbirth, or breastfeeding), age, ancestry, United States military or veteran status, color, religion, creed, marital or domestic partner status, medical condition, genetic information, national origin, citizenship status, low-income status, or mental or physical disability so long as the essential functions of the job can be performed with or without reasonable accommodation, or any other protected category under federal, state, or local law. Learn more about your rights under Federal laws and supplemental language at Labor Laws Posters.",1019,,,,https://www.linkedin.com/jobs/view/data-analyst-mid-pogrammer-analyst-ii-at-amentum-4465863831?trk=bingjobs,,,,,YmluZzoyNjA3NjI0MTcuUmV0cm8,,0,Pending,,False
+be21eb9b-215f-49ce-860f-585f7c1f4967,4f4aa4fd3f517a4777586c20598c13c7,2026-09-13,JSearch,Analytics Engineer in USA,"Category Analyst, Category Analytics",Amazon,"Austin, Texas",Not specified,,,"sql, tableau",2026-09-11,"Description
+
+
+
+As an Analytics Partner, you will be responsible for delivering data-driven and actionable recommendations through our category-level insights process to drive business decisions. The ideal candidate has the ability to “tell a story” with their analysis, built across a variety of data-sources (transactional, market, competitor, and customer) to help stakeholders achieve their business objectives. With a strong analytical skillset, relevant experience (category and assortment management, retail operations, business analysis, etc), and knowledge of the Whole Foods Market product mix you will thrive in this role that is the ideal combination of art and science.
+
+
+
+Key job responsibilities
+
+
+
+
+- Utilizes advanced analytical methods to identify patterns, relationships, and trends across multiple data sources. Synthesizes information to construct a data-driven narrative with business-driving recommendations that can be understood and actioned-upon by a broad audience.
+- Explains complex data and analytical approaches in simple terms that connect results with merchandising, customer, competitive, and marketing problems.
+- Supports category-level insights, ad-hocs, and reports as needed.
+- Collaborates with cross-functional partners across the analytics organization (assortment analytics, pricing, promotion, etc) and acts as project manager to translate stakeholder business questions into analyses that inform business decisions and align with business objectives.
+
+
+
+
+
+Skills
+
+
+
+
+
+- Experience using multiple large enterprise databases to query and prepare data for analysis.
+- Strong ability to translate data into actionable analytical insights which drive business decisions.
+- Understands customer, market, and industry trends and emerging challenges.
+- Demonstrates strong knowledge of the Whole Foods Market product mix, supply base, and retail operations.
+- Communicates structured information in a clear, concise, and organized fashion. Tailors communication approach to specific situations and audiences.
+- Able to effectively lead meetings, present information, and respond to questions in both one-on-one situations and group meetings.
+- Advanced ability to plan, estimate, organize, and lead multiple projects.
+- Collaborates with stakeholders and cross-functional Team Members at various levels of the organization to achieve business objectives by required deadlines.
+- Builds trust and nurtures relationships with senior-level stakeholders and leaders.
+- Impacts overall team effectiveness.
+- May provide informal support to less experienced Team Members.
+
+
+
+
+
+Basic Qualifications
+
+
+
+
+
+- Bachelor's degree in a quantitative discipline such as statistics, mathematics, economics, computer science, or any related quantitative field
+- 3+ years of doing one of several roles: quantitative/financial analysis, retail buying, retail planning & allocation, product/project management, pricing, marketing or e-commerce experience
+- Experience with data analysis tools such as Excel, Pivot Tables, macros, SQL, visualization tools - Tableau, Quicksight, etc.
+
+
+
+
+
+Preferred Qualifications
+
+
+
+
+
+- Experience in the Grocery / CPG business
+
+
+
+
+
+Amazon is an equal opportunity employer and does not discriminate on the basis of protected veteran status, disability, or other legally protected status.
+
+
+
+Our inclusive culture empowers Amazonians to deliver the best results for our customers. If you have a disability and need a workplace accommodation or adjustment during the application and hiring process, including support for the interview or onboarding process, please visit https://amazon.jobs/content/en/how-we-hire/accommodations for more information. If the country/region you’re applying in isn’t listed, please contact your Recruiting Partner.
+
+
+
+The base salary range for this position is listed below. Your Amazon package will include sign-on payments and restricted stock units (RSUs). Final compensation will be determined based on factors including experience, qualifications, and location. Amazon also offers comprehensive benefits including health insurance (medical, dental, vision, prescription, Basic Life & AD&D insurance and option for Supplemental life plans, EAP, Mental Health Support, Medical Advice Line, Flexible Spending Accounts, Adoption and Surrogacy Reimbursement coverage), 401(k) matching, paid time off, and parental leave. Learn more about our benefits at https://amazon.jobs/en/benefits.
+
+
+
+USA, TX, AUSTIN - 74,300.00 - 130,100.00 USD annually
+
+
+
+
+
+Company - Amazon.com Services LLC
+
+
+
+Job ID: A10506822",608,,,,https://www.linkedin.com/jobs/view/category-analyst-category-analytics-at-amazon-4456414498?trk=bingjobs,,,,,YmluZzoxODY0OTU0NjQ1LlJldHJv,,0,Pending,,False
+d5dbe42b-0d48-4c0c-9b31-5d69221b49cb,6971b7a9f3fca760df95438c7c1dff90,2026-09-13,JSearch,Analytics Engineer in USA,Decision Intelligence Analyst,BNY,"Pittsburgh, Pennsylvania",Not specified,,,,2026-09-10,"JOB DESCRIPTION
+
+
+
+Decision Intelligence Analyst – Corporate Engineering
+
+
+
+At BNY, our culture allows us to run our company better and enables employees’ growth and success. As a leading global financial services company at the heart of the global financial system, we influence nearly 20% of the world’s investible assets. Every day, our teams harness cutting-edge AI and breakthrough technologies to collaborate with clients, driving transformative solutions that redefine industries and uplift communities worldwide.
+
+
+
+Recognized as a top destination for innovators, BNY is where bold ideas meet advanced technology and exceptional talent. Together, we power the future of finance – and this is what is all about. Join us and be part of something extraordinary.
+
+
+
+We’re seeking a future team member for the role of Decision Intelligence Analyst to join our Corporate Engineering team. This role is in Pittsburgh, PA or Lake Mary, FL.
+
+
+
+In this role, you’ll make an impact in the following ways:
+
+
+
+
+- Provide decision intelligence and support to the Engineering Excellence Lead for Corporate Engineering by translating strategy into measurable execution outcomes.
+- Drive engineering excellence and delivery performance across Corporate Engineering Hubs and Corporate Activity Teams through adoption of standards, tooling, metrics, insights, training, communication, and governance.
+- Convert comprehensive engineering data—portfolio, headcount, financial, and execution signals—into clear insights and narratives for senior leaders.
+- Enable AI-accelerated workflows that automate insight generation while ensuring human judgment and context guide executive decisions.
+
+
+
+
+
+To be successful in this role, we’re seeking the following:
+
+
+
+
+- Bachelor’s degree or equivalent experience in analytics, engineering operations, finance, strategy, consulting, or related fields.
+- Approximately 2–4 years of relevant experience, ideally in analytics, engineering operations, finance, strategy, consulting, or rotational programs.
+- High learning agility and comfort working in ambiguous, fast-paced environments.
+- Strong skills in data synthesis, executive communication, and AI-enabled decision support.
+
+
+
+
+
+At BNY, our culture speaks for itself, check out the latest BNY news at:
+
+
+
+BNY Newsroom
+
+
+
+BNY LinkedIn
+
+
+
+Here’s a Few Of Our Recent Awards:
+
+
+
+America’s Most Innovative Companies, Fortune, 2025
+
+
+
+World’s Most Admired Companies, Fortune 2025
+
+
+
+“Most Just Companies”, Just Capital and CNBC, 2025
+
+
+
+Our Benefits And Rewards:
+
+
+
+BNY offers highly competitive compensation, benefits, and wellbeing programs rooted in a strong culture of excellence and our pay-for-performance philosophy. We provide access to flexible global resources and tools for your life’s journey. Focus on your health, foster your personal resilience, and reach your financial goals as a valued member of our team, along with generous paid leaves, including paid volunteer time, that can support you and your family through moments that matter.
+
+
+
+BNY is an Equal Employment Opportunity/Affirmative Action Employer - Underrepresented racial and ethnic groups/Females/Individuals with Disabilities/Protected Veterans.
+
+
+
+ABOUT THE TEAM
+
+
+
+At BNY, our culture speaks for itself, check out the latest BNY news at BNY Newsroom & BNY LinkedIn
+
+
+
+Here’s a Few Of Our Recent Awards:
+
+
+
+
+
+- America’s Most Innovative Companies, Fortune, 2025
+- World’s Most Admired Companies, Fortune 2025
+- “Most Just Companies”, Just Capital and CNBC, 2025
+
+
+
+
+
+Our Benefits And Rewards:
+
+
+
+BNY offers highly competitive compensation, benefits, and wellbeing programs rooted in a strong culture of excellence and our pay-for-performance philosophy. We provide access to flexible global resources and tools for your life’s journey. Focus on your health, foster your personal resilience, and reach your financial goals as a valued member of our team, along with generous paid leaves, including paid volunteer time, that can support you and your family through moments that matter.
+
+
+
+BNY is an Equal Employment Opportunity/Affirmative Action Employer - Underrepresented racial and ethnic groups/Females/Individuals with Disabilities/Protected Veterans.
+
+
+
+BNY assesses market data to ensure a competitive compensation package for our employees. The expected base salary for this position when employment commences can be found in the Job Info section at the bottom of the posting.
+
+
+
+Base salary offered may vary depending on multiple individualized factors, including market location, job-related knowledge, skills, and experience. Base salary is only part of the total rewards package, which may include eligibility for an annual discretionary incentive award. Subject to the terms and conditions of the applicable plans then in effect, eligible employees may enroll in a 401(k) plan as well as participate in Company-sponsored medical, dental, vision, and basic life insurance plans for the employee and the employee’s eligible dependents. Eligible employees also may receive other benefits (including various paid time off benefits, such as vacation and sick time), dependent on the position offered. Details of participation in these benefit plans will be provided if an employee receives an offer of employment.
+
+
+
+If hired, the employee will be in an “at will” position and the Company reserves the right to modify base salary (as well as any other discretionary payments or compensation programs) at any time, including for reasons related to individual performance, Company or individual department/team performance, and market factors.",796,,,,https://www.linkedin.com/jobs/view/decision-intelligence-analyst-at-bny-4465846094?trk=bingjobs,,,,,YmluZzotMjA5NTAzOTI1Ny5SZXRybw,,0,Pending,,False

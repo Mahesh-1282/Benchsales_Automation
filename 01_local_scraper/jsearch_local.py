@@ -12,9 +12,14 @@
 ╚══════════════════════════════════════════════════════════════════════╝
 """
 
-import os, csv, json, uuid, hashlib, re, requests, time, logging
+import os, csv, json, uuid, hashlib, re, requests, time, logging, sys
 from datetime import date, datetime
 from dotenv import load_dotenv
+from pathlib import Path
+
+# Import local db_utils
+sys.path.insert(0, str(Path(__file__).parent.parent / "03_databricks_app"))
+from db_utils import execute_sql, query_df, insert_row, esc
 
 # ── Load .env ────────────────────────────────────────────────────────
 load_dotenv()
@@ -280,30 +285,57 @@ def build_record(job: dict, keyword: str) -> dict:
     }
 
 
-def write_csv(records: list) -> int:
-    """Write records to CSV, skip if file already has that job_hash."""
-    existing_hashes: set = set()
-    if os.path.exists(CSV_FILE):
-        try:
-            with open(CSV_FILE, "r", encoding="utf-8") as f:
-                for row in csv.DictReader(f):
-                    existing_hashes.add(row.get("job_hash", ""))
-        except Exception:
-            pass
+def write_to_db(records: list) -> int:
+    """Write records to SQLite jobs_harvested_bronze, skip if file already has that job_hash."""
+    existing_df = query_df("SELECT job_hash FROM jobs_harvested_bronze")
+    existing_hashes = set(existing_df["job_hash"]) if not existing_df.empty else set()
 
     new_records = [r for r in records if r["job_hash"] not in existing_hashes]
     if not new_records:
-        log.info("  ℹ️  No new records to write (all already in CSV).")
+        log.info("  ℹ️  No new records to write (all already in DB).")
         return 0
 
-    mode = "a" if os.path.exists(CSV_FILE) else "w"
-    with open(CSV_FILE, mode=mode, newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_HEADERS, extrasaction="ignore")
-        if mode == "w":
-            writer.writeheader()
-        writer.writerows(new_records)
+    inserted = 0
+    for r in new_records:
+        # Match EXACTLY with bronze schema
+        bronze_row = {
+            "id": r["id"],
+            "job_hash": r["job_hash"],
+            "fetch_date": r["fetch_date"],
+            "portal": r["portal"],
+            "search_keyword": r["search_keyword"],
+            "job_title": r["job_title"],
+            "company_name": r["company_name"],
+            "location": r["location"],
+            "remote_type": r["remote_type"],
+            "salary_range": r["salary_range"],
+            "experience_years": r["experience_years"],
+            "tech_stack": r["tech_stack"],
+            "posted_date": r["posted_date"],
+            "job_description": r["job_description"],
+            "description_length": r["description_length"],
+            "roles_responsibilities": r["roles_responsibilities"],
+            "requirements_section": r["requirements_section"],
+            "roles_summary": r["roles_summary"],
+            "apply_link": r["apply_link"],
+            "easy_apply_link": r["easy_apply_link"],
+            "company_career_url": r["company_career_url"],
+            "company_website": r["company_website"],
+            "hr_email": r["hr_email"],
+            "job_id": r["job_id"],
+            "visa_sponsorship": r["visa_sponsorship"],
+            "validation_score": r["validation_score"],
+            "validation_status": r["validation_status"],
+            "ai_summary": r["ai_summary"],
+            "detail_fetched": r["detail_fetched"]
+        }
+        ok, err = insert_row("jobs_harvested_bronze", bronze_row)
+        if ok:
+            inserted += 1
+        else:
+            log.error(f"DB Insert Error: {err}")
 
-    return len(new_records)
+    return inserted
 
 
 # ── Main ─────────────────────────────────────────────────────────────
@@ -315,7 +347,7 @@ def main():
 
     log.info("=" * 65)
     log.info(f"🚀 JSEARCH LOCAL RUNNER — {TODAY}")
-    log.info(f"📋 Keywords: {len(SEARCH_KEYWORDS)} | Output: {CSV_FILE}")
+    log.info(f"📋 Keywords: {len(SEARCH_KEYWORDS)} | Output: SQLite (jobs_harvested_bronze)")
     log.info("=" * 65)
 
     all_records    = []
@@ -341,20 +373,15 @@ def main():
         log.info(f"  📊 Running total: {len(all_records)} unique jobs so far")
         time.sleep(DELAY_BETWEEN_CALLS)
 
-    # Write to CSV
-    written = write_csv(all_records)
+    # Write to SQLite DB
+    written = write_to_db(all_records)
 
     log.info("=" * 65)
     log.info(f"✅ DONE!")
     log.info(f"   Total API results : {total_fetched}")
     log.info(f"   Unique jobs (dedup): {len(all_records)}")
-    log.info(f"   Written to CSV     : {written}")
-    log.info(f"   Output file        : {os.path.abspath(CSV_FILE)}")
+    log.info(f"   Written to DB      : {written}")
     log.info("=" * 65)
-    log.info("📌 NEXT STEP: Upload the CSV to Databricks manually:")
-    log.info("   Databricks → Data → DBFS → /FileStore/jobs_daily/")
-    log.info(f"   Upload: {CSV_FILE}")
-    log.info("   Then run notebook: 02_databricks_notebooks/01_bronze_loader")
 
 
 if __name__ == "__main__":

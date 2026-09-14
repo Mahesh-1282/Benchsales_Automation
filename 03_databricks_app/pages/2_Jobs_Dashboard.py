@@ -4,7 +4,7 @@ Three-panel: Job List | Full Job Details | Resume Panel
 """
 
 import streamlit as st
-import sys, os, json, uuid
+import sys, os, json, uuid, re
 from pathlib import Path
 from datetime import datetime
 
@@ -51,7 +51,7 @@ st.markdown("<h2 style='color:#f1f5f9; margin-bottom:4px;'>💼 Jobs Dashboard</
 # ── User selector + Download format ──────────────────────────
 hcol1, hcol2, hcol3 = st.columns([3, 2, 2])
 
-users_df = query_df(f"SELECT user_id, full_name, total_experience_years FROM {CATALOG}.users_schema.users WHERE is_active = true")
+users_df = query_df(f"SELECT user_id, full_name, total_experience_years FROM users WHERE is_active = true")
 if users_df.empty:
     st.warning("No users yet. Complete Onboarding first.")
     st.stop()
@@ -81,7 +81,7 @@ m_df = query_df(f"""
         SUM(CASE WHEN status = 'recruiter_replied' THEN 1 ELSE 0 END) AS replied,
         SUM(CASE WHEN status = 'matched' THEN 1 ELSE 0 END) AS pending,
         AVG(match_score) AS avg_score
-    FROM {CATALOG}.default.user_job_matches
+    FROM user_job_matches
     WHERE user_id = '{user_id}'
 """)
 
@@ -111,6 +111,61 @@ sf_str  = "', '".join(status_f)  if status_f  else "matched"
 ef_str  = "', '".join(exp_fit_f) if exp_fit_f else "exact"
 skills_sql = f"AND LOWER(j.tech_stack) LIKE LOWER('%{skills_f}%')" if skills_f else ""
 
+import subprocess
+
+# ── Local Scraper ─────────────────────────────────────────────
+with st.expander("🕷️ Run Local Scraper", expanded=False):
+    st.markdown("Trigger the multi-portal job scraper locally. This streams logs in real-time.")
+    
+    kw = ""
+    if "ai_scraping_keywords" in users_df.columns:
+        matching_user = users_df.loc[users_df["user_id"] == user_id]
+        if not matching_user.empty:
+            kw = matching_user.iloc[0].get("ai_scraping_keywords", "")
+    
+    st.info(f"Using AI Keywords: **{kw or 'Data Engineer (Default)'}**")
+    
+    if st.button("▶️ Start Scraping", type="primary"):
+        st.markdown("### 📜 Live Scraping Logs")
+        log_container = st.empty()
+        
+        scraper_script = os.path.join(Path(__file__).parent.parent.parent, "01_local_scraper", "job_scrapper.py")
+        
+        env = os.environ.copy()
+        if kw:
+            env["SCRAPER_KEYWORDS"] = kw
+            
+        process = subprocess.Popen([sys.executable, scraper_script], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=env)
+        
+        logs = []
+        for line in iter(process.stdout.readline, ''):
+            logs.append(line)
+            log_container.code("".join(logs[-100:]), language="bash")
+            
+        process.stdout.close()
+        process.wait()
+        
+        if process.returncode == 0:
+            st.success("✅ Scraping Complete!")
+        else:
+            st.error(f"❌ Scraping Failed with code {process.returncode}")
+        
+        if st.button("🔄 Reload Dashboard After Scrape"):
+            st.rerun()
+
+    st.markdown("---")
+    st.markdown("### ⚙️ Pipeline")
+    if st.button("▶️ Run Job Matching Pipeline", type="secondary"):
+        with st.spinner("Running pipeline (Bronze -> Silver -> Matching -> Resume Gen)..."):
+            pipeline_script = os.path.join(Path(__file__).parent.parent, "local_pipeline.py")
+            p = subprocess.run([sys.executable, pipeline_script], capture_output=True, text=True)
+            if p.returncode == 0:
+                st.success("✅ Pipeline Complete!")
+                with st.expander("Show Pipeline Logs"):
+                    st.code(p.stdout, language="bash")
+            else:
+                st.error(f"❌ Pipeline Failed: {p.stderr}")
+
 # ── Load jobs ─────────────────────────────────────────────────
 jobs_df = query_df(f"""
     SELECT
@@ -122,8 +177,8 @@ jobs_df = query_df(f"""
         j.hr_email, j.portal, j.experience_min, j.experience_max,
         j.ai_summary, j.visa_sponsorship, j.roles_summary,
         j.job_description, j.requirements_section
-    FROM {CATALOG}.default.user_job_matches m
-    JOIN {CATALOG}.default.jobs_clean_silver j ON m.job_hash = j.job_hash
+    FROM user_job_matches m
+    JOIN jobs_clean_silver j ON m.job_hash = j.job_hash
     WHERE m.user_id = '{user_id}'
       AND m.match_score >= {min_score}
       AND m.status IN ('{sf_str}')
@@ -148,7 +203,7 @@ with bac1:
             st.warning("No jobs selected via checkboxes.")
         else:
             for mid in selected_ids:
-                execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'resume_pending' WHERE match_id = '{mid}'")
+                execute_sql(f"UPDATE user_job_matches SET status = 'resume_pending' WHERE match_id = '{mid}'")
             st.success(f"Queued {len(selected_ids)} resumes for generation!")
             st.rerun()
 with bac2:
@@ -272,7 +327,8 @@ with detail_col:
     jt1, jt2, jt3 = st.tabs(["📋 Responsibilities", "📌 Requirements", "🔗 Apply"])
 
     with jt1:
-        roles = str(job.get("roles_summary") or job.get("job_description") or "Not available")[:3000]
+        raw_roles = str(job.get("roles_summary") or job.get("job_description") or "Not available")
+        roles = re.sub(r'<[^>]+>', '', raw_roles)[:3000]
         if "•" in roles:
             for line in roles.split("\n"):
                 if line.strip():
@@ -281,8 +337,9 @@ with detail_col:
             st.markdown(f"<div style='font-size:13px; color:#94a3b8; white-space:pre-wrap;'>{roles[:2000]}</div>", unsafe_allow_html=True)
 
     with jt2:
-        req = str(job.get("requirements_section") or job.get("tech_stack") or "See job description")
-        st.markdown(f"<div style='font-size:13px; color:#94a3b8; white-space:pre-wrap;'>{req[:2000]}</div>", unsafe_allow_html=True)
+        raw_req = str(job.get("requirements_section") or job.get("tech_stack") or "See job description")
+        req = re.sub(r'<[^>]+>', '', raw_req)[:2000]
+        st.markdown(f"<div style='font-size:13px; color:#94a3b8; white-space:pre-wrap;'>{req}</div>", unsafe_allow_html=True)
 
     with jt3:
         apply_url  = str(job.get("easy_apply_link") or job.get("apply_link") or "")
@@ -295,9 +352,9 @@ with detail_col:
         if apply_url and apply_url not in ("None", ""):
             st.markdown(f"**[🔗 Open Job Listing]({apply_url})**")
             if st.button("📤 Mark as Applied (link)", key=f"apply_link_{job['match_id']}"):
-                execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'applied' WHERE match_id = '{job['match_id']}'")
+                execute_sql(f"UPDATE user_job_matches SET status = 'applied' WHERE match_id = '{job['match_id']}'")
                 try:
-                    insert_row(f"{CATALOG}.default.job_submissions", {
+                    insert_row(f"job_submissions", {
                         "submission_id":      str(uuid.uuid4()),
                         "user_id":            user_id,
                         "job_hash":           str(job["job_hash"]),
@@ -318,16 +375,16 @@ with detail_col:
     ac1, ac2, ac3 = st.columns(3)
     with ac1:
         if job["status"] not in ("resume_ready", "applied") and st.button("📄 Queue Resume Gen", key=f"gen_{job['match_id']}", use_container_width=True, type="primary"):
-            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'resume_pending' WHERE match_id = '{job['match_id']}'")
+            execute_sql(f"UPDATE user_job_matches SET status = 'resume_pending' WHERE match_id = '{job['match_id']}'")
             st.success("Queued!")
             st.rerun()
     with ac2:
         if st.button("⏭️ Skip Job", key=f"skip_{job['match_id']}", use_container_width=True):
-            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'skipped' WHERE match_id = '{job['match_id']}'")
+            execute_sql(f"UPDATE user_job_matches SET status = 'skipped' WHERE match_id = '{job['match_id']}'")
             st.rerun()
     with ac3:
         if st.button("♻️ Re-match", key=f"rematch_{job['match_id']}", use_container_width=True):
-            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'matched' WHERE match_id = '{job['match_id']}'")
+            execute_sql(f"UPDATE user_job_matches SET status = 'matched' WHERE match_id = '{job['match_id']}'")
             st.rerun()
 
 # ── PANEL 3: Resume Panel ─────────────────────────────────────
@@ -343,7 +400,7 @@ with resume_col:
                    gr.experience_years_used, gr.skills_highlighted,
                    gr.tailored_bullets_json, gr.resume_version,
                    gr.is_user_edited, gr.generated_at, gr.basic_knowledge_added
-            FROM {CATALOG}.default.generated_resumes gr
+            FROM generated_resumes gr
             WHERE gr.resume_id = '{resume_id}' AND gr.is_latest = true
         """)
 
@@ -353,7 +410,7 @@ with resume_col:
                        gr.experience_years_used, gr.skills_highlighted,
                        gr.tailored_bullets_json, gr.resume_version,
                        gr.is_user_edited, gr.generated_at, gr.basic_knowledge_added
-                FROM {CATALOG}.default.generated_resumes gr
+                FROM generated_resumes gr
                 WHERE gr.user_id = '{user_id}' AND gr.job_hash = '{job["job_hash"]}' AND gr.is_latest = true
                 LIMIT 1
             """)
@@ -421,7 +478,7 @@ with resume_col:
                     # Pre-escape JSON string (Python 3.11: no backslash in f-string)
                     bullets_str = esc(json.dumps(bullets_json))
                     execute_sql(
-                        f"UPDATE {CATALOG}.default.generated_resumes "
+                        f"UPDATE generated_resumes "
                         f"SET tailored_bullets_json = '{bullets_str}', "
                         f"is_user_edited = true, "
                         f"last_edited_at = current_timestamp() "
@@ -430,8 +487,8 @@ with resume_col:
                     st.success("✅ Saved!")
 
             if st.button("🔄 Regenerate (new version)", key=f"regen_{resume_id}", use_container_width=True):
-                execute_sql(f"UPDATE {CATALOG}.default.generated_resumes SET is_latest = false WHERE resume_id = '{resume_id}'")
-                execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'matched', resume_generated = false, resume_id = NULL WHERE match_id = '{job['match_id']}'")
+                execute_sql(f"UPDATE generated_resumes SET is_latest = false WHERE resume_id = '{resume_id}'")
+                execute_sql(f"UPDATE user_job_matches SET status = 'matched', resume_generated = false, resume_id = NULL WHERE match_id = '{job['match_id']}'")
                 st.success("Queued for regeneration!")
                 st.rerun()
 
@@ -463,6 +520,6 @@ with resume_col:
         """, unsafe_allow_html=True)
 
         if st.button("🤖 Generate Resume Now", key=f"gen_now_{job['match_id']}", type="primary", use_container_width=True):
-            execute_sql(f"UPDATE {CATALOG}.default.user_job_matches SET status = 'resume_pending' WHERE match_id = '{job['match_id']}'")
+            execute_sql(f"UPDATE user_job_matches SET status = 'resume_pending' WHERE match_id = '{job['match_id']}'")
             st.success("✅ Queued! Resume will be ready in ~15 minutes.")
             st.rerun()

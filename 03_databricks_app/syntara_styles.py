@@ -240,7 +240,7 @@ div[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
 }
 
 /* ── Divider ── */
-hr { border-color: var(--border) !important; margin: 2rem 0 !important; }
+hr { border: none !important; border-bottom: 1px solid var(--border) !important; margin: 2rem 0 !important; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width:8px; height:8px; }
@@ -265,6 +265,101 @@ section[data-testid="stFileUploadDropzone"]:hover {
 }
 section[data-testid="stFileUploadDropzone"] svg {
     fill: var(--accent) !important;
+}/* ── Job Cards ── */
+.job-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.job-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+}
+.job-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.job-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.3;
+}
+.job-card-company {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-top: 4px;
+}
+.job-card-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    object-fit: contain;
+    padding: 4px;
+    background: #fff;
+}
+.job-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+.job-card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+.job-card-snippet {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 8px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.job-card-skills {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.job-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+}
+.job-card-time {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+.job-card-actions {
+    display: flex;
+    gap: 8px;
 }
 </style>
 """

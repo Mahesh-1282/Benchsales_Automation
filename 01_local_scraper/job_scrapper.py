@@ -20,12 +20,25 @@
 ╚══════════════════════════════════════════════════════════════════════╝
 """
 
-import os, csv, hashlib, uuid, re, time, random, logging, json, requests
+import os, csv, hashlib, uuid, re, time, random, logging, json, requests, sys
+from pathlib import Path
 from datetime import datetime, date, timedelta
+import ssl
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+try:
+    ssl._create_default_https_context = ssl._create_unverified_context
+except Exception:
+    pass
+
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urlparse, urljoin, quote_plus
 import playwright_stealth
+
+# Import local db_utils
+sys.path.insert(0, str(Path(__file__).parent.parent / "03_databricks_app"))
+from db_utils import execute_sql, query_df, insert_row, esc, update_row
 
 try:
     from tabulate import tabulate
@@ -52,9 +65,8 @@ CONFIG = {
     # ── Output ──────────────────────────────────────────────
     "csv_file": "jobs_v10_output_test_2.csv",
 
-    # ── NVIDIA NIM ───────────────────────────────────────────
-    "nvidia_api_key": os.getenv("NVIDIA_NIM_API_KEY", "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"),
-    "nvidia_model":   "meta/llama-3.1-8b-instruct",
+    # ── Gemini AI ───────────────────────────────────────────
+    "gemini_api_key": os.getenv("GEMINI_API_KEY", ""),
     "use_ai_scoring": True,
 
     # ── Site Toggle ──────────────────────────────────────────
@@ -63,16 +75,7 @@ CONFIG = {
     "enable_all_sites": True,
 
     # ── Target Roles ─────────────────────────────────────────
-    "roles": [
-        "Data Engineer",
-        "Senior Data Engineer",
-        "PySpark Engineer",
-        "ETL Developer",
-        "Analytics Engineer",
-        "Machine Learning Engineer",
-        "Databricks Engineer",
-        "Spark Developer",
-    ],
+    "roles": [r.strip() for r in os.getenv("SCRAPER_KEYWORDS", "Data Engineer, Senior Data Engineer").split(",") if r.strip()],
 
     # ── Scraping ─────────────────────────────────────────────
     "max_jobs_per_portal_per_role": 25,
@@ -204,30 +207,29 @@ def guess_company_domain(company_name: str) -> str:
     return ""
 
 # ============================================================
-# 🤖  NVIDIA NIM AI SCORER
+# 🤖  GEMINI AI SCORER & EXTRACTOR
 # ============================================================
 def ai_score_job(job: dict) -> tuple[int, str, str, str, bool]:
     """
-    Score a job using NVIDIA NIM API.
+    Score a job using Gemini 3.5 Flash API.
     Returns: (score, ai_summary, tech_stack, experience_years, visa_sponsorship)
     """
-    api_key = CONFIG["nvidia_api_key"]
-    if not api_key or api_key.startswith("YOUR_"):
+    api_key = CONFIG["gemini_api_key"]
+    if not api_key:
         sc = rule_based_score(job)
         return sc, "N/A", job.get("tech_stack", ""), "Not Specified", False
 
-    desc = (job.get("job_description") or "")[:2000]
+    desc = (job.get("job_description") or "")[:3000]
     if len(desc) < 50:
         desc = f"Job Title: {job.get('job_title')}. Company: {job.get('company_name')}."
 
-    prompt = f"""Analyze this US IT job posting. Respond ONLY with JSON, no other text.
-
+    prompt = f"""Analyze this US IT job posting.
 Title: {job.get('job_title', '')}
 Company: {job.get('company_name', '')}
 Location: {job.get('location', '')}
 Description: {desc}
 
-JSON format (strictly):
+You must return EXACTLY this JSON format and nothing else. Ensure valid JSON:
 {{
   "score": <0-100 integer, relevance for US IT job search>,
   "is_real_job": <true/false>,
@@ -239,19 +241,18 @@ JSON format (strictly):
 }}"""
 
     try:
-        resp = requests.post(
-            "https://integrate.api.nvidia.com/v1/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-            json={
-                "model": CONFIG["nvidia_model"],
-                "messages": [{"role": "user", "content": prompt}],
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {
                 "temperature": 0.1,
                 "max_tokens": 400,
-            },
-            timeout=15
-        )
+                "responseMimeType": "application/json"
+            }
+        }
+        resp = requests.post(url, json=payload, timeout=15)
         if resp.status_code == 200:
-            content = resp.json()["choices"][0]["message"]["content"].strip()
+            content = resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
             m = re.search(r'\{.*\}', content, re.DOTALL)
             if m:
                 data = json.loads(m.group())
@@ -345,20 +346,18 @@ def ai_heal_selectors(page, portal_name, keyword):
             return None
             
         prompt = f"Portal {portal_name} job card HTML classes:\n{dom_snippet}\nRespond ONLY with the single best CSS selector for the job card. No markdown, no explanation."
-        
-        resp = requests.post(
-            "https://integrate.api.nvidia.com/v1/chat/completions",
-            headers={"Authorization": f"Bearer {CONFIG['nvidia_api_key']}", "Content-Type": "application/json"},
-            json={
-                "model": CONFIG["nvidia_model"],
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.1, 
-                "max_tokens": 30 # Super tight limit!
-            },
-            timeout=10
-        )
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={os.getenv('GEMINI_API_KEY', '')}"
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {
+                "temperature": 0.1,
+                "max_tokens": 30,
+                "responseMimeType": "text/plain"
+            }
+        }
+        resp = requests.post(url, json=payload, timeout=10)
         if resp.status_code == 200:
-            selector = resp.json()["choices"][0]["message"]["content"].strip().replace('`', '')
+            selector = resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip().replace('`', '')
             log.info(f"  🤖 AI Suggested Selector: {selector}")
             return selector
     except Exception as e:
@@ -458,13 +457,12 @@ class IndeedScraper(BaseScraper):
             time.sleep(4)
             self.scroll_page(4)
 
-            cards = self.page.query_selector_all("div.job_seen_beacon")
             if not cards:
                 cards = self.page.query_selector_all("[data-testid='slider_item']")
             
             if not cards:
-                new_sel = ai_heal_selectors(self.page, "Indeed", keyword)
-                if new_sel: cards = self.page.query_selector_all(new_sel)
+                raw_text = self.page.inner_text("body")
+                return ai_extract_jobs_from_dom(raw_text, "Indeed", keyword)
                 
             log.info(f"  📦 Indeed: {len(cards)} cards")
 
@@ -595,13 +593,12 @@ class GlassdoorScraper(BaseScraper):
             time.sleep(4)
             self.scroll_page(3)
 
-            cards = self.page.query_selector_all("li[class*='JobsList_jobListItem']")
             if not cards:
                 cards = self.page.query_selector_all("[data-test='jobListing']")
             
             if not cards:
-                new_sel = ai_heal_selectors(self.page, "Glassdoor", keyword)
-                if new_sel: cards = self.page.query_selector_all(new_sel)
+                raw_text = self.page.inner_text("body")
+                return ai_extract_jobs_from_dom(raw_text, "Glassdoor", keyword)
                 
             log.info(f"  📦 Glassdoor: {len(cards)} cards")
 
@@ -656,26 +653,10 @@ class WellfoundScraper(BaseScraper):
             # Wellfound uses React — job cards are inside div[data-test="JobListing"]
             cards = self.page.query_selector_all("div[data-test='JobListing'], div[class*='JobListingCard']")
             if not cards:
-                cards = self.page.query_selector_all("div[class*='styles_component__Ey28k']")
-            if not cards:
-                # Try any link containing /jobs/
-                job_links = self.page.query_selector_all("a[href*='/jobs/']")
-                log.info(f"  📦 Wellfound links: {len(job_links)}")
-                seen = set()
-                for link_el in job_links[:CONFIG["max_jobs_per_portal_per_role"]]:
-                    try:
-                        href = link_el.get_attribute("href") or ""
-                        if not href or href in seen or "/jobs/" not in href:
-                            continue
-                        if not href.startswith("http"):
-                            href = "https://wellfound.com" + href
-                        seen.add(href)
-                        title = link_el.inner_text().strip() or keyword
-                        rec = build_record(self.portal, keyword, title, "Unknown", "Remote", "", href)
-                        jobs.append(rec)
-                    except: pass
-                return jobs
-
+                # Use AI Fallback extraction
+                raw_text = self.page.inner_text("body")
+                return ai_extract_jobs_from_dom(raw_text, "Wellfound", keyword)
+                
             log.info(f"  📦 Wellfound: {len(cards)} cards")
             seen = set()
             for card in cards[:CONFIG["max_jobs_per_portal_per_role"]]:
@@ -1058,21 +1039,22 @@ JSON format:
   "salary_mentioned": "<salary string or empty>",
   "visa_sponsorship": <true/false>
 }}"""
-    api_key = CONFIG["nvidia_api_key"]
-    model = CONFIG["nvidia_model"]
+    api_key = os.getenv("GEMINI_API_KEY", "")
 
     for attempt in range(3):
         try:
-            resp = requests.post(
-                "https://integrate.api.nvidia.com/v1/chat/completions",
-                headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-                json={"model": model,
-                      "messages": [{"role": "user", "content": prompt}],
-                      "temperature": 0.1, "max_tokens": 500},
-                timeout=20,
-            )
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+            payload = {
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {
+                    "temperature": 0.1,
+                    "max_tokens": 500,
+                    "responseMimeType": "application/json"
+                }
+            }
+            resp = requests.post(url, json=payload, timeout=20)
             if resp.status_code == 200:
-                content = resp.json()["choices"][0]["message"]["content"].strip()
+                content = resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
                 m = re.search(r'\{.*\}', content, re.DOTALL)
                 if m:
                     data = json.loads(m.group())
@@ -1348,29 +1330,200 @@ def fetch_details_parallel(records: list, _browser=None) -> list:
     return list(hash_to_record.values())
 
 
-# ============================================================
-# 💾  CSV WRITER
-# ============================================================
-def write_csv(records: list) -> int:
-    csv_file = CONFIG["csv_file"]
-    existing = set()
-    if os.path.exists(csv_file):
+def ai_extract_jobs_from_dom(raw_text: str, portal_name: str, keyword: str) -> list:
+    """Fallback extraction using Gemini when DOM classes change."""
+    api_key = os.getenv("GEMINI_API_KEY", "")
+    if not api_key:
+        return []
+    
+    prompt = f"""Extract job postings from this text from {portal_name} for the keyword '{keyword}'.
+Return a valid JSON list of dictionaries. Each dictionary must have:
+"title": <job title>,
+"company": <company name>,
+"location": <location>,
+"salary": <salary>,
+"job_description": <full job description, roles and responsibilities in text format without html tags>,
+"tech_stack": <tech stack comma separated>,
+"remote_type": <remote or onsite>,
+"link": <url if available, else "">
+
+Return ONLY valid JSON.
+Text:
+{raw_text[:8000]}"""
+    try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0.1, "responseMimeType": "application/json"}
+        }
+        resp = requests.post(url, json=payload, timeout=20, verify=False)
+        if resp.status_code == 200:
+            content = resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+            m = re.search(r'\[.*\]', content, re.DOTALL)
+            if m:
+                jobs = json.loads(m.group())
+            else:
+                jobs = json.loads(content)
+            
+            # Map the extracted fields to our schema
+            records = []
+            for j in jobs:
+                rec = build_record(
+                    portal=portal_name,
+                    keyword=keyword,
+                    title=j.get("title", ""),
+                    company=j.get("company", ""),
+                    location=j.get("location", ""),
+                    desc=j.get("job_description", ""),
+                    url=j.get("link", ""),
+                    salary=j.get("salary", "")
+                )
+                rec["tech_stack"] = j.get("tech_stack", "")
+                rec["remote_type"] = j.get("remote_type", "")
+                records.append(rec)
+            return records
+    except Exception as e:
+        log.warning(f"  [AI DOM Extraction] Error: {e}")
+    return []
+
+class HiringCafeScraper(BaseScraper):
+    def __init__(self, page):
+        super().__init__(page, "HiringCafe")
+        
+    def scrape(self, keyword: str) -> list:
+        log.info(f"  [HiringCafe] Started search for '{keyword}'...")
+        jobs = []
         try:
-            with open(csv_file, "r", encoding="utf-8") as f:
-                existing = {row.get("job_hash", "") for row in csv.DictReader(f)}
-        except: pass
+            url = f"https://hiring.cafe/?search={quote_plus(keyword)}"
+            self.page.goto(url, wait_until="domcontentloaded", timeout=CONFIG["page_timeout_ms"])
+            time.sleep(4)
+            
+            # Try traditional DOM extraction first
+            items = self.page.query_selector_all("a[href*='/job/']")
+            for item in items[:15]:
+                try:
+                    title = item.inner_text().split("\n")[0] if item.inner_text() else "Unknown"
+                    link = urljoin("https://hiring.cafe", item.get_attribute("href"))
+                    if len(title) > 3:
+                        jobs.append(build_record(
+                            self.portal, keyword, title, "Unknown", "USA", "", link
+                        ))
+                except Exception:
+                    pass
+                    
+            if not jobs:
+                log.info("  [HiringCafe] Standard selectors found 0 jobs. Falling back to Ultra AI DOM extraction...")
+                raw_text = self.page.evaluate("document.body.innerText")
+                extracted = ai_extract_jobs_from_dom(raw_text, "HiringCafe", keyword)
+                for ext in extracted:
+                    jobs.append(build_record(
+                        self.portal, keyword, ext.get("title", "Unknown"),
+                        ext.get("company", "Unknown"), ext.get("location", "USA"), "",
+                        ext.get("link", url)
+                    ))
+                    
+        except Exception as e:
+            log.warning(f"  [HiringCafe] Error: {e}")
+        return jobs
 
-    new_recs = [r for r in records if r["job_hash"] not in existing]
-    if not new_recs:
-        return 0
+class WelcomeToTheJungleScraper(BaseScraper):
+    def __init__(self, page):
+        super().__init__(page, "WTTJ")
+        
+    def scrape(self, keyword: str) -> list:
+        log.info(f"  [WTTJ] Started search for '{keyword}'...")
+        jobs = []
+        try:
+            url = f"https://www.welcometothejungle.com/en/jobs?query={quote_plus(keyword)}"
+            self.page.goto(url, wait_until="domcontentloaded", timeout=CONFIG["page_timeout_ms"])
+            time.sleep(4)
+            
+            # Try traditional DOM extraction
+            items = self.page.query_selector_all("li div[data-testid='search-results-list-item-wrapper']")
+            for item in items[:15]:
+                try:
+                    title_el = item.query_selector("h4, h3")
+                    title = title_el.inner_text() if title_el else "Unknown"
+                    link_el = item.query_selector("a")
+                    link = urljoin("https://www.welcometothejungle.com", link_el.get_attribute("href")) if link_el else url
+                    if len(title) > 3:
+                        jobs.append(build_record(
+                            self.portal, keyword, title, "Unknown", "USA", "", link
+                        ))
+                except Exception:
+                    pass
+                    
+            if not jobs:
+                log.info("  [WTTJ] Standard selectors found 0 jobs. Falling back to Ultra AI DOM extraction...")
+                raw_text = self.page.evaluate("document.body.innerText")
+                extracted = ai_extract_jobs_from_dom(raw_text, "WelcomeToTheJungle", keyword)
+                for ext in extracted:
+                    jobs.append(build_record(
+                        self.portal, keyword, ext.get("title", "Unknown"),
+                        ext.get("company", "Unknown"), ext.get("location", "USA"), "",
+                        ext.get("link", url)
+                    ))
+                    
+        except Exception as e:
+            log.warning(f"  [WTTJ] Error: {e}")
+        return jobs
 
-    mode = "a" if os.path.exists(csv_file) else "w"
-    with open(csv_file, mode=mode, newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=CSV_HEADERS, extrasaction="ignore")
-        if mode == "w":
-            w.writeheader()
-        w.writerows(new_recs)
-    return len(new_recs)
+
+# ============================================================
+# 💾  SQLITE DB WRITER
+# ============================================================
+def write_to_db(records: list) -> int:
+    """Inserts distinct records into jobs_harvested_bronze."""
+    new_recs = 0
+    
+    # Query existing hashes to prevent duplicates
+    existing_df = query_df("SELECT job_hash FROM jobs_harvested_bronze")
+    existing_hashes = set(existing_df["job_hash"]) if not existing_df.empty else set()
+
+    for r in records:
+        if r["job_hash"] not in existing_hashes:
+            # We must only include columns that exist in jobs_harvested_bronze table
+            # Some fields like validation_score might need mapping if bronze schema differs,
+            # but assuming they match exactly based on the previous pipeline.
+            bronze_row = {
+                "id": str(uuid.uuid4()),
+                "job_hash": r["job_hash"],
+                "fetch_date": r["fetch_date"],
+                "portal": r.get("portal", ""),
+                "search_keyword": r.get("search_keyword", ""),
+                "job_title": r.get("job_title", ""),
+                "company_name": r.get("company_name", ""),
+                "location": r.get("location", ""),
+                "remote_type": r.get("remote_type", ""),
+                "salary_range": r.get("salary_range", ""),
+                "experience_years": r.get("experience_years", ""),
+                "tech_stack": r.get("tech_stack", ""),
+                "posted_date": r.get("posted_date", ""),
+                "job_description": r.get("job_description", ""),
+                "description_length": r.get("description_length", 0),
+                "roles_responsibilities": r.get("roles_responsibilities", ""),
+                "requirements_section": r.get("requirements_section", ""),
+                "roles_summary": r.get("roles_summary", ""),
+                "apply_link": r.get("apply_link", ""),
+                "easy_apply_link": r.get("easy_apply_link", ""),
+                "company_career_url": r.get("company_career_url", ""),
+                "company_website": r.get("company_website", ""),
+                "hr_email": r.get("hr_email", ""),
+                "job_id": r.get("job_id", ""),
+                "visa_sponsorship": r.get("visa_sponsorship", ""),
+                "validation_score": r.get("validation_score", 0),
+                "validation_status": r.get("validation_status", ""),
+                "ai_summary": r.get("ai_summary", ""),
+                "detail_fetched": r.get("detail_fetched", False)
+            }
+            ok, err = insert_row("jobs_harvested_bronze", bronze_row)
+            if ok:
+                new_recs += 1
+                existing_hashes.add(r["job_hash"])
+            else:
+                log.error(f"DB Insert Error: {err}")
+                
+    return new_recs
 
 
 # ============================================================
@@ -1409,7 +1562,7 @@ def print_summary(records: list):
     print(f"\n✅ Valid: {by_status.get('Valid',0)}  ⚠️ Partial: {by_status.get('Partial',0)}")
     print(f"📝 With description: {with_desc}/{len(records)} ({with_desc*100//max(len(records),1)}%)")
     print(f"📧 With email: {with_email}/{len(records)}")
-    print(f"📁 CSV: {os.path.abspath(CONFIG['csv_file'])}")
+    print(f"📁 DB: SQLite (jobs_harvested_bronze)")
     print("=" * 70)
 
     print("\n📋 SAMPLE JOBS (first 5 with descriptions):")
@@ -1437,7 +1590,7 @@ def run_harvester_v10():
     log.info("🚀 US IT JOB HARVESTER V10 — FULL PIPELINE")
     log.info(f"📋 Roles: {len(CONFIG['roles'])} | Sites: {'ALL 10+' if CONFIG['enable_all_sites'] else 'Top 4'}")
     log.info(f"⏱️  Filter: Yesterday ({YESTERDAY}) + Today ({TODAY})")
-    log.info(f"🤖 AI: NVIDIA NIM ({CONFIG['nvidia_model']})")
+    log.info(f"🤖 AI: Gemini Flash (gemini-3.5-flash)")
     log.info("=" * 65)
 
     all_records = []
@@ -1470,6 +1623,8 @@ def run_harvester_v10():
                 "ZipRecruiter": ZipRecruiterScraper(page),
                 "SimplyHired":  SimplyHiredScraper(page),
                 "Monster":      MonsterScraper(page),
+                "HiringCafe":   HiringCafeScraper(page),
+                "WTTJ":         WelcomeToTheJungleScraper(page),
             })
 
         ddg_scrapers = []
@@ -1488,6 +1643,7 @@ def run_harvester_v10():
                     jobs = scraper.scrape(role)
                     log.info(f"  ✅ {portal_name}: {len(jobs)} jobs")
                     all_records.extend(jobs)
+                    write_to_db(jobs) # Real-time parallel insertion
                 except Exception as e:
                     log.warning(f"  ❌ {portal_name}: {e}")
                 time.sleep(random.uniform(*CONFIG["inter_request_delay"]))
@@ -1496,6 +1652,7 @@ def run_harvester_v10():
                 try:
                     jobs = scraper.scrape(role)
                     all_records.extend(jobs)
+                    write_to_db(jobs) # Real-time parallel insertion
                 except Exception as e:
                     log.debug(f"DDG scraper err: {e}")
 
@@ -1520,6 +1677,17 @@ def run_harvester_v10():
             rec["tech_stack"] = tech
             rec["experience_years"] = exp_yrs
             rec["visa_sponsorship"] = visa
+            
+            # Real-time UI update
+            update_row("jobs_harvested_bronze", {
+                "validation_score": rec["validation_score"],
+                "validation_status": rec["validation_status"],
+                "ai_summary": rec["ai_summary"],
+                "tech_stack": rec["tech_stack"],
+                "experience_years": rec["experience_years"],
+                "visa_sponsorship": int(rec["visa_sponsorship"]) if isinstance(rec["visa_sponsorship"], bool) else rec["visa_sponsorship"]
+            }, f"job_hash = '{rec['job_hash']}'")
+            
             if (i + 1) % 20 == 0:
                 log.info(f"   Scored {i+1}/{len(unique)}...")
 
@@ -1552,6 +1720,21 @@ def run_harvester_v10():
                 if ai.get("salary_mentioned") and not rec.get("salary_range", "").strip():
                     rec["salary_range"] = ai["salary_mentioned"]
 
+                # Real-time UI update
+                update_row("jobs_harvested_bronze", {
+                    "validation_score": rec["validation_score"],
+                    "validation_status": rec["validation_status"],
+                    "ai_summary": rec["ai_summary"],
+                    "roles_summary": rec["roles_summary"],
+                    "remote_type": rec["remote_type"],
+                    "tech_stack": rec["tech_stack"],
+                    "experience_years": rec["experience_years"],
+                    "salary_range": rec["salary_range"],
+                    "visa_sponsorship": int(rec["visa_sponsorship"] == "True") if isinstance(rec["visa_sponsorship"], str) else int(bool(rec["visa_sponsorship"])),
+                    "job_description": rec["job_description"],
+                    "detail_fetched": 1
+                }, f"job_hash = '{rec['job_hash']}'")
+
             if (i + 1) % 10 == 0:
                 log.info(f"   Re-scored {i+1}/{len(fetched_with_desc)}...")
 
@@ -1560,9 +1743,9 @@ def run_harvester_v10():
 
         browser.close()
 
-    # ── Write CSV ────────────────────────────────────────────
-    written = write_csv(final)
-    log.info(f"\n💾 Written {written} new records → {CONFIG['csv_file']}")
+    # ── Write DB ────────────────────────────────────────────
+    written = write_to_db(final)
+    log.info(f"\n💾 Inserted {written} new records → SQLite jobs_harvested_bronze")
 
     print_summary(final)
     return final
@@ -1576,4 +1759,4 @@ if __name__ == "__main__":
     email_count = sum(1 for j in jobs if j.get("hr_email"))
     print(f"   📝 With full description: {desc_count}")
     print(f"   📧 With HR email: {email_count}")
-    print(f"   📁 CSV: jobs_v10_output.csv")
+    print(f"   📁 DB: SQLite (jobs_harvested_bronze)")

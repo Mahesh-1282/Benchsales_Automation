@@ -82,9 +82,8 @@ def ai_analyze_recruiter_email(recruiter_text: str, user_name: str, job_title: s
     """Use NVIDIA NIM to analyze inbound recruiter email and draft reply."""
     import requests, re, os
 
-    NVIDIA_API_KEY = os.getenv("NVIDIA_NIM_API_KEY", "")
-    NVIDIA_URL     = "https://integrate.api.nvidia.com/v1/chat/completions"
-    NVIDIA_MODEL   = "meta/llama-3.1-8b-instruct"
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+    GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent"
 
     prompt = f"""Analyze this inbound recruiter email and draft a professional reply.
 
@@ -106,19 +105,19 @@ Respond with JSON:
 }}"""
 
     try:
-        resp = requests.post(
-            NVIDIA_URL,
-            headers={"Authorization": f"Bearer {NVIDIA_API_KEY}", "Content-Type": "application/json"},
-            json={"model": NVIDIA_MODEL,
-                  "messages": [{"role": "user", "content": prompt}],
-                  "temperature": 0.2, "max_tokens": 800},
-            timeout=30,
-        )
+        url = f"{GEMINI_URL}?key={GEMINI_API_KEY}"
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0.2, "responseMimeType": "application/json"}
+        }
+        resp = requests.post(url, json=payload, timeout=30)
+        
         if resp.status_code == 200:
-            content = resp.json()["choices"][0]["message"]["content"]
+            content = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
             m = re.search(r"\{.*\}", content, re.DOTALL)
             if m:
                 return json.loads(m.group())
+            return json.loads(content)
     except Exception as e:
         st.error(f"AI analysis error: {e}")
 
