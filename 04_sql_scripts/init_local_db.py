@@ -39,7 +39,7 @@ def init_db():
       company_website TEXT,
       hr_email TEXT,
       job_id TEXT,
-      visa_sponsorship BOOLEAN,
+      visa_sponsorship TEXT,
       validation_score INTEGER,
       validation_status TEXT,
       ai_summary TEXT,

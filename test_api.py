@@ -1,22 +1,33 @@
 import os
 import requests
-import dotenv
-from pathlib import Path
-import json
+from dotenv import load_dotenv
 
-app_dir = Path("/Users/mahesh/Desktop/untitled folder/Benchsales_Automation/03_databricks_app")
-dotenv.load_dotenv(app_dir / ".env")
+load_dotenv("01_local_scraper/.env")
+api_key = os.getenv("NVIDIA_NIM_API_KEY")
+print("NVIDIA KEY:", api_key[:10] if api_key else None)
 
-api_key = os.environ.get('GEMINI_API_KEY')
-url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+resp = requests.post(
+    "https://integrate.api.nvidia.com/v1/chat/completions",
+    headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+    json={
+        "model": "meta/llama-3.1-8b-instruct",
+        "messages": [{"role": "user", "content": "Hello"}],
+        "max_tokens": 10,
+    }
+)
+print("NVIDIA STATUS:", resp.status_code)
+print("NVIDIA TEXT:", resp.text)
 
-payload = {
-    "contents": [{"parts": [{"text": "Return a JSON object with keys 'foo' and 'bar'."}]}],
-    "generationConfig": {"temperature": 0.0, "responseMimeType": "application/json"}
-}
-resp = requests.post(url, json=payload)
-print(f"Gemini API status: {resp.status_code}")
-if resp.status_code == 200:
-    print(resp.json()["candidates"][0]["content"]["parts"][0]["text"])
-else:
-    print(resp.text)
+gemini_key = os.getenv("GEMINI_API_KEY")
+print("GEMINI KEY:", gemini_key[:10] if gemini_key else None)
+url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent?key={gemini_key}"
+resp2 = requests.post(
+    url,
+    headers={"Content-Type": "application/json"},
+    json={
+        "contents": [{"parts": [{"text": "Hello"}]}],
+        "generationConfig": {"maxOutputTokens": 10}
+    }
+)
+print("GEMINI STATUS:", resp2.status_code)
+print("GEMINI TEXT:", resp2.text)

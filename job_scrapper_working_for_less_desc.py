@@ -446,27 +446,12 @@ def rule_based_score(rec: dict) -> int:
     score += 15 if len(desc) > 400 else (5 if len(desc) > 100 else 0)
     return min(score, 100)
 
-def clean_location(loc: str) -> str:
-    if not loc: return "USA"
-    loc = re.sub(r"(?i)\b\d+\s+(days?|hours?|mins?)\s+ago\b", "", loc)
-    loc = re.sub(r"(?i)\b(today|yesterday|reposted|an hour ago)\b", "", loc)
-    loc = re.sub(r"(?i)no location provided", "", loc)
-    loc = re.sub(r"•", "", loc).strip(" ,-")
-    return loc if len(loc) > 2 else "USA"
-
 # ============================================================
 # 🏗️  JOB RECORD BUILDER
 # ============================================================
 def build_record(portal, keyword, title, company, location, desc, url,
                  posted="", salary="", job_type="", job_id="") -> dict:
     now = datetime.now()
-    
-    # Global Link Validation
-    if url and any(bad in url.lower() for bad in ["?search=", "?q=", "url 1", "example.com", "not found"]):
-        url = ""
-    if portal == "WelcomeToTheJungle" and "/companies/" in url and "/jobs/" not in url:
-        url = ""
-        
     return {
         "id":               str(uuid.uuid4()),
         "job_hash":         hashlib.md5(url.encode()).hexdigest(),
@@ -489,7 +474,7 @@ def build_record(portal, keyword, title, company, location, desc, url,
         "company_website":  "",
         "hr_email":         "",
         "job_id":           job_id,
-        "visa_sponsorship": "Not specified",
+        "visa_sponsorship": False,
         "validation_score": 0,
         "validation_status": "Pending",
         "ai_summary":       "",
@@ -604,18 +589,6 @@ class BaseScraper:
         for _ in range(times):
             self.page.evaluate("window.scrollBy(0, 900)")
             time.sleep(CONFIG["scroll_delay"])
-
-    def fallback_if_empty(self, jobs: list, keyword: str) -> list:
-        if not jobs:
-            log.info(f"  [{self.portal}] Standard selectors returned 0 jobs. Falling back to AI DOM extraction...")
-            try:
-                raw_text = self.page.evaluate("document.body.innerText")
-                extracted = ai_extract_jobs_from_dom(raw_text, self.portal, keyword)
-                if extracted:
-                    jobs.extend(extracted)
-            except Exception as e:
-                log.debug(f"[{self.portal}] AI fallback failed: {e}")
-        return jobs
 
 # ============================================================
 # 🏢  PORTAL SCRAPERS
@@ -883,7 +856,7 @@ class LinkedInScraper(BaseScraper):
                     log.debug(f"LinkedIn card err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ LinkedIn: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── INDEED ──────────────────────────────────────────────────
@@ -955,7 +928,7 @@ class IndeedScraper(BaseScraper):
                     log.debug(f"Indeed card err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ Indeed: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── DICE ─────────────────────────────────────────────────────
@@ -1020,7 +993,7 @@ class DiceScraper(BaseScraper):
                     log.debug(f"Dice link err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ Dice: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── GLASSDOOR ────────────────────────────────────────────────
@@ -1078,7 +1051,7 @@ class GlassdoorScraper(BaseScraper):
                     log.debug(f"Glassdoor card err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ Glassdoor: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── WELLFOUND (FIXED) ────────────────────────────────────────
@@ -1129,7 +1102,7 @@ class WellfoundScraper(BaseScraper):
                     log.debug(f"Wellfound card err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ Wellfound: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── BUILTIN ──────────────────────────────────────────────────
@@ -1182,7 +1155,7 @@ class BuiltInScraper(BaseScraper):
                     log.debug(f"BuiltIn err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ Built In: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── ZIPRECRUITER ─────────────────────────────────────────────
@@ -1233,7 +1206,7 @@ class ZipRecruiterScraper(BaseScraper):
                     log.debug(f"ZipRecruiter err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ ZipRecruiter: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── SIMPLYHIRED ──────────────────────────────────────────────
@@ -1286,7 +1259,7 @@ class SimplyHiredScraper(BaseScraper):
                     log.debug(f"SimplyHired err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ SimplyHired: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── MONSTER ──────────────────────────────────────────────────
@@ -1325,7 +1298,7 @@ class MonsterScraper(BaseScraper):
                     log.debug(f"Monster err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ Monster: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ── GREENHOUSE SCRAPER (via DDG search) ──────────────────────
@@ -1464,24 +1437,20 @@ def ai_rescore(job: dict) -> dict:
 
     if len(desc) < 50:
         return {
-            "validation_score": 20, "validation_status": "Junk",
+            "validation_score": 60, "validation_status": "Partial",
             "ai_summary": "No description available", "roles_summary": "",
             "tech_stack": job.get("tech_stack", ""), "experience_years": "Not specified",
             "remote_type": "Remote" if "remote" in (title + location).lower() else "Not specified",
-            "visa_sponsorship": "Not specified", "salary_mentioned": "", "cleaned_location": location, "hr_email": ""
+            "visa_sponsorship": False, "salary_mentioned": "",
         }
 
     prompt = f"""Analyze this US IT job posting. Return ONLY valid JSON, no markdown, no extra text.
-DO NOT limit, summarize, or truncate `roles_responsibilities`, `requirements_section`, and `tech_stack`. Extract them completely and identically to the description.
 
 Title: {title}
 Company: {company}
-Original Location: {location}
+Location: {location}
 Description:
 {desc}
-
-Location Cleaning Rules:
-If Original Location is junk (e.g., '13 Days Ago'), 'Pune', 'India', or outside the US, find the real US location from the Description. If not found, use 'United States'.
 
 Return exactly this JSON:
 {{
@@ -1489,18 +1458,16 @@ Return exactly this JSON:
   "is_real_job": <true or false>,
   "summary": "<2-sentence summary>",
   "roles_summary": "<3-5 bullet key responsibilities>",
-  "roles_responsibilities": "<full, un-truncated roles & responsibilities exactly from the text>",
-  "requirements_section": "<full, un-truncated requirements exactly from the text>",
-  "tech_stack": "<all skills comma-separated, un-truncated>",
+  "roles_responsibilities": "<detailed list of roles and responsibilities from the description>",
+  "requirements_section": "<detailed list of requirements from the description>",
+  "tech_stack": "<all skills comma-separated, e.g. Python, FastAPI, AWS, Docker>",
   "experience_years": "<e.g. 5+ years or Not specified>",
   "remote_type": "<Remote|Hybrid|Onsite|Not specified>",
   "salary_mentioned": "<salary string or empty>",
-  "visa_sponsorship": "<e.g., Not Supported, H1B Sponsored, W2 Only, or Not specified based on description>",
-  "hr_email_from_desc": "<any recruiter/HR email found in description, else empty>",
-  "cleaned_location": "<the corrected valid US location>"
+  "visa_sponsorship": <true or false>
 }}"""
 
-    content = _ai_call(prompt, max_tokens=4000, job_hash=job.get("job_hash", ""))
+    content = _ai_call(prompt, max_tokens=1500, job_hash=job.get("job_hash", ""))
     if content:
         data = _parse_ai_json(content)
         if data and isinstance(data, dict):
@@ -1520,9 +1487,7 @@ Return exactly this JSON:
                     "experience_years": str(data.get("experience_years", "Not specified")),
                     "remote_type": str(data.get("remote_type", "Not specified")),
                     "salary_mentioned": str(data.get("salary_mentioned", "")),
-                    "visa_sponsorship": str(data.get("visa_sponsorship", "Not specified")),
-                    "hr_email": str(data.get("hr_email_from_desc", "")),
-                    "cleaned_location": str(data.get("cleaned_location", location))
+                    "visa_sponsorship": bool(data.get("visa_sponsorship", False)),
                 }
             except (ValueError, TypeError):
                 pass
@@ -1701,7 +1666,6 @@ PORTAL_SELECTORS = {
     ],
     "indeed.com": [
         "div#jobDescriptionText",
-        "div.jobsearch-jobDescriptionText",
         "div[class*='jobsearch-JobComponent-description']",
         "div[id*='jobDescription']",
         "div[class*='jobDescription']",
@@ -1855,7 +1819,7 @@ def fetch_details_parallel(records: list, _browser=None) -> list:
                             log.debug(f"LinkedIn API error: {e}")
                 
                 # ── Browser scraping if Guest API failed or not LinkedIn ──
-                if len(desc) < 100 and "indeed.com" not in url:
+                if len(desc) < 100:
                     try:
                         page.goto(url, wait_until="domcontentloaded", timeout=CONFIG["detail_fetch_timeout_ms"])
                         time.sleep(wait_secs)
@@ -1872,6 +1836,8 @@ def fetch_details_parallel(records: list, _browser=None) -> list:
                                     candidate = el.inner_text().strip()
                                     if len(candidate) > len(desc) and len(candidate) > 80:
                                         desc = candidate
+                                    if len(desc) > 500:
+                                        break
                             except Exception:
                                 continue
 
@@ -1919,6 +1885,10 @@ def fetch_details_parallel(records: list, _browser=None) -> list:
                                             text = el.get_text(separator=' ', strip=True)
                                             if len(text) > len(primp_desc) and len(text) > 80:
                                                 primp_desc = text
+                                            if len(primp_desc) > 500:
+                                                break
+                                    if len(primp_desc) > 500:
+                                        break
                                 
                                 if len(primp_desc) < 100:
                                     # bs4 smart fallback
@@ -2001,13 +1971,13 @@ Return a valid JSON list of dictionaries. Each dictionary must have:
 "job_description": <full job description, roles and responsibilities in text format without html tags>,
 "tech_stack": <tech stack comma separated>,
 "remote_type": <remote or onsite>,
-"link": <url if available explicitly in text, else "">
+"link": <url if available, else "">
 
 Return ONLY valid JSON.
 Text:
-{raw_text[:35000]}"""
+{raw_text[:8000]}"""
     
-    content = _ai_call(prompt, max_tokens=2500, use_ultra=True)
+    content = _ai_call(prompt, max_tokens=2000, use_ultra=True)
     if content:
         try:
             m = re.search(r'\[.*\]', content, re.DOTALL)
@@ -2018,10 +1988,6 @@ Text:
             
             records = []
             for j in jobs:
-                url_candidate = str(j.get("link", "")).strip()
-                if any(bad in url_candidate.lower() for bad in ["url 1", "url 2", "url 3", "link 1", "link 2", "example.com", "not found", "n/a"]):
-                    url_candidate = ""
-                
                 rec = build_record(
                     portal=portal_name,
                     keyword=keyword,
@@ -2029,7 +1995,7 @@ Text:
                     company=j.get("company", ""),
                     location=j.get("location", ""),
                     desc=j.get("job_description", ""),
-                    url=url_candidate,
+                    url=j.get("link", ""),
                     salary=j.get("salary", "")
                 )
                 rec["tech_stack"] = j.get("tech_stack", "")
@@ -2049,7 +2015,7 @@ class HiringCafeScraper(BaseScraper):
         log.info(f"  [HiringCafe] Started search for '{keyword}'...")
         jobs = []
         try:
-            url = f"https://hiring.cafe/?search={quote_plus(keyword + ' United States')}"
+            url = f"https://hiring.cafe/?search={quote_plus(keyword)}"
             self.page.goto(url, wait_until="domcontentloaded", timeout=CONFIG["page_timeout_ms"])
             time.sleep(4)
             
@@ -2070,8 +2036,12 @@ class HiringCafeScraper(BaseScraper):
                 log.info("  [HiringCafe] Standard selectors found 0 jobs. Falling back to Ultra AI DOM extraction...")
                 raw_text = self.page.evaluate("document.body.innerText")
                 extracted = ai_extract_jobs_from_dom(raw_text, "HiringCafe", keyword)
-                if extracted:
-                    jobs.extend(extracted)
+                for ext in extracted:
+                    jobs.append(build_record(
+                        self.portal, keyword, ext.get("title", "Unknown"),
+                        ext.get("company", "Unknown"), ext.get("location", "USA"), "",
+                        ext.get("link", url)
+                    ))
                     
         except Exception as e:
             log.warning(f"  [HiringCafe] Error: {e}")
@@ -2108,8 +2078,12 @@ class WelcomeToTheJungleScraper(BaseScraper):
                 log.info("  [WTTJ] Standard selectors found 0 jobs. Falling back to Ultra AI DOM extraction...")
                 raw_text = self.page.evaluate("document.body.innerText")
                 extracted = ai_extract_jobs_from_dom(raw_text, "WelcomeToTheJungle", keyword)
-                if extracted:
-                    jobs.extend(extracted)
+                for ext in extracted:
+                    jobs.append(build_record(
+                        self.portal, keyword, ext.get("title", "Unknown"),
+                        ext.get("company", "Unknown"), ext.get("location", "USA"), "",
+                        ext.get("link", url)
+                    ))
                     
         except Exception as e:
             log.warning(f"  [WTTJ] Error: {e}")
@@ -2180,7 +2154,7 @@ class CareerBuilderScraper(BaseScraper):
                     log.debug(f"CareerBuilder card err: {e}")
         except Exception as e:
             log.warning(f"  ⚠️ CareerBuilder: {e}")
-        return self.fallback_if_empty(jobs, keyword)
+        return jobs
 
 
 # ============================================================
@@ -2498,19 +2472,7 @@ def run_harvester_v10(keywords: list[str] = None):
                 rec["ai_summary"] = ai.get("ai_summary", "")
                 rec["roles_summary"] = ai.get("roles_summary", "")
                 rec["remote_type"] = ai.get("remote_type", "")
-                rec["visa_sponsorship"] = str(ai.get("visa_sponsorship", "Not specified"))
-                
-                if ai.get("cleaned_location"):
-                    rec["location"] = clean_location(ai["cleaned_location"])
-                else:
-                    rec["location"] = clean_location(rec.get("location", ""))
-                    
-                if ai.get("hr_email"):
-                    rec["hr_email"] = ai["hr_email"]
-                if ai.get("roles_responsibilities"):
-                    rec["roles_responsibilities"] = ai["roles_responsibilities"]
-                if ai.get("requirements_section"):
-                    rec["requirements_section"] = ai["requirements_section"]
+                rec["visa_sponsorship"] = str(ai.get("visa_sponsorship", False))
                 
                 if ai.get("tech_stack"): 
                     rec["tech_stack"] = ai["tech_stack"]
@@ -2529,10 +2491,9 @@ def run_harvester_v10(keywords: list[str] = None):
                     "tech_stack": rec["tech_stack"],
                     "experience_years": rec["experience_years"],
                     "salary_range": rec["salary_range"],
-                    "visa_sponsorship": rec["visa_sponsorship"],
-                    "location": rec.get("location", ""),
-                    "job_description": rec.get("job_description", ""),
-                    "description_length": rec.get("description_length", 0),
+                    "visa_sponsorship": int(rec["visa_sponsorship"] == "True") if isinstance(rec["visa_sponsorship"], str) else int(bool(rec["visa_sponsorship"])),
+                    "job_description": rec["job_description"],
+                    "description_length": rec["description_length"],
                     "roles_responsibilities": rec.get("roles_responsibilities", ""),
                     "requirements_section": rec.get("requirements_section", ""),
                     "hr_email": rec.get("hr_email", ""),

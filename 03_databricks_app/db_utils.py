@@ -45,16 +45,19 @@ def execute_sql(sql: str) -> tuple:
         # Remove collate if present in queries
         sql = sql.replace("COLLATE UTF8_BINARY", "")
         
-        with get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(sql)
-            
-            # If it's a SELECT, fetch rows
-            if sql.strip().upper().startswith("SELECT") or sql.strip().upper().startswith("PRAGMA"):
-                rows = [dict(row) for row in cursor.fetchall()]
-            else:
-                conn.commit()
-                rows = []
+        conn = get_connection()
+        try:
+            with conn:
+                cursor = conn.cursor()
+                cursor.execute(sql)
+                
+                # If it's a SELECT, fetch rows
+                if sql.strip().upper().startswith("SELECT") or sql.strip().upper().startswith("PRAGMA"):
+                    rows = [dict(row) for row in cursor.fetchall()]
+                else:
+                    rows = []
+        finally:
+            conn.close()
                 
         return True, rows, ""
     except Exception as e:

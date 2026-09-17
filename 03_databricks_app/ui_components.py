@@ -74,7 +74,10 @@ def render_job_card(job, user_id):
     
     # Horizontal Skills
     tech_stack = str(job.get('tech_stack', 'N/A'))
-    skills_html = "".join([f"<span style='background:#e2e8f0; padding:4px 10px; border-radius:16px; font-size:12px; color:#334155; font-weight:500;'>{s.strip()}</span>" for s in tech_stack.split(',') if s.strip()])
+    skills_html = "".join([
+        f"<span style='padding:4px 10px; background:#f5f3ff; color:#6d28d9; border:1px solid #ddd6fe; border-radius:6px; font-weight:500; font-size:12px;'>{s.strip()}</span>"
+        for s in tech_stack.split(',') if s.strip()
+    ])
     
     match_score = job.get('match_score', 0)
     badge_class = "badge-green" if match_score >= 80 else ("badge-yellow" if match_score >= 50 else "badge-red")
@@ -99,18 +102,21 @@ def render_job_card(job, user_id):
         </div>
         
         <div class="job-card-tags" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-            <span style="background:#f1f5f9; padding:4px 10px; border-radius:16px; font-size:12px; color:#475569; font-weight:500;">💼 {rem}</span>
-            <span style="background:#f1f5f9; padding:4px 10px; border-radius:16px; font-size:12px; color:#475569; font-weight:500;">📍 {loc}</span>
-            <span style="background:#f1f5f9; padding:4px 10px; border-radius:16px; font-size:12px; color:#475569; font-weight:500;">💰 {salary}</span>
-            <span style="background:#f1f5f9; padding:4px 10px; border-radius:16px; font-size:12px; color:#475569; font-weight:500;">⏱️ {posted}</span>
+            <span style="background:#f8fafc; padding:4px 12px; border-radius:16px; font-size:12px; color:#475569; font-weight:500; border:1px solid #e2e8f0;">📍 {loc}</span>
+            <span style="background:#f8fafc; padding:4px 12px; border-radius:16px; font-size:12px; color:#475569; font-weight:500; border:1px solid #e2e8f0;">💰 {salary}</span>
+            <span style="background:#f8fafc; padding:4px 12px; border-radius:16px; font-size:12px; color:#475569; font-weight:500; border:1px solid #e2e8f0;">💼 {rem}</span>
+            <span style="background:#ecfdf5; padding:4px 12px; border-radius:16px; font-size:12px; color:#047857; font-weight:500; border:1px solid #a7f3d0;">⏱️ {posted}</span>
         </div>
         
-        <div class="job-card-snippet" style="font-size:14px; color:#475569; line-height:1.5;">
-            {clean_desc}
+        <div style="padding:14px; background:#f8fafc; border-radius:12px; border:1px solid #f1f5f9; font-size:14px; color:#475569; line-height:1.6; margin-top:4px;">
+            <strong style="color:#1e293b;">Overview:</strong> {clean_desc}
         </div>
         
-        <div class="job-card-skills" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
-            <strong style='font-size:13px; color:#64748b; margin-top:4px;'>Tech Stack:</strong> {skills_html}
+        <div style="margin-top:4px;">
+            <span style="display:block; font-size:11px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Tech Stack:</span>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                {skills_html}
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)

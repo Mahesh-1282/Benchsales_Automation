@@ -34,39 +34,84 @@ html, body, [class*="css"], .main, .stApp {
     color: var(--text-primary) !important;
 }
 .main .block-container {
-    padding: 1.5rem 2rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
     max-width: 1400px !important;
+}
+[data-testid="stAppViewBlockContainer"] {
+    padding-top: 1.5rem !important;
+}
+/* ── Hide Streamlit chrome (Deploy, Header, Toolbar, Footer) ── */
+header[data-testid="stHeader"],
+.stAppDeployButton,
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+#MainMenu,
+footer {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* ── Container Overrides ── */
+[data-testid="stVerticalBlockBorderWrapper"] {
+    border-radius: 20px !important;
+    border-color: #e2e8f0 !important;
+    background: #ffffff !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
 }
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
-    background: #f8fafc !important;
+    background: #ffffff !important;
     border-right: 1px solid var(--border) !important;
+}
+[data-testid="stSidebar"] > div:first-child {
+    padding-top: 1rem !important;
+}
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+    display: flex !important;
+    flex-direction: column !important;
+}
+[data-testid="stSidebarNav"] {
+    order: 2 !important;
+    margin-top: 16px !important;
 }
 [data-testid="stSidebar"] * { color: var(--text-primary) !important; }
 [data-testid="stSidebar"] a {
-    border-radius: 8px !important;
+    border-radius: 12px !important;
     transition: all 0.2s !important;
     color: var(--text-secondary) !important;
+    font-weight: 500 !important;
 }
 [data-testid="stSidebar"] a:hover {
-    background: var(--accent-glow) !important;
-    color: var(--accent) !important;
+    background: #f1f5f9 !important;
+    color: var(--text-primary) !important;
 }
 [data-testid="stSidebar"] [data-testid="stSidebarNav"] li a {
-    border-radius: 8px !important;
-    margin: 2px 8px !important;
-    padding: 8px 12px !important;
+    border-radius: 12px !important;
+    margin: 4px 16px !important;
+    padding: 10px 16px !important;
     transition: all 0.2s !important;
 }
 [data-testid="stSidebar"] [data-testid="stSidebarNav"] li a:hover {
-    background: var(--accent-glow) !important;
-    border-left: 3px solid var(--accent) !important;
-    color: var(--accent) !important;
+    background: #f1f5f9 !important;
+    border-left: none !important;
+    color: var(--text-primary) !important;
+}
+/* Style active sidebar link */
+[data-testid="stSidebarNav"] li a[aria-current="page"] {
+    background: #f5f3ff !important;
+    color: #7c3aed !important;
+    font-weight: 600 !important;
+}
+[data-testid="stSidebarNav"] li a[aria-current="page"] span {
+    color: #7c3aed !important;
 }
 
 /* ── Headings ── */
-h1, h2, h3, h4 { color: var(--text-primary) !important; }
+h1, h2, h3, h4 { color: var(--text-primary); }
 
 /* ── Cards ── */
 .syntara-card {
@@ -248,8 +293,7 @@ hr { border: none !important; border-bottom: 1px solid var(--border) !important;
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius:4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* ── Hide Streamlit chrome ── */
-#MainMenu, footer { visibility: hidden !important; }
+/* Chrome hiding moved to top of file */
 
 /* ── Upload Area Tweaks ── */
 section[data-testid="stFileUploadDropzone"] {

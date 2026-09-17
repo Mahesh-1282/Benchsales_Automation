@@ -32,10 +32,13 @@ if "default_download_format" not in st.session_state:
 # ── Sidebar Setup ─────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
-    <div style='padding:24px 16px 16px; border-bottom:1px solid rgba(99,102,241,0.2); margin-bottom:12px;'>
-        <div class='syntara-logo'>⚡ SYNTARA</div>
-        <div style='font-size:11px; color:#475569; margin-top:4px; font-weight:500;'>
-            AI Bench Sales Automation
+    <div style='padding:24px 16px 16px; display:flex; align-items:center; gap:12px; margin-bottom:12px;'>
+        <div style='width:40px; height:40px; border-radius:12px; background:#7c3aed; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; box-shadow:0 4px 6px rgba(124,58,237,0.2);'>
+            ⚡
+        </div>
+        <div>
+            <div style='font-size:20px; font-weight:800; color:#7c3aed; letter-spacing:-0.5px; line-height:1;'>SYNTARA</div>
+            <div style='font-size:11px; color:#94a3b8; font-weight:600; margin-top:2px;'>AI Bench Sales Automation</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
